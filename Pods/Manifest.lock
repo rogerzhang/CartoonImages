@@ -1,0 +1,36 @@
+PODS:
+  - Alamofire (5.10.1)
+  - KeychainSwift (24.0.0)
+  - Moya/Combine (15.0.0):
+    - Moya/Core
+  - Moya/Core (15.0.0):
+    - Alamofire (~> 5.0)
+  - ReSwift (6.1.1)
+  - SDWebImage (5.20.0):
+    - SDWebImage/Core (= 5.20.0)
+  - SDWebImage/Core (5.20.0)
+
+DEPENDENCIES:
+  - KeychainSwift
+  - Moya/Combine (~> 15.0)
+  - ReSwift
+  - SDWebImage
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - KeychainSwift
+    - Moya
+    - ReSwift
+    - SDWebImage
+
+SPEC CHECKSUMS:
+  Alamofire: 840d2a1ad82355b536ec6ba5f97e5bfa54600ca3
+  KeychainSwift: 007c4647486e4563adca839cf02cef00deb3b670
+  Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  ReSwift: 929afd2c897f0d33c76c730710a31bb2d2a66713
+  SDWebImage: 73c6079366fea25fa4bb9640d5fb58f0893facd8
+
+PODFILE CHECKSUM: c74234f6aac9caf27529a29bd7bc12c27a155699
+
+COCOAPODS: 1.15.2
