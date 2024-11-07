@@ -29,6 +29,7 @@
 		DB5A682C2CD7968A00F1D151 /* CartoonImagesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5A682B2CD7968A00F1D151 /* CartoonImagesTests.swift */; };
 		DB5A68362CD7968A00F1D151 /* CartoonImagesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5A68352CD7968A00F1D151 /* CartoonImagesUITests.swift */; };
 		DB5A68382CD7968A00F1D151 /* CartoonImagesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5A68372CD7968A00F1D151 /* CartoonImagesUITestsLaunchTests.swift */; };
+		DBABC6262CDC5281001FD8C0 /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC6252CDC5281001FD8C0 /* ImageProcessor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		DB5A68312CD7968A00F1D151 /* CartoonImagesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CartoonImagesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB5A68352CD7968A00F1D151 /* CartoonImagesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartoonImagesUITests.swift; sourceTree = "<group>"; };
 		DB5A68372CD7968A00F1D151 /* CartoonImagesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartoonImagesUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		DBABC6252CDC5281001FD8C0 /* ImageProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +241,7 @@
 		DB5A68192CD7968800F1D151 /* CartoonImages */ = {
 			isa = PBXGroup;
 			children = (
+				DBABC6242CDC5281001FD8C0 /* Utils */,
 				DB2F11FF2CDBA404005EF0E5 /* Network */,
 				DB2F11F82CDB9FC9005EF0E5 /* Models */,
 				DB2F11D12CD7993D005EF0E5 /* Views */,
@@ -273,6 +276,14 @@
 				DB5A68372CD7968A00F1D151 /* CartoonImagesUITestsLaunchTests.swift */,
 			);
 			path = CartoonImagesUITests;
+			sourceTree = "<group>";
+		};
+		DBABC6242CDC5281001FD8C0 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				DBABC6252CDC5281001FD8C0 /* ImageProcessor.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -520,6 +531,7 @@
 				DB2F11DB2CD7993D005EF0E5 /* AppAction.swift in Sources */,
 				DB2F11D92CD7993D005EF0E5 /* NetworkMiddleware.swift in Sources */,
 				DB2F11F62CDB9ED3005EF0E5 /* Store.swift in Sources */,
+				DBABC6262CDC5281001FD8C0 /* ImageProcessor.swift in Sources */,
 				DB2F11F42CD91107005EF0E5 /* AppReducer.swift in Sources */,
 				DB2F11FA2CDB9FC9005EF0E5 /* User.swift in Sources */,
 				DB2F12022CDBA404005EF0E5 /* NetworkService.swift in Sources */,
@@ -688,6 +700,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CartoonImages/Preview Content\"";
@@ -708,6 +721,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.roger.zhang.CartoonImages;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -720,6 +734,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CartoonImages/Preview Content\"";
@@ -740,6 +755,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.roger.zhang.CartoonImages;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

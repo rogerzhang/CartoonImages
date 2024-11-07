@@ -4,14 +4,14 @@ import UIKit
 
 enum API {
     case login(username: String, password: String)
-    case processImage(image: UIImage)
+    case processImage(image: UIImage, modelType: String)
     case fetchProducts
     case purchase(productId: String)
 }
 
 extension API: TargetType {
     var baseURL: URL {
-        return URL(string: "https://your-api-base-url.com")!
+        return URL(string: "http://192.168.1.20:8080")!
     }
     
     var path: String {
@@ -19,7 +19,7 @@ extension API: TargetType {
         case .login:
             return "/auth/login"
         case .processImage:
-            return "/image/process"
+            return "/process_image/"
         case .fetchProducts:
             return "/products"
         case .purchase:
@@ -43,12 +43,25 @@ extension API: TargetType {
                 parameters: ["username": username, "password": password],
                 encoding: JSONEncoding.default
             )
-        case let .processImage(image):
+        case let .processImage(image, modelType):
             guard let imageData = image.jpegData(compressionQuality: 0.8) else {
                 return .requestPlain
             }
-            let formData = MultipartFormData(provider: .data(imageData), name: "image", fileName: "image.jpg", mimeType: "image/jpeg")
-            return .uploadMultipart([formData])
+            
+            let formData: [MultipartFormData] = [
+                MultipartFormData(
+                    provider: .data(imageData),
+                    name: "file",
+                    fileName: "image.jpg",
+                    mimeType: "image/jpeg"
+                ),
+                MultipartFormData(
+                    provider: .data(modelType.data(using: .utf8)!),
+                    name: "modelType"
+                )
+            ]
+            
+            return .uploadMultipart(formData)
         case .fetchProducts:
             return .requestPlain
         case let .purchase(productId):
@@ -60,7 +73,9 @@ extension API: TargetType {
     }
     
     var headers: [String : String]? {
-        var headers = ["Content-Type": "application/json"]
+        var headers = [
+            "Accept": "application/json"
+        ]
         if let token = mainStore.state.authState.token {
             headers["Authorization"] = "Bearer \(token)"
         }
