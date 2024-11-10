@@ -22,13 +22,6 @@ struct ImageProcessingView: View {
                     .frame(maxHeight: UIScreen.main.bounds.height * 0.5)
                     .cornerRadius(10)
                     .shadow(radius: 5)
-                
-                // 显示图片大小
-                if let imageData = image.jpegData(compressionQuality: 1.0) {
-                    Text("Image size: \(String(format: "%.1f", Double(imageData.count) / 1024.0)) KB")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                }
             } else {
                 Image(systemName: "photo.fill")
                     .resizable()
@@ -75,29 +68,63 @@ struct ImageProcessingView: View {
                 }
                 .disabled(viewModel.isProcessing)
                 .padding(.horizontal)
-            }
-            
-            // Apple Pay 按钮
-            if viewModel.processedImage != nil {
-                Button(action: {
-                    showPaymentAlert = true
-                }) {
-                    HStack {
-                        if viewModel.paymentIsProcessing {
-                            ProgressView()
-                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                                .padding(.trailing, 5)
+                
+                // 支付入口区域
+                VStack(spacing: 12) {
+                    Divider()
+                        .padding(.vertical, 8)
+                    
+                    // 会员服务说明
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("会员服务")
+                            .font(.headline)
+                        
+                        HStack {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.green)
+                            Text("无限次数处理图片")
                         }
-                        Image(systemName: "applelogo")
-                        Text("使用 Apple Pay 支付")
+                        
+                        HStack {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.green)
+                            Text("高级滤镜效果")
+                        }
+                        
+                        HStack {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.green)
+                            Text("批量处理功能")
+                        }
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.black)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                    
+                    // 价格和支付按钮
+                    VStack(spacing: 10) {
+                        Text("¥1.99/月")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        
+                        Button(action: {
+                            showPaymentAlert = true
+                        }) {
+                            HStack {
+                                Image(systemName: "applelogo")
+                                Text("立即开通")
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.black)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                        }
+                        .disabled(viewModel.paymentIsProcessing)
+                    }
+                    .padding(.horizontal)
                 }
-                .disabled(viewModel.paymentIsProcessing)
+                .background(Color.gray.opacity(0.1))
+                .cornerRadius(15)
                 .padding(.horizontal)
             }
             
@@ -118,7 +145,7 @@ struct ImageProcessingView: View {
             }
             Button("取消", role: .cancel) { }
         } message: {
-            Text("需要支付 ¥1.99 以保存处理后的图片")
+            Text("开通会员服务 ¥1.99/月")
         }
         .alert("支付错误", isPresented: Binding(
             get: { viewModel.showPaymentError },
