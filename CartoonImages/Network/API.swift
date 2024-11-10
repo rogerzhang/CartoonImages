@@ -3,7 +3,6 @@ import Moya
 import UIKit
 
 enum API {
-    case login(username: String, password: String)
     case processImage(image: UIImage, modelType: String)
     case fetchProducts
     case purchase(productId: String)
@@ -16,8 +15,6 @@ extension API: TargetType {
     
     var path: String {
         switch self {
-        case .login:
-            return "/auth/login"
         case .processImage:
             return "/process_image/"
         case .fetchProducts:
@@ -29,36 +26,27 @@ extension API: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .login, .processImage, .purchase:
+        case .processImage:
             return .post
-        case .fetchProducts:
+        case .fetchProducts, .purchase:
             return .get
         }
     }
     
     var task: Task {
         switch self {
-        case let .login(username, password):
-            return .requestParameters(
-                parameters: ["username": username, "password": password],
-                encoding: JSONEncoding.default
-            )
         case let .processImage(image, modelType):
             guard let imageData = image.jpegData(compressionQuality: 0.8) else {
                 return .requestPlain
             }
             
-            let formData: [MultipartFormData] = [
-                MultipartFormData(
-                    provider: .data(imageData),
-                    name: "file",
-                    fileName: "image.jpg",
-                    mimeType: "image/jpeg"
-                ),
-                MultipartFormData(
-                    provider: .data(modelType.data(using: .utf8)!),
-                    name: "modelType"
-                )
+            let formData = [
+                MultipartFormData(provider: .data(imageData),
+                                name: "file",
+                                fileName: "image.jpg",
+                                mimeType: "image/jpeg"),
+                MultipartFormData(provider: .data(modelType.data(using: .utf8)!),
+                                name: "modelType")
             ]
             
             return .uploadMultipart(formData)
@@ -73,12 +61,6 @@ extension API: TargetType {
     }
     
     var headers: [String : String]? {
-        var headers = [
-            "Accept": "application/json"
-        ]
-        if let token = mainStore.state.authState.token {
-            headers["Authorization"] = "Bearer \(token)"
-        }
-        return headers
+        return ["Accept": "application/json"]
     }
 } 

@@ -1,11 +1,15 @@
+import SwiftUI
+import Combine
+import ReSwift
+import Foundation
+
 class ImageProcessingViewModel: ObservableObject {
     @Published var selectedImage: UIImage?
     @Published var processedImage: UIImage?
-    @Published var isProcessing = false
-    @Published var error: String?
-    @Published var showError = false
-    @Published var showTips = false
-    @Published var selectedModelType = "1"
+    @Published var isProcessing: Bool = false
+    @Published var paymentIsProcessing: Bool = false
+    @Published var paymentError: String? = nil
+    @Published var showPaymentError: Bool = false
     
     let modelTypes: [(id: String, name: String)] = [
         ("1", "Style 1"),
@@ -16,47 +20,42 @@ class ImageProcessingViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
-    // 监听 selectedImage 的变化
     init() {
-        $selectedImage
-            .sink { [weak self] image in
-                if let image = image {
-                    // 打印处理后的图片大小
-                    if let imageData = image.jpegData(compressionQuality: 1.0) {
-                        print("Image size: \(Double(imageData.count) / 1024.0) KB")
-                    }
-                }
+        // 订阅 Store 的状态变化
+        mainStore.subscribe(self) { subscription in
+            subscription.select { state in
+                (state.imageState, state.paymentState)
             }
-            .store(in: &cancellables)
+        }
     }
     
     func processImage() {
         guard let image = selectedImage else { return }
-        
-        isProcessing = true
-        error = nil
-        processedImage = nil
-        
-        NetworkService.shared.processImage(image, modelType: selectedModelType)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { [weak self] completion in
-                    self?.isProcessing = false
-                    if case let .failure(error) = completion {
-                        self?.error = error.localizedDescription
-                        self?.showError = true
-                    }
-                },
-                receiveValue: { [weak self] processedImage in
-                    self?.processedImage = processedImage
-                }
-            )
-            .store(in: &cancellables)
+        mainStore.dispatch(AppAction.image(.startProcessing(image, "1")))
     }
     
-    private func handleError(_ error: Error) {
-        self.error = error.localizedDescription
-        self.showError = true
-        self.showTips = error.localizedDescription.contains("face")
+    func handlePayment(amount: Decimal) {
+        mainStore.dispatch(AppAction.payment(.startPayment(amount: amount)))
+    }
+    
+    func dismissPaymentError() {
+        mainStore.dispatch(AppAction.payment(.dismissError))
+    }
+    
+    deinit {
+        mainStore.unsubscribe(self)
+    }
+}
+
+extension ImageProcessingViewModel: StoreSubscriber {
+    func newState(state: (imageState: ImageState, paymentState: PaymentState)) {
+        DispatchQueue.main.async {
+            self.selectedImage = state.imageState.selectedImage
+            self.processedImage = state.imageState.processedImage
+            self.isProcessing = state.imageState.isProcessing
+            self.paymentIsProcessing = state.paymentState.isProcessing
+            self.paymentError = state.paymentState.error
+            self.showPaymentError = state.paymentState.showError
+        }
     }
 } 

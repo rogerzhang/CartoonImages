@@ -1,15 +1,14 @@
 import SwiftUI
-import UIKit
-import Combine
 
 struct ImageProcessingView: View {
     @StateObject private var viewModel = ImageProcessingViewModel()
     @State private var showImagePicker = false
+    @State private var showPaymentAlert = false
     
     var body: some View {
         VStack(spacing: 20) {
+            // 图片显示部分
             if let image = viewModel.processedImage {
-                // 显示处理后的图片
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
@@ -17,7 +16,6 @@ struct ImageProcessingView: View {
                     .cornerRadius(10)
                     .shadow(radius: 5)
             } else if let image = viewModel.selectedImage {
-                // 显示选择的原图
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
@@ -32,7 +30,6 @@ struct ImageProcessingView: View {
                         .foregroundColor(.gray)
                 }
             } else {
-                // 显示占位图
                 Image(systemName: "photo.fill")
                     .resizable()
                     .scaledToFit()
@@ -41,168 +38,95 @@ struct ImageProcessingView: View {
                     .opacity(0.5)
             }
             
-            if viewModel.showTips {
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Tips for best results:")
-                        .font(.headline)
-                    Text("• Choose a photo with a clear, front-facing face")
-                    Text("• Ensure good lighting")
-                    Text("• Avoid photos with multiple faces")
-                    Text("• Avoid photos with face partially covered")
-                }
-                .padding()
-                .background(Color.blue.opacity(0.1))
-                .cornerRadius(10)
-                .padding(.horizontal)
-            }
-            
-            // 模型选择器
-            if viewModel.selectedImage != nil {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Select Style:")
-                        .font(.headline)
-                        .padding(.horizontal)
-                    
-                    Picker("Style", selection: $viewModel.selectedModelType) {
-                        ForEach(viewModel.modelTypes, id: \.id) { model in
-                            Text(model.name).tag(model.id)
-                        }
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .padding(.horizontal)
-                }
-            }
-            
-            VStack(spacing: 15) {
-                Button(action: {
-                    showImagePicker = true
-                }) {
-                    HStack {
-                        Image(systemName: "photo.on.rectangle")
-                        Text("Select Image")
-                    }
+            // 选择图片按钮
+            Button(action: {
+                showImagePicker = true
+            }) {
+                Text(viewModel.selectedImage == nil ? "选择图片" : "重新选择")
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
-                }
-                
-                if viewModel.selectedImage != nil {
-                    Button(action: {
-                        viewModel.processImage()
-                    }) {
-                        HStack {
-                            if viewModel.isProcessing {
-                                ProgressView()
-                                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                                    .padding(.trailing, 5)
-                            } else {
-                                Image(systemName: "wand.and.stars")
-                                    .padding(.trailing, 5)
-                            }
-                            Text(viewModel.isProcessing ? "Processing..." : "Transform Image")
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.green)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                    }
-                    .disabled(viewModel.isProcessing)
-                }
             }
             .padding(.horizontal)
             
-            if let error = viewModel.error {
-                Text(error)
-                    .foregroundColor(.red)
+            // 处理图片按钮
+            if viewModel.selectedImage != nil {
+                Button(action: {
+                    viewModel.processImage()
+                }) {
+                    HStack {
+                        if viewModel.isProcessing {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                .padding(.trailing, 5)
+                        } else {
+                            Image(systemName: "wand.and.stars")
+                                .padding(.trailing, 5)
+                        }
+                        Text(viewModel.isProcessing ? "处理中..." : "开始处理")
+                    }
+                    .frame(maxWidth: .infinity)
                     .padding()
+                    .background(Color.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                }
+                .disabled(viewModel.isProcessing)
+                .padding(.horizontal)
+            }
+            
+            // Apple Pay 按钮
+            if viewModel.processedImage != nil {
+                Button(action: {
+                    showPaymentAlert = true
+                }) {
+                    HStack {
+                        if viewModel.paymentIsProcessing {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                .padding(.trailing, 5)
+                        }
+                        Image(systemName: "applelogo")
+                        Text("使用 Apple Pay 支付")
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.black)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                }
+                .disabled(viewModel.paymentIsProcessing)
+                .padding(.horizontal)
             }
             
             Spacer()
         }
         .sheet(isPresented: $showImagePicker) {
-            ImagePicker(selectedImage: $viewModel.selectedImage)
+            ImagePicker(selectedImage: Binding(
+                get: { viewModel.selectedImage },
+                set: { viewModel.selectedImage = $0 }
+            ))
         }
-        .alert("Cannot Process Image", isPresented: $viewModel.showError) {
-            Button("OK", role: .cancel) {
-                viewModel.showTips = viewModel.error?.contains("face") == true
-            }
-        } message: {
-            Text(viewModel.error ?? "Unknown error")
-        }
-    }
-}
-
-class ImageProcessingViewModel: ObservableObject {
-    @Published var selectedImage: UIImage?
-    @Published var processedImage: UIImage?
-    @Published var isProcessing = false
-    @Published var error: String?
-    @Published var showError = false
-    @Published var showTips = false
-    @Published var selectedModelType = "1"  // 默认使用模型 1
-    
-    // 可用的模型类型及其显示名称
-    let modelTypes: [(id: String, name: String)] = [
-        ("0", "Style 0"),
-        ("1", "Style 1"),
-        ("2", "Style 2"),
-        ("3", "Style 3"),
-        ("4", "Style 4")
-    ]
-    
-    private var cancellables = Set<AnyCancellable>()
-    
-    func processImage() {
-        guard let image = selectedImage else { return }
-        
-        isProcessing = true
-        error = nil
-        processedImage = nil
-        
-        NetworkService.shared.processImage(image, modelType: selectedModelType)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { [weak self] completion in
-                    self?.isProcessing = false
-                    if case let .failure(error) = completion {
-                        self?.handleError(error)
-                    }
-                },
-                receiveValue: { [weak self] processedImage in
-                    self?.processedImage = processedImage
-                    mainStore.dispatch(AppAction.image(.processSuccess(processedImage)))
+        .alert("确认支付", isPresented: $showPaymentAlert) {
+            Button("确认") {
+                if let amount = Decimal(string: "1.99") {
+                    viewModel.handlePayment(amount: amount)
                 }
-            )
-            .store(in: &cancellables)
-    }
-    
-    private func handleError(_ error: ProcessImageError) {
-        self.error = error.userMessage
-        self.showError = true
-        
-        // 对于特定错误显示提示
-        if case .noFaceDetected = error {
-            self.showTips = true
+                showPaymentAlert = false
+            }
+            Button("取消", role: .cancel) { }
+        } message: {
+            Text("需要支付 ¥1.99 以保存处理后的图片")
         }
-        
-        mainStore.dispatch(AppAction.image(.processFailure(error)))
-    }
-    
-    // 清理函数
-    func cleanup() {
-        selectedImage = nil
-        processedImage = nil
-        error = nil
-        isProcessing = false
-    }
-}
-
-// 预览
-struct ImageProcessingView_Previews: PreviewProvider {
-    static var previews: some View {
-        ImageProcessingView()
+        .alert("支付错误", isPresented: Binding(
+            get: { viewModel.showPaymentError },
+            set: { _ in viewModel.dismissPaymentError() }
+        )) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            Text(viewModel.paymentError ?? "未知错误")
+        }
     }
 } 

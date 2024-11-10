@@ -10,14 +10,9 @@
 		392B79EEB384D4AA603A1FBF /* Pods_CartoonImagesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3343FEB1234EE9272DA26412 /* Pods_CartoonImagesTests.framework */; };
 		A3E579A77711374CA7E9B8D6 /* Pods_CartoonImages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D342CDF58A28354F783AFE /* Pods_CartoonImages.framework */; };
 		B6F13A374466FE21626F7205 /* Pods_CartoonImages_CartoonImagesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27B7592F3C5C08AEAABCB37B /* Pods_CartoonImages_CartoonImagesUITests.framework */; };
-		DB2F11D92CD7993D005EF0E5 /* NetworkMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11CC2CD7993D005EF0E5 /* NetworkMiddleware.swift */; };
-		DB2F11DA2CD7993D005EF0E5 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11CE2CD7993D005EF0E5 /* AppState.swift */; };
-		DB2F11DB2CD7993D005EF0E5 /* AppAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11D02CD7993D005EF0E5 /* AppAction.swift */; };
 		DB2F11DC2CD7993D005EF0E5 /* ImageProcessingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11D22CD7993D005EF0E5 /* ImageProcessingView.swift */; };
 		DB2F11DD2CD7993D005EF0E5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11D32CD7993D005EF0E5 /* ContentView.swift */; };
 		DB2F11E62CD7A0D5005EF0E5 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11E22CD7A0D5005EF0E5 /* ImagePicker.swift */; };
-		DB2F11F42CD91107005EF0E5 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11F32CD91107005EF0E5 /* AppReducer.swift */; };
-		DB2F11F62CDB9ED3005EF0E5 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11F52CDB9ED3005EF0E5 /* Store.swift */; };
 		DB2F11FA2CDB9FC9005EF0E5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11F92CDB9FC9005EF0E5 /* User.swift */; };
 		DB2F11FD2CDBA12A005EF0E5 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11FB2CDBA129005EF0E5 /* LoginView.swift */; };
 		DB2F11FE2CDBA12A005EF0E5 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11FC2CDBA12A005EF0E5 /* MainView.swift */; };
@@ -30,6 +25,19 @@
 		DB5A68362CD7968A00F1D151 /* CartoonImagesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5A68352CD7968A00F1D151 /* CartoonImagesUITests.swift */; };
 		DB5A68382CD7968A00F1D151 /* CartoonImagesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5A68372CD7968A00F1D151 /* CartoonImagesUITestsLaunchTests.swift */; };
 		DBABC6262CDC5281001FD8C0 /* ImageProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC6252CDC5281001FD8C0 /* ImageProcessor.swift */; };
+		DBABC6382CDC6A3B001FD8C0 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC62C2CDC6A3B001FD8C0 /* AppState.swift */; };
+		DBABC63A2CDC6A3B001FD8C0 /* AppAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC62F2CDC6A3B001FD8C0 /* AppAction.swift */; };
+		DBABC63B2CDC6A3B001FD8C0 /* ImageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC6302CDC6A3B001FD8C0 /* ImageAction.swift */; };
+		DBABC63C2CDC6A3B001FD8C0 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC6312CDC6A3B001FD8C0 /* Store.swift */; };
+		DBABC63D2CDC6A3B001FD8C0 /* ImageReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC6332CDC6A3B001FD8C0 /* ImageReducer.swift */; };
+		DBABC63E2CDC6A3B001FD8C0 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC6342CDC6A3B001FD8C0 /* AppReducer.swift */; };
+		DBABC64B2CDC6B95001FD8C0 /* NetworkMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC6422CDC6B95001FD8C0 /* NetworkMiddleware.swift */; };
+		DBABC6512CDC717C001FD8C0 /* AuthReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC6502CDC717C001FD8C0 /* AuthReducer.swift */; };
+		DBABC6542CDE5100001FD8C0 /* PaymentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC6532CDE5100001FD8C0 /* PaymentService.swift */; };
+		DBABC6562CDE5119001FD8C0 /* PaymentAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC6552CDE5119001FD8C0 /* PaymentAction.swift */; };
+		DBABC6582CDE512B001FD8C0 /* AuthAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC6572CDE512B001FD8C0 /* AuthAction.swift */; };
+		DBABC65A2CDE513D001FD8C0 /* PaymentReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC6592CDE513D001FD8C0 /* PaymentReducer.swift */; };
+		DBABC65D2CDE567F001FD8C0 /* ImageProcessingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC65C2CDE567F001FD8C0 /* ImageProcessingViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,14 +67,9 @@
 		96D342CDF58A28354F783AFE /* Pods_CartoonImages.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CartoonImages.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B835B7F1DB0DF1C6F2A073E2 /* Pods-CartoonImagesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CartoonImagesTests.debug.xcconfig"; path = "Target Support Files/Pods-CartoonImagesTests/Pods-CartoonImagesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D347D9BE7FEA0A172EC8A770 /* Pods-CartoonImages-CartoonImagesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CartoonImages-CartoonImagesUITests.release.xcconfig"; path = "Target Support Files/Pods-CartoonImages-CartoonImagesUITests/Pods-CartoonImages-CartoonImagesUITests.release.xcconfig"; sourceTree = "<group>"; };
-		DB2F11CC2CD7993D005EF0E5 /* NetworkMiddleware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMiddleware.swift; sourceTree = "<group>"; };
-		DB2F11CE2CD7993D005EF0E5 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		DB2F11D02CD7993D005EF0E5 /* AppAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppAction.swift; sourceTree = "<group>"; };
 		DB2F11D22CD7993D005EF0E5 /* ImageProcessingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessingView.swift; sourceTree = "<group>"; };
 		DB2F11D32CD7993D005EF0E5 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DB2F11E22CD7A0D5005EF0E5 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
-		DB2F11F32CD91107005EF0E5 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
-		DB2F11F52CDB9ED3005EF0E5 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		DB2F11F92CDB9FC9005EF0E5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DB2F11FB2CDBA129005EF0E5 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DB2F11FC2CDBA12A005EF0E5 /* MainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -82,6 +85,19 @@
 		DB5A68352CD7968A00F1D151 /* CartoonImagesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartoonImagesUITests.swift; sourceTree = "<group>"; };
 		DB5A68372CD7968A00F1D151 /* CartoonImagesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartoonImagesUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		DBABC6252CDC5281001FD8C0 /* ImageProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessor.swift; sourceTree = "<group>"; };
+		DBABC62C2CDC6A3B001FD8C0 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		DBABC62F2CDC6A3B001FD8C0 /* AppAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppAction.swift; sourceTree = "<group>"; };
+		DBABC6302CDC6A3B001FD8C0 /* ImageAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageAction.swift; sourceTree = "<group>"; };
+		DBABC6312CDC6A3B001FD8C0 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		DBABC6332CDC6A3B001FD8C0 /* ImageReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageReducer.swift; sourceTree = "<group>"; };
+		DBABC6342CDC6A3B001FD8C0 /* AppReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
+		DBABC6422CDC6B95001FD8C0 /* NetworkMiddleware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMiddleware.swift; sourceTree = "<group>"; };
+		DBABC6502CDC717C001FD8C0 /* AuthReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthReducer.swift; sourceTree = "<group>"; };
+		DBABC6532CDE5100001FD8C0 /* PaymentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentService.swift; sourceTree = "<group>"; };
+		DBABC6552CDE5119001FD8C0 /* PaymentAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentAction.swift; sourceTree = "<group>"; };
+		DBABC6572CDE512B001FD8C0 /* AuthAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthAction.swift; sourceTree = "<group>"; };
+		DBABC6592CDE513D001FD8C0 /* PaymentReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentReducer.swift; sourceTree = "<group>"; };
+		DBABC65C2CDE567F001FD8C0 /* ImageProcessingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessingViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,14 +151,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DB2F11CB2CD7993D005EF0E5 /* Middleware */ = {
-			isa = PBXGroup;
-			children = (
-				DB2F11CC2CD7993D005EF0E5 /* NetworkMiddleware.swift */,
-			);
-			path = Middleware;
-			sourceTree = "<group>";
-		};
 		DB2F11D12CD7993D005EF0E5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,50 +161,6 @@
 				DB2F11D32CD7993D005EF0E5 /* ContentView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		DB2F11EC2CD91058005EF0E5 /* Redux */ = {
-			isa = PBXGroup;
-			children = (
-				DB2F11CB2CD7993D005EF0E5 /* Middleware */,
-				DB2F11F02CD910DF005EF0E5 /* Action */,
-				DB2F11EF2CD910C3005EF0E5 /* Store */,
-				DB2F11EE2CD910A1005EF0E5 /* Reducer */,
-				DB2F11ED2CD91064005EF0E5 /* State */,
-			);
-			path = Redux;
-			sourceTree = "<group>";
-		};
-		DB2F11ED2CD91064005EF0E5 /* State */ = {
-			isa = PBXGroup;
-			children = (
-				DB2F11CE2CD7993D005EF0E5 /* AppState.swift */,
-			);
-			path = State;
-			sourceTree = "<group>";
-		};
-		DB2F11EE2CD910A1005EF0E5 /* Reducer */ = {
-			isa = PBXGroup;
-			children = (
-				DB2F11F32CD91107005EF0E5 /* AppReducer.swift */,
-			);
-			path = Reducer;
-			sourceTree = "<group>";
-		};
-		DB2F11EF2CD910C3005EF0E5 /* Store */ = {
-			isa = PBXGroup;
-			children = (
-				DB2F11F52CDB9ED3005EF0E5 /* Store.swift */,
-			);
-			path = Store;
-			sourceTree = "<group>";
-		};
-		DB2F11F02CD910DF005EF0E5 /* Action */ = {
-			isa = PBXGroup;
-			children = (
-				DB2F11D02CD7993D005EF0E5 /* AppAction.swift */,
-			);
-			path = Action;
 			sourceTree = "<group>";
 		};
 		DB2F11F82CDB9FC9005EF0E5 /* Models */ = {
@@ -241,11 +205,13 @@
 		DB5A68192CD7968800F1D151 /* CartoonImages */ = {
 			isa = PBXGroup;
 			children = (
+				DBABC65B2CDE567F001FD8C0 /* ViewModels */,
+				DBABC6522CDE5100001FD8C0 /* Services */,
+				DBABC6272CDC6A3B001FD8C0 /* Store */,
 				DBABC6242CDC5281001FD8C0 /* Utils */,
 				DB2F11FF2CDBA404005EF0E5 /* Network */,
 				DB2F11F82CDB9FC9005EF0E5 /* Models */,
 				DB2F11D12CD7993D005EF0E5 /* Views */,
-				DB2F11EC2CD91058005EF0E5 /* Redux */,
 				DB5A681A2CD7968800F1D151 /* CartoonImagesApp.swift */,
 				DB5A681E2CD7968A00F1D151 /* Assets.xcassets */,
 				DB5A68202CD7968A00F1D151 /* Preview Content */,
@@ -284,6 +250,72 @@
 				DBABC6252CDC5281001FD8C0 /* ImageProcessor.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		DBABC6272CDC6A3B001FD8C0 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				DBABC6282CDC6A3B001FD8C0 /* Middleware */,
+				DBABC62B2CDC6A3B001FD8C0 /* States */,
+				DBABC62E2CDC6A3B001FD8C0 /* Actions */,
+				DBABC6312CDC6A3B001FD8C0 /* Store.swift */,
+				DBABC6322CDC6A3B001FD8C0 /* Reducers */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		DBABC6282CDC6A3B001FD8C0 /* Middleware */ = {
+			isa = PBXGroup;
+			children = (
+				DBABC6422CDC6B95001FD8C0 /* NetworkMiddleware.swift */,
+			);
+			path = Middleware;
+			sourceTree = "<group>";
+		};
+		DBABC62B2CDC6A3B001FD8C0 /* States */ = {
+			isa = PBXGroup;
+			children = (
+				DBABC62C2CDC6A3B001FD8C0 /* AppState.swift */,
+			);
+			path = States;
+			sourceTree = "<group>";
+		};
+		DBABC62E2CDC6A3B001FD8C0 /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				DBABC6572CDE512B001FD8C0 /* AuthAction.swift */,
+				DBABC6552CDE5119001FD8C0 /* PaymentAction.swift */,
+				DBABC62F2CDC6A3B001FD8C0 /* AppAction.swift */,
+				DBABC6302CDC6A3B001FD8C0 /* ImageAction.swift */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
+		DBABC6322CDC6A3B001FD8C0 /* Reducers */ = {
+			isa = PBXGroup;
+			children = (
+				DBABC6592CDE513D001FD8C0 /* PaymentReducer.swift */,
+				DBABC6502CDC717C001FD8C0 /* AuthReducer.swift */,
+				DBABC6332CDC6A3B001FD8C0 /* ImageReducer.swift */,
+				DBABC6342CDC6A3B001FD8C0 /* AppReducer.swift */,
+			);
+			path = Reducers;
+			sourceTree = "<group>";
+		};
+		DBABC6522CDE5100001FD8C0 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				DBABC6532CDE5100001FD8C0 /* PaymentService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		DBABC65B2CDE567F001FD8C0 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				DBABC65C2CDE567F001FD8C0 /* ImageProcessingViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -525,20 +557,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB2F11DC2CD7993D005EF0E5 /* ImageProcessingView.swift in Sources */,
+				DBABC6582CDE512B001FD8C0 /* AuthAction.swift in Sources */,
 				DB2F11FE2CDBA12A005EF0E5 /* MainView.swift in Sources */,
+				DBABC6562CDE5119001FD8C0 /* PaymentAction.swift in Sources */,
 				DB2F11DD2CD7993D005EF0E5 /* ContentView.swift in Sources */,
 				DB5A681B2CD7968800F1D151 /* CartoonImagesApp.swift in Sources */,
-				DB2F11DB2CD7993D005EF0E5 /* AppAction.swift in Sources */,
-				DB2F11D92CD7993D005EF0E5 /* NetworkMiddleware.swift in Sources */,
-				DB2F11F62CDB9ED3005EF0E5 /* Store.swift in Sources */,
+				DBABC6542CDE5100001FD8C0 /* PaymentService.swift in Sources */,
 				DBABC6262CDC5281001FD8C0 /* ImageProcessor.swift in Sources */,
-				DB2F11F42CD91107005EF0E5 /* AppReducer.swift in Sources */,
 				DB2F11FA2CDB9FC9005EF0E5 /* User.swift in Sources */,
+				DBABC64B2CDC6B95001FD8C0 /* NetworkMiddleware.swift in Sources */,
+				DBABC63A2CDC6A3B001FD8C0 /* AppAction.swift in Sources */,
 				DB2F12022CDBA404005EF0E5 /* NetworkService.swift in Sources */,
+				DBABC63D2CDC6A3B001FD8C0 /* ImageReducer.swift in Sources */,
+				DBABC63C2CDC6A3B001FD8C0 /* Store.swift in Sources */,
 				DB2F11E62CD7A0D5005EF0E5 /* ImagePicker.swift in Sources */,
+				DBABC6512CDC717C001FD8C0 /* AuthReducer.swift in Sources */,
 				DB2F11FD2CDBA12A005EF0E5 /* LoginView.swift in Sources */,
+				DBABC6382CDC6A3B001FD8C0 /* AppState.swift in Sources */,
+				DBABC65D2CDE567F001FD8C0 /* ImageProcessingViewModel.swift in Sources */,
+				DBABC63B2CDC6A3B001FD8C0 /* ImageAction.swift in Sources */,
+				DBABC65A2CDE513D001FD8C0 /* PaymentReducer.swift in Sources */,
+				DBABC63E2CDC6A3B001FD8C0 /* AppReducer.swift in Sources */,
 				DB2F12032CDBA404005EF0E5 /* API.swift in Sources */,
-				DB2F11DA2CD7993D005EF0E5 /* AppState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -61,7 +61,7 @@ extension LoginViewModel: StoreSubscriber {
     func newState(state: AppState) {
         isLoading = false // 当收到新状态时重置loading
         if let error = state.authState.error {
-            self.error = error.localizedDescription
+            self.error = error
         }
     }
 } 
