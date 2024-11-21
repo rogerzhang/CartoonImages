@@ -10,7 +10,7 @@ enum API {
 
 extension API: TargetType {
     var baseURL: URL {
-        return URL(string: "http://192.168.1.20:8080")!
+        return URL(string: "http://121.41.44.51:8080/")!
     }
     
     var path: String {
