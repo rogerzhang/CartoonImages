@@ -197,12 +197,14 @@ class CameraController: NSObject, ObservableObject {
                     
                     if let connection = videoDataOutput.connection(with: .video) {
                         connection.videoOrientation = .portrait
+                        connection.automaticallyAdjustsVideoMirroring = false
                         connection.isVideoMirrored = (self.position == .front)
                     }
                 }
                 
                 if let connection = self.photoOutput.connection(with: .video) {
                     connection.videoOrientation = .portrait
+                    connection.automaticallyAdjustsVideoMirroring = false
                     connection.isVideoMirrored = false
                 }
                 
@@ -361,57 +363,62 @@ extension CameraController: AVCaptureVideoDataOutputSampleBufferDelegate {
     func captureOutput(_ output: AVCaptureOutput,
                       didOutput sampleBuffer: CMSampleBuffer,
                       from connection: AVCaptureConnection) {
-        guard let beautyEnabled = beautyEnabled?.wrappedValue,
-              beautyEnabled,
-              let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
         }
         
-        let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
+        // 检查是否启用美颜
+        guard let beautyEnabled = beautyEnabled?.wrappedValue,
+              beautyEnabled else {
+            // 美颜关闭时，直接返回，让原始预览显示
+            return
+        }
         
+        // 以下是美颜处理的代码
+        CVPixelBufferLockBaseAddress(pixelBuffer, .readOnly)
+        
+        let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
         var currentImage = ciImage
         
+        // 1. 磨皮效果
         if let smoothFilter = CIFilter(name: "CIBilateralFilter") {
             smoothFilter.setValue(currentImage, forKey: kCIInputImageKey)
-            smoothFilter.setValue(20.0, forKey: "inputSpatialRadius")     // 增加磨皮范围
-            smoothFilter.setValue(1.5, forKey: "inputDistanceMultiplier") // 增加磨皮强度
+            smoothFilter.setValue(10.0, forKey: "inputSpatialRadius")
+            smoothFilter.setValue(0.8, forKey: "inputDistanceMultiplier")
             if let output = smoothFilter.outputImage {
                 currentImage = output
             }
         }
         
+        // 2. 美白和调色
         if let whiteningFilter = CIFilter(name: "CIColorControls") {
             whiteningFilter.setValue(currentImage, forKey: kCIInputImageKey)
-            whiteningFilter.setValue(1.3, forKey: kCIInputBrightnessKey)  // 提高亮度
-            whiteningFilter.setValue(1.4, forKey: kCIInputSaturationKey)  // 提高饱和度
-            whiteningFilter.setValue(1.2, forKey: kCIInputContrastKey)    // 提高对比度
+            whiteningFilter.setValue(0.1, forKey: kCIInputBrightnessKey)
+            whiteningFilter.setValue(1.1, forKey: kCIInputSaturationKey)
+            whiteningFilter.setValue(1.05, forKey: kCIInputContrastKey)
             if let output = whiteningFilter.outputImage {
                 currentImage = output
             }
         }
         
+        // 3. 肤色优化
         if let skinFilter = CIFilter(name: "CIColorMatrix") {
             skinFilter.setValue(currentImage, forKey: kCIInputImageKey)
-            skinFilter.setValue(CIVector(x: 1.5, y: 0, z: 0, w: 0), forKey: "inputRVector") // 增强红色
-            skinFilter.setValue(CIVector(x: 0, y: 1.2, z: 0, w: 0), forKey: "inputGVector") // 增强绿色
+            skinFilter.setValue(CIVector(x: 1.1, y: 0, z: 0, w: 0), forKey: "inputRVector")
+            skinFilter.setValue(CIVector(x: 0, y: 1.05, z: 0, w: 0), forKey: "inputGVector")
             skinFilter.setValue(CIVector(x: 0, y: 0, z: 1.0, w: 0), forKey: "inputBVector")
             if let output = skinFilter.outputImage {
                 currentImage = output
             }
         }
         
-        if let glowFilter = CIFilter(name: "CIGaussianBlur") {
-            glowFilter.setValue(currentImage, forKey: kCIInputImageKey)
-            glowFilter.setValue(3.0, forKey: kCIInputRadiusKey)
-            if let output = glowFilter.outputImage {
-                currentImage = output
-            }
-        }
-        
+        // 渲染处理后的图像到原始 pixelBuffer
         context.render(currentImage,
                       to: pixelBuffer,
                       bounds: currentImage.extent,
                       colorSpace: CGColorSpaceCreateDeviceRGB())
+        
+        CVPixelBufferUnlockBaseAddress(pixelBuffer, .readOnly)
     }
 } 
 
