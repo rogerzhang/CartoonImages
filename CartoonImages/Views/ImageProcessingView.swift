@@ -1,9 +1,17 @@
 import SwiftUI
+import AVFoundation
 
 struct ImageProcessingView: View {
-    @StateObject private var viewModel = ImageProcessingViewModel()
+    @StateObject private var viewModel: ImageProcessingViewModel
     @State private var showImagePicker = false
+    @State private var sourceType: UIImagePickerController.SourceType = .camera
+    @State private var cameraPosition: AVCaptureDevice.Position = .front
+    @State private var beautyEnabled = true
     @State private var showPaymentAlert = false
+    
+    init(viewModel: ImageProcessingViewModel = ImageProcessingViewModel()) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         VStack(spacing: 20) {
@@ -131,10 +139,11 @@ struct ImageProcessingView: View {
             Spacer()
         }
         .sheet(isPresented: $showImagePicker) {
-            ImagePicker(selectedImage: Binding(
-                get: { viewModel.selectedImage },
-                set: { viewModel.selectedImage = $0 }
-            ))
+            CustomCameraView(
+                selectedImage: $viewModel.selectedImage,
+                isPresented: $showImagePicker,
+                beautyEnabled: $beautyEnabled
+            )
         }
         .alert("确认支付", isPresented: $showPaymentAlert) {
             Button("确认") {

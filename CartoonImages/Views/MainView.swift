@@ -2,13 +2,12 @@ import SwiftUI
 import ReSwift
 
 struct MainView: View {
-    @StateObject private var viewModel = MainViewModel()
-    
     var body: some View {
         TabView {
             ImageProcessingView()
                 .tabItem {
-                    Label("Process", systemImage: "photo")
+                    Image(systemName: "photo.fill")
+                    Text("处理图片")
                 }
             
             SettingsView()

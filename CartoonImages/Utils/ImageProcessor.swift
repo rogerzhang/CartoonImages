@@ -11,7 +11,6 @@ class ImageProcessor {
         let originalHeight = image.size.height
         let minLength = min(originalWidth, originalHeight)
         
-        let size = CGSize(width: minLength, height: minLength)
         let x = (originalWidth - minLength) / 2
         let y = (originalHeight - minLength) / 2
         
@@ -28,7 +27,7 @@ class ImageProcessor {
         var compression: CGFloat = 1.0
         let maxCompression: CGFloat = 0.1
         
-        var processedImage = resizeImage(image, maxLength: 800)
+        let processedImage = resizeImage(image, maxLength: 800)
         
         guard var imageData = processedImage.jpegData(compressionQuality: compression) else {
             return nil
