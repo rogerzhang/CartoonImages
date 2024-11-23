@@ -1,85 +1,121 @@
 import SwiftUI
 import AVFoundation
+import Photos
 
 struct CustomCameraView: View {
+    @Environment(\.dismiss) private var dismiss
     @StateObject private var camera = CameraController()
     @Binding var selectedImage: UIImage?
     @Binding var isPresented: Bool
     @Binding var beautyEnabled: Bool
+    @State private var showPhotoLibrary = false
     let backgroundColor: Color = .white.opacity(1)
     let foregroundColor: Color = Color(uiColor: .darkGray)
     let cameraButtonColor: Color = .purple
     
     var body: some View {
-        ZStack {
-            backgroundColor.edgesIgnoringSafeArea(.all)
-            
-            VStack(spacing: 0) {
-                HStack {
-                    Button(action: { isPresented = false }) {
-                        Image(systemName: "xmark")
-                            .font(.title2)
-                            .foregroundColor(foregroundColor)
-                            .padding()
-                    }
-                    
-                    Spacer()
-                    
-                    Button(action: { camera.switchCamera() }) {
-                        Image(systemName: "camera.rotate")
-                            .font(.title2)
-                            .foregroundColor(foregroundColor)
-                            .padding()
-                    }
-                }
-                .frame(height: 60)
-                .background(backgroundColor)
-                
-                GeometryReader { geometry in
-                    ZStack {
-                        CameraPreviewView(session: camera.session)
-                            .frame(width: geometry.size.width - 20,
-                                  height: geometry.size.height)
-                            .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
-                            .padding(.horizontal, 10)
-                    }
-                }
-                .frame(maxHeight: .infinity)
-                
-                HStack {
-                    Button(action: { camera.openPhotoLibrary() }) {
-                        Image(systemName: "photo.on.rectangle")
-                            .font(.title2)
-                            .foregroundColor(foregroundColor)
-                            .frame(width: 60, height: 60)
-                    }
-                    
-                    Spacer()
-                    
-                    Button(action: { camera.capturePhoto() }) {
-                        ZStack {
-                            Circle()
-                                .fill(cameraButtonColor)
-                                .frame(width: 70, height: 70)
-                            Circle()
-                                .stroke(cameraButtonColor, lineWidth: 3)
-                                .frame(width: 80, height: 80)
+        GeometryReader { geometry in
+            ZStack {
+                VStack(spacing: 0) {
+                    // 顶部工具栏
+                    HStack {
+                        Button(action: { dismiss() }) {
+                            Image(systemName: "xmark")
+                                .font(.title2)
+                                .foregroundColor(foregroundColor)
+                                .padding()
+                        }
+                        
+                        Spacer()
+                        
+                        Button(action: { camera.switchCamera() }) {
+                            Image(systemName: "camera.rotate")
+                                .font(.title2)
+                                .foregroundColor(foregroundColor)
+                                .padding()
                         }
                     }
+                    .frame(height: 44)
+//                    .padding(.top, geometry.safeAreaInsets.top)
+                    .background(backgroundColor)
                     
-                    Spacer()
-                    
-                    Button(action: { beautyEnabled.toggle() }) {
-                        Image(systemName: beautyEnabled ? "sparkles" : "wand.and.stars.inverse")
-                            .font(.title2)
-                            .foregroundColor(beautyEnabled ? .yellow : foregroundColor)
-                            .frame(width: 60, height: 60)
+                    GeometryReader { geometry in
+                        ZStack {
+                            CameraPreviewView(session: camera.session)
+                                .frame(width: geometry.size.width - 20,
+                                      height: geometry.size.height)
+                                .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
+                                .padding(.horizontal, 10)
+                        }
+                        .background(backgroundColor)
                     }
+                    .frame(maxHeight: .infinity)
+                    
+                    // 底部工具栏
+                    HStack {
+                        Button(action: { showPhotoLibrary = true }) {
+                            Image(systemName: "photo.on.rectangle")
+                                .font(.title2)
+                                .foregroundColor(foregroundColor)
+                                .frame(width: 60, height: 60)
+                        }
+                        
+                        Spacer()
+                        
+                        Button(action: { camera.capturePhoto() }) {
+                            ZStack {
+                                Circle()
+                                    .fill(cameraButtonColor)
+                                    .frame(width: 70, height: 70)
+                                Circle()
+                                    .stroke(cameraButtonColor, lineWidth: 3)
+                                    .frame(width: 80, height: 80)
+                            }
+                        }
+                        
+                        Spacer()
+                        
+                        Button(action: { beautyEnabled.toggle() }) {
+                            Image(systemName: beautyEnabled ? "sparkles" : "wand.and.stars.inverse")
+                                .font(.title2)
+                                .foregroundColor(beautyEnabled ? .yellow : foregroundColor)
+                                .frame(width: 60, height: 60)
+                        }
+                    }
+                    .padding(.horizontal, 30)
+                    .frame(height: 100)
+//                    .padding(.bottom, geometry.safeAreaInsets.bottom)
+                    .background(backgroundColor)
                 }
-                .padding(.horizontal, 30)
-                .frame(height: 100)
-                .background(backgroundColor)
+                
+                // 添加确认视图的覆盖层
+                if camera.showConfirmation {
+                    PhotoConfirmationView(
+                        selectedImage: .constant(camera.tempImage),
+                        onRetake: {
+                            // 重置状态
+                            camera.showConfirmation = false
+                            camera.tempImage = nil
+                            // 在后台线程重启相机
+                            camera.restartSession()
+                        },
+                        onConfirm: {
+                            selectedImage = camera.tempImage
+                            dismiss()
+                        }
+                    )
+                    .transition(.opacity)
+                    .animation(.easeInOut, value: camera.showConfirmation)
+                }
             }
+        }
+//        .edgesIgnoringSafeArea(.all)
+        .sheet(isPresented: $showPhotoLibrary) {
+            ImagePickerView(
+                selectedImage: $selectedImage,
+                isPresented: $showPhotoLibrary,
+                beautyEnabled: $beautyEnabled
+            )
         }
         .onAppear {
             camera.checkPermissions()
@@ -124,9 +160,11 @@ class PreviewView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         videoPreviewLayer.frame = bounds
+        
         if let connection = videoPreviewLayer.connection {
             connection.automaticallyAdjustsVideoMirroring = false
-            connection.isVideoMirrored = (videoPreviewLayer.session?.inputs.first as? AVCaptureDeviceInput)?.device.position == .front
+            let isFrontCamera = (videoPreviewLayer.session?.inputs.first as? AVCaptureDeviceInput)?.device.position == .front
+            connection.isVideoMirrored = isFrontCamera
         }
     }
 }
@@ -146,6 +184,9 @@ class CameraController: NSObject, ObservableObject {
     private var selectedImage: Binding<UIImage?>?
     private var isPresented: Binding<Bool>?
     private var beautyEnabled: Binding<Bool>?
+    
+    @Published var showConfirmation = false
+    @Published var tempImage: UIImage?
     
     override init() {
         super.init()
@@ -182,6 +223,12 @@ class CameraController: NSObject, ObservableObject {
                 
                 if self.session.canAddOutput(self.photoOutput) {
                     self.session.addOutput(self.photoOutput)
+                    
+                    if let connection = self.photoOutput.connection(with: .video) {
+                        connection.videoOrientation = .portrait
+                        connection.automaticallyAdjustsVideoMirroring = false
+                        connection.isVideoMirrored = (self.position == .front)
+                    }
                 }
                 
                 let videoDataOutput = AVCaptureVideoDataOutput()
@@ -202,13 +249,7 @@ class CameraController: NSObject, ObservableObject {
                     }
                 }
                 
-                if let connection = self.photoOutput.connection(with: .video) {
-                    connection.videoOrientation = .portrait
-                    connection.automaticallyAdjustsVideoMirroring = false
-                    connection.isVideoMirrored = false
-                }
-                
-                self.session.sessionPreset = .high
+                self.session.sessionPreset = .photo
                 self.session.commitConfiguration()
                 
                 if !self.session.isRunning {
@@ -245,12 +286,94 @@ class CameraController: NSObject, ObservableObject {
     }
     
     func capturePhoto() {
+        guard let photoOutput = session.outputs.first as? AVCapturePhotoOutput else {
+            print("Photo output not found")
+            return
+        }
+        
         let settings = AVCapturePhotoSettings()
-        photoOutput.capturePhoto(with: settings, delegate: self)
+//        settings.flashMode = .auto
+        
+        DispatchQueue.main.async {
+            photoOutput.capturePhoto(with: settings, delegate: self)
+        }
+    }
+    
+    private func getKeyWindow() -> UIWindow? {
+        if #available(iOS 15.0, *) {
+            let scenes = UIApplication.shared.connectedScenes
+            let windowScene = scenes.first as? UIWindowScene
+            return windowScene?.windows.first(where: { $0.isKeyWindow })
+        } else {
+            return UIApplication.shared.windows.first(where: { $0.isKeyWindow })
+        }
     }
     
     func openPhotoLibrary() {
-        isPresented?.wrappedValue = false
+        PHPhotoLibrary.requestAuthorization(for: .readWrite) { [weak self] status in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                switch status {
+                case .authorized, .limited:
+                    let picker = UIImagePickerController()
+                    picker.sourceType = .photoLibrary
+                    picker.delegate = self
+                    
+                    if let keyWindow = self.getKeyWindow(),
+                       let rootViewController = keyWindow.rootViewController {
+                        var topController = rootViewController
+                        while let presentedController = topController.presentedViewController {
+                            topController = presentedController
+                        }
+                        
+                        topController.present(picker, animated: true)
+                    }
+                    
+                case .denied, .restricted:
+                    let alert = UIAlertController(
+                        title: "需要相册访问权限",
+                        message: "请在设置中允许访问相册",
+                        preferredStyle: .alert
+                    )
+                    
+                    alert.addAction(UIAlertAction(title: "取消", style: .cancel))
+                    alert.addAction(UIAlertAction(title: "去设置", style: .default) { _ in
+                        if let url = URL(string: UIApplication.openSettingsURLString) {
+                            UIApplication.shared.open(url)
+                        }
+                    })
+                    
+                    if let keyWindow = self.getKeyWindow(),
+                       let rootViewController = keyWindow.rootViewController {
+                        rootViewController.present(alert, animated: true)
+                    }
+                    
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    private func presentImagePicker() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            self.isPresented?.wrappedValue = false
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                let picker = UIImagePickerController()
+                picker.sourceType = .photoLibrary
+                picker.delegate = self
+                
+                if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                   let window = scene.windows.first,
+                   let rootVC = window.rootViewController {
+                    rootVC.present(picker, animated: true)
+                }
+            }
+        }
     }
     
     func stopSession() {
@@ -274,7 +397,6 @@ class CameraController: NSObject, ObservableObject {
         let context = CIContext(options: [.useSoftwareRenderer: false])
         var currentImage = ciImage
         
-        // 1. 磨皮
         if let smoothFilter = CIFilter(name: "CIBilateralFilter") {
             smoothFilter.setValue(currentImage, forKey: kCIInputImageKey)
             smoothFilter.setValue(10.0, forKey: "inputSpatialRadius")
@@ -284,34 +406,40 @@ class CameraController: NSObject, ObservableObject {
             }
         }
         
-        // 2. 美白和调色
         if let whiteningFilter = CIFilter(name: "CIColorControls") {
             whiteningFilter.setValue(currentImage, forKey: kCIInputImageKey)
-            whiteningFilter.setValue(0.1, forKey: kCIInputBrightnessKey)    // 降低亮度避免过曝
-            whiteningFilter.setValue(1.1, forKey: kCIInputSaturationKey)    // 适度提高饱和度
-            whiteningFilter.setValue(1.05, forKey: kCIInputContrastKey)     // 轻微提高对比度
+            whiteningFilter.setValue(0.1, forKey: kCIInputBrightnessKey)
+            whiteningFilter.setValue(1.1, forKey: kCIInputSaturationKey)
+            whiteningFilter.setValue(1.05, forKey: kCIInputContrastKey)
             if let output = whiteningFilter.outputImage {
                 currentImage = output
             }
         }
         
-        // 3. 肤色优化
         if let skinFilter = CIFilter(name: "CIColorMatrix") {
             skinFilter.setValue(currentImage, forKey: kCIInputImageKey)
-            skinFilter.setValue(CIVector(x: 1.1, y: 0, z: 0, w: 0), forKey: "inputRVector")  // 轻微增强红色
-            skinFilter.setValue(CIVector(x: 0, y: 1.05, z: 0, w: 0), forKey: "inputGVector") // 轻微增强绿色
+            skinFilter.setValue(CIVector(x: 1.1, y: 0, z: 0, w: 0), forKey: "inputRVector")
+            skinFilter.setValue(CIVector(x: 0, y: 1.05, z: 0, w: 0), forKey: "inputGVector")
             skinFilter.setValue(CIVector(x: 0, y: 0, z: 1.0, w: 0), forKey: "inputBVector")
             if let output = skinFilter.outputImage {
                 currentImage = output
             }
         }
         
-        // 确保输出图像在正确的颜色空间中
         if let outputImage = context.createCGImage(currentImage, from: currentImage.extent, format: .RGBA8, colorSpace: CGColorSpaceCreateDeviceRGB()) {
             let finalImage = UIImage(cgImage: outputImage)
             completion(finalImage)
         } else {
             completion(image)
+        }
+    }
+    
+    func restartSession() {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            if !self.session.isRunning {
+                self.session.startRunning()
+            }
         }
     }
 }
@@ -320,40 +448,27 @@ extension CameraController: AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput,
                     didFinishProcessingPhoto photo: AVCapturePhoto,
                     error: Error?) {
+        session.stopRunning()
+        
         guard let imageData = photo.fileDataRepresentation(),
               var image = UIImage(data: imageData) else { return }
         
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             
-            // 1. 修正图片方向
+            // 先修正图片方向
             image = image.fixOrientation()
             
-            // 2. 应用美颜效果或直接使用原图
+            // 存储临时图片并显示确认视图
             if let beautyEnabled = self.beautyEnabled, beautyEnabled.wrappedValue {
+                // 应用美颜效果
                 self.applyBeautyFilter(to: image) { processedImage in
-                    // 3. 如果是前置摄像头，在美颜处理后进行水平翻转
-                    if self.position == .front {
-                        if let cgImage = processedImage.cgImage {
-                            let finalImage = UIImage(cgImage: cgImage, scale: processedImage.scale, orientation: .upMirrored)
-                            self.selectedImage?.wrappedValue = finalImage
-                        } else {
-                            self.selectedImage?.wrappedValue = processedImage
-                        }
-                    } else {
-                        self.selectedImage?.wrappedValue = processedImage
-                    }
-                    self.isPresented?.wrappedValue = false
+                    self.tempImage = processedImage
+                    self.showConfirmation = true
                 }
             } else {
-                // 不使用美颜时的处理逻辑保持不变
-                if self.position == .front {
-                    if let cgImage = image.cgImage {
-                        image = UIImage(cgImage: cgImage, scale: image.scale, orientation: .upMirrored)
-                    }
-                }
-                self.selectedImage?.wrappedValue = image
-                self.isPresented?.wrappedValue = false
+                self.tempImage = image
+                self.showConfirmation = true
             }
         }
     }
@@ -367,20 +482,16 @@ extension CameraController: AVCaptureVideoDataOutputSampleBufferDelegate {
             return
         }
         
-        // 检查是否启用美颜
         guard let beautyEnabled = beautyEnabled?.wrappedValue,
               beautyEnabled else {
-            // 美颜关闭时，直接返回，让原始预览显示
             return
         }
         
-        // 以下是美颜处理的代码
         CVPixelBufferLockBaseAddress(pixelBuffer, .readOnly)
         
         let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
         var currentImage = ciImage
         
-        // 1. 磨皮效果
         if let smoothFilter = CIFilter(name: "CIBilateralFilter") {
             smoothFilter.setValue(currentImage, forKey: kCIInputImageKey)
             smoothFilter.setValue(10.0, forKey: "inputSpatialRadius")
@@ -390,7 +501,6 @@ extension CameraController: AVCaptureVideoDataOutputSampleBufferDelegate {
             }
         }
         
-        // 2. 美白和调色
         if let whiteningFilter = CIFilter(name: "CIColorControls") {
             whiteningFilter.setValue(currentImage, forKey: kCIInputImageKey)
             whiteningFilter.setValue(0.1, forKey: kCIInputBrightnessKey)
@@ -401,7 +511,6 @@ extension CameraController: AVCaptureVideoDataOutputSampleBufferDelegate {
             }
         }
         
-        // 3. 肤色优化
         if let skinFilter = CIFilter(name: "CIColorMatrix") {
             skinFilter.setValue(currentImage, forKey: kCIInputImageKey)
             skinFilter.setValue(CIVector(x: 1.1, y: 0, z: 0, w: 0), forKey: "inputRVector")
@@ -412,7 +521,6 @@ extension CameraController: AVCaptureVideoDataOutputSampleBufferDelegate {
             }
         }
         
-        // 渲染处理后的图像到原始 pixelBuffer
         context.render(currentImage,
                       to: pixelBuffer,
                       bounds: currentImage.extent,
@@ -422,11 +530,9 @@ extension CameraController: AVCaptureVideoDataOutputSampleBufferDelegate {
     }
 } 
 
-// 添加 UIImage 扩展来处理镜像
 extension UIImage {
     func withHorizontallyFlippedOrientation() -> UIImage {
         if let cgImage = self.cgImage {
-            // 确保图片方向正确后再进行水平翻转
             let flippedImage = UIImage(cgImage: cgImage, scale: scale, orientation: .upMirrored)
             
             UIGraphicsBeginImageContextWithOptions(size, false, scale)
@@ -453,67 +559,149 @@ extension UIImage {
     }
 } 
 
-// 添加 UIImage 扩展来修正方向
 extension UIImage {
     func fixOrientation() -> UIImage {
         if imageOrientation == .up {
             return self
         }
         
-        var transform = CGAffineTransform.identity
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        draw(in: CGRect(origin: .zero, size: size))
+        let normalizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
         
-        switch imageOrientation {
-        case .down, .downMirrored:
-            transform = transform.translatedBy(x: size.width, y: size.height)
-            transform = transform.rotated(by: .pi)
-        case .left, .leftMirrored:
-            transform = transform.translatedBy(x: size.width, y: 0)
-            transform = transform.rotated(by: .pi/2)
-        case .right, .rightMirrored:
-            transform = transform.translatedBy(x: 0, y: size.height)
-            transform = transform.rotated(by: -.pi/2)
-        case .up, .upMirrored:
-            break
-        @unknown default:
-            break
-        }
-        
-        switch imageOrientation {
-        case .upMirrored, .downMirrored:
-            transform = transform.translatedBy(x: size.width, y: 0)
-            transform = transform.scaledBy(x: -1, y: 1)
-        case .leftMirrored, .rightMirrored:
-            transform = transform.translatedBy(x: size.height, y: 0)
-            transform = transform.scaledBy(x: -1, y: 1)
-        default:
-            break
-        }
-        
-        guard let cgImage = self.cgImage,
-              let colorSpace = cgImage.colorSpace,
-              let ctx = CGContext(data: nil,
-                                width: Int(size.width),
-                                height: Int(size.height),
-                                bitsPerComponent: cgImage.bitsPerComponent,
-                                bytesPerRow: 0,
-                                space: colorSpace,
-                                bitmapInfo: cgImage.bitmapInfo.rawValue) else {
-            return self
-        }
-        
-        ctx.concatenate(transform)
-        
-        switch imageOrientation {
-        case .left, .leftMirrored, .right, .rightMirrored:
-            ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.height, height: size.width))
-        default:
-            ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-        }
-        
-        guard let newCGImage = ctx.makeImage() else {
-            return self
-        }
-        
-        return UIImage(cgImage: newCGImage, scale: scale, orientation: .up)
+        return normalizedImage ?? self
     }
 } 
+
+extension CameraController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController,
+                             didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            if let beautyEnabled = beautyEnabled?.wrappedValue, beautyEnabled {
+                applyBeautyFilter(to: image) { processedImage in
+                    self.selectedImage?.wrappedValue = processedImage
+                }
+            } else {
+                self.selectedImage?.wrappedValue = image
+            }
+        }
+        
+        picker.dismiss(animated: true) {
+            self.isPresented?.wrappedValue = false
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+}
+
+extension UIViewController {
+    func topMostViewController() -> UIViewController {
+        if let presented = presentedViewController {
+            return presented.topMostViewController()
+        }
+        
+        if let navigation = self as? UINavigationController {
+            return navigation.visibleViewController?.topMostViewController() ?? navigation
+        }
+        
+        if let tab = self as? UITabBarController {
+            return tab.selectedViewController?.topMostViewController() ?? tab
+        }
+        
+        return self
+    }
+}
+
+struct ImagePickerView: UIViewControllerRepresentable {
+    @Binding var selectedImage: UIImage?
+    @Binding var isPresented: Bool
+    @Binding var beautyEnabled: Bool
+    
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = context.coordinator
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        let parent: ImagePickerView
+        
+        init(_ parent: ImagePickerView) {
+            self.parent = parent
+        }
+        
+        func imagePickerController(_ picker: UIImagePickerController,
+                                 didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let image = info[.originalImage] as? UIImage {
+                if parent.beautyEnabled {
+                    applyBeautyFilter(to: image) { processedImage in
+                        self.parent.selectedImage = processedImage
+                        self.parent.isPresented = false
+                    }
+                } else {
+                    parent.selectedImage = image
+                    parent.isPresented = false
+                }
+            }
+        }
+        
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            parent.isPresented = false
+        }
+        
+        private func applyBeautyFilter(to image: UIImage, completion: @escaping (UIImage) -> Void) {
+            guard let ciImage = CIImage(image: image) else {
+                completion(image)
+                return
+            }
+            
+            let context = CIContext(options: [.useSoftwareRenderer: false])
+            var currentImage = ciImage
+            
+            if let smoothFilter = CIFilter(name: "CIBilateralFilter") {
+                smoothFilter.setValue(currentImage, forKey: kCIInputImageKey)
+                smoothFilter.setValue(10.0, forKey: "inputSpatialRadius")
+                smoothFilter.setValue(0.8, forKey: "inputDistanceMultiplier")
+                if let output = smoothFilter.outputImage {
+                    currentImage = output
+                }
+            }
+            
+            if let whiteningFilter = CIFilter(name: "CIColorControls") {
+                whiteningFilter.setValue(currentImage, forKey: kCIInputImageKey)
+                whiteningFilter.setValue(0.1, forKey: kCIInputBrightnessKey)
+                whiteningFilter.setValue(1.1, forKey: kCIInputSaturationKey)
+                whiteningFilter.setValue(1.05, forKey: kCIInputContrastKey)
+                if let output = whiteningFilter.outputImage {
+                    currentImage = output
+                }
+            }
+            
+            if let skinFilter = CIFilter(name: "CIColorMatrix") {
+                skinFilter.setValue(currentImage, forKey: kCIInputImageKey)
+                skinFilter.setValue(CIVector(x: 1.1, y: 0, z: 0, w: 0), forKey: "inputRVector")
+                skinFilter.setValue(CIVector(x: 0, y: 1.05, z: 0, w: 0), forKey: "inputGVector")
+                skinFilter.setValue(CIVector(x: 0, y: 0, z: 1.0, w: 0), forKey: "inputBVector")
+                if let output = skinFilter.outputImage {
+                    currentImage = output
+                }
+            }
+            
+            if let outputImage = context.createCGImage(currentImage, from: currentImage.extent) {
+                completion(UIImage(cgImage: outputImage))
+            } else {
+                completion(image)
+            }
+        }
+    }
+}

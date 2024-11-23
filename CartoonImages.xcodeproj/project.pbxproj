@@ -39,6 +39,7 @@
 		DBABC6582CDE512B001FD8C0 /* AuthAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC6572CDE512B001FD8C0 /* AuthAction.swift */; };
 		DBABC65A2CDE513D001FD8C0 /* PaymentReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC6592CDE513D001FD8C0 /* PaymentReducer.swift */; };
 		DBABC65D2CDE567F001FD8C0 /* ImageProcessingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC65C2CDE567F001FD8C0 /* ImageProcessingViewModel.swift */; };
+		DBEE755C2CF17B6A00A833AD /* PhotoConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEE755B2CF17B6A00A833AD /* PhotoConfirmationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,7 @@
 		DBABC6572CDE512B001FD8C0 /* AuthAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthAction.swift; sourceTree = "<group>"; };
 		DBABC6592CDE513D001FD8C0 /* PaymentReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentReducer.swift; sourceTree = "<group>"; };
 		DBABC65C2CDE567F001FD8C0 /* ImageProcessingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessingViewModel.swift; sourceTree = "<group>"; };
+		DBEE755B2CF17B6A00A833AD /* PhotoConfirmationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoConfirmationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 		DB2F11D12CD7993D005EF0E5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DBEE755B2CF17B6A00A833AD /* PhotoConfirmationView.swift */,
 				DB2CEB102CF077B7006D7C52 /* CustomCameraView.swift */,
 				DB2F11FB2CDBA129005EF0E5 /* LoginView.swift */,
 				DB2F11FC2CDBA12A005EF0E5 /* MainView.swift */,
@@ -576,6 +579,7 @@
 				DB2F11E62CD7A0D5005EF0E5 /* ImagePicker.swift in Sources */,
 				DBABC6512CDC717C001FD8C0 /* AuthReducer.swift in Sources */,
 				DB2CEB112CF077B7006D7C52 /* CustomCameraView.swift in Sources */,
+				DBEE755C2CF17B6A00A833AD /* PhotoConfirmationView.swift in Sources */,
 				DB2F11FD2CDBA12A005EF0E5 /* LoginView.swift in Sources */,
 				DBABC6382CDC6A3B001FD8C0 /* AppState.swift in Sources */,
 				DBABC65D2CDE567F001FD8C0 /* ImageProcessingViewModel.swift in Sources */,
