@@ -19,7 +19,9 @@ struct CustomCameraView: View {
                 VStack(spacing: 0) {
                     // 顶部工具栏
                     HStack {
-                        Button(action: { dismiss() }) {
+                        Button(action: {
+                            dismiss()
+                        }) {
                             Image(systemName: "xmark")
                                 .font(.title2)
                                 .foregroundColor(foregroundColor)
@@ -199,29 +201,53 @@ class CameraController: NSObject, ObservableObject {
         beautyFilter?.setValue(0.3, forKey: "inputShadowAmount")
     }
     
+    private func cleanUpSession() {
+        sessionQueue.sync {
+            if session.isRunning {
+                session.stopRunning()
+            }
+            session.beginConfiguration()
+            session.inputs.forEach { session.removeInput($0) }
+            session.outputs.forEach { session.removeOutput($0) }
+            session.commitConfiguration()
+        }
+    }
+    
+    private let sessionQueue = DispatchQueue(label: "com.app.camera.sessionQueue")
+
     private func setupCamera() {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+        sessionQueue.async { [weak self] in
             guard let self = self else { return }
+
+            
+            if session.isRunning {
+                session.stopRunning()
+            }
             
             self.session.beginConfiguration()
             
+            // 清除旧的输入和输出
             self.session.inputs.forEach { self.session.removeInput($0) }
             self.session.outputs.forEach { self.session.removeOutput($0) }
             
             guard let videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera,
-                                                          for: .video,
-                                                          position: self.position) else {
+                                                            for: .video,
+                                                            position: self.position) else {
+                self.session.commitConfiguration()
                 return
             }
             
             do {
+                // 添加输入
                 let videoInput = try AVCaptureDeviceInput(device: videoDevice)
                 if self.session.canAddInput(videoInput) {
                     self.session.addInput(videoInput)
                     self.videoInput = videoInput
                 }
                 
+                // 添加照片输出
                 if self.session.canAddOutput(self.photoOutput) {
+                    
                     self.session.addOutput(self.photoOutput)
                     
                     if let connection = self.photoOutput.connection(with: .video) {
@@ -231,12 +257,13 @@ class CameraController: NSObject, ObservableObject {
                     }
                 }
                 
+                // 添加视频数据输出
                 let videoDataOutput = AVCaptureVideoDataOutput()
                 videoDataOutput.videoSettings = [
                     kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA
                 ]
                 videoDataOutput.alwaysDiscardsLateVideoFrames = true
-                videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "videoQueue"))
+                videoDataOutput.setSampleBufferDelegate(self, queue: self.sessionQueue)
                 
                 if self.session.canAddOutput(videoDataOutput) {
                     self.session.addOutput(videoDataOutput)
@@ -249,14 +276,17 @@ class CameraController: NSObject, ObservableObject {
                     }
                 }
                 
+                // 配置完成，提交更改
                 self.session.sessionPreset = .photo
                 self.session.commitConfiguration()
                 
+                // 启动会话
                 if !self.session.isRunning {
                     self.session.startRunning()
                 }
             } catch {
                 print("Error setting up camera: \(error.localizedDescription)")
+                self.session.commitConfiguration()
             }
         }
     }
@@ -378,6 +408,7 @@ class CameraController: NSObject, ObservableObject {
     
     func stopSession() {
         session.stopRunning()
+        session.inputs.forEach { session.removeInput($0) }
     }
     
     func setBindings(selectedImage: Binding<UIImage?>,
