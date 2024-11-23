@@ -40,17 +40,32 @@ struct ImageProcessingView: View {
             }
             
             // 选择图片按钮
-            Button(action: {
-                showImagePicker = true
-            }) {
+//            Button(action: {
+//                showImagePicker = true
+//            }) {
+//                Text(viewModel.selectedImage == nil ? "选择图片" : "重新选择")
+//                    .frame(maxWidth: .infinity)
+//                    .padding()
+//                    .background(Color.blue)
+//                    .foregroundColor(.white)
+//                    .cornerRadius(10)
+//            }
+//            .padding(.horizontal)
+            
+            NavigationLink(destination: {
+                CustomCameraView(
+                    selectedImage: $viewModel.selectedImage,
+                    isPresented: $showImagePicker,
+                    beautyEnabled: $beautyEnabled
+                ).navigationBarHidden(true)
+            }, label: {
                 Text(viewModel.selectedImage == nil ? "选择图片" : "重新选择")
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
-            }
-            .padding(.horizontal)
+            })
             
             // 处理图片按钮
             if viewModel.selectedImage != nil {

@@ -7,7 +7,7 @@ struct CustomCameraView: View {
     @Binding var isPresented: Bool
     @Binding var beautyEnabled: Bool
     let backgroundColor: Color = .white.opacity(1)
-    let foregroundColor: Color = .black.opacity(0.9)
+    let foregroundColor: Color = Color(uiColor: .darkGray)
     let cameraButtonColor: Color = .purple
     
     var body: some View {
