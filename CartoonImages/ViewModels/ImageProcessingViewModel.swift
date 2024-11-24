@@ -29,9 +29,9 @@ class ImageProcessingViewModel: ObservableObject {
         }
     }
     
-    func processImage() {
+    func processImage(with modelType: String) {
         guard let image = selectedImage else { return }
-        mainStore.dispatch(AppAction.image(.startProcessing(image, "1")))
+        mainStore.dispatch(AppAction.image(.startProcessing(image, modelType)))
     }
     
     func handlePayment(amount: Decimal) {
