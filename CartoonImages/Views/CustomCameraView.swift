@@ -38,7 +38,6 @@ struct CustomCameraView: View {
                         }
                     }
                     .frame(height: 44)
-//                    .padding(.top, geometry.safeAreaInsets.top)
                     .background(backgroundColor)
                     
                     GeometryReader { geometry in
@@ -86,7 +85,6 @@ struct CustomCameraView: View {
                     }
                     .padding(.horizontal, 30)
                     .frame(height: 100)
-//                    .padding(.bottom, geometry.safeAreaInsets.bottom)
                     .background(backgroundColor)
                 }
                 
@@ -112,7 +110,7 @@ struct CustomCameraView: View {
             }
         }
 //        .edgesIgnoringSafeArea(.all)
-        .sheet(isPresented: $showPhotoLibrary) {
+        .fullScreenCover(isPresented: $showPhotoLibrary) {
             ImagePickerView(
                 selectedImage: $selectedImage,
                 isPresented: $showPhotoLibrary,
@@ -655,6 +653,11 @@ struct ImagePickerView: UIViewControllerRepresentable {
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         picker.delegate = context.coordinator
+        
+        // 添加关闭按钮
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: context.coordinator, action: #selector(context.coordinator.cancel))
+        picker.navigationItem.leftBarButtonItem = cancelButton
+        
         return picker
     }
     
@@ -733,6 +736,10 @@ struct ImagePickerView: UIViewControllerRepresentable {
             } else {
                 completion(image)
             }
+        }
+        
+        @objc func cancel() {
+            parent.isPresented = false
         }
     }
 }
