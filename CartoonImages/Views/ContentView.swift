@@ -3,6 +3,7 @@ import ReSwift
 import AVFoundation
 
 struct ContentView: View {
+    @EnvironmentObject private var themeManager: ThemeManager
     @StateObject private var viewModel = ContentViewModel()
     @State private var showImagePicker = false
     @State private var sourceType: UIImagePickerController.SourceType = .camera
@@ -12,40 +13,11 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             MainView()
-//                .overlay(
-//                    VStack {
-//                        HStack {
-//                            Button(action: {
-//                                sourceType = .camera
-//                                showImagePicker = true
-//                            }) {
-//                                Image(systemName: "camera")
-//                                    .font(.title)
-//                            }
-//                            
-//                            Button(action: {
-//                                sourceType = .photoLibrary
-//                                showImagePicker = true
-//                            }) {
-//                                Image(systemName: "photo.on.rectangle")
-//                                    .font(.title)
-//                            }
-//                        }
-//                        .padding()
-//                        
-//                        Toggle("美颜", isOn: $beautyEnabled)
-//                            .padding()
-//                    }
-//                )
-//                .sheet(isPresented: $showImagePicker) {
-//                    ImagePicker(
-//                        selectedImage: $viewModel.selectedImage,
-//                        sourceType: $sourceType,
-//                        cameraPosition: $cameraPosition,
-//                        beautyEnabled: $beautyEnabled
-//                    )
-//                }
+                .background(themeManager.background)
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationBarHidden(true)
         }
+        .accentColor(themeManager.accent)
     }
 }
 

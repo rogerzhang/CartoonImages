@@ -2,6 +2,7 @@ import SwiftUI
 import AVFoundation
 
 struct ImageProcessingView: View {
+    @EnvironmentObject private var themeManager: ThemeManager
     @StateObject private var viewModel: ImageProcessingViewModel
     @State private var showImagePicker = false
     @State private var beautyEnabled = true
@@ -26,20 +27,7 @@ struct ImageProcessingView: View {
             // 底部模型选择区域
             modelSelectionArea
         }
-//        .navigationDestination(isPresented: $showImagePicker) {
-//            CustomCameraView(
-//                selectedImage: $viewModel.selectedImage,
-//                isPresented: $showImagePicker,
-//                beautyEnabled: $beautyEnabled
-//            )
-//        }
-//        .sheet(isPresented: $showImagePicker) {
-//            CustomCameraView(
-//                selectedImage: $viewModel.selectedImage,
-//                isPresented: $showImagePicker,
-//                beautyEnabled: $beautyEnabled
-//            )
-//        }
+        .background(themeManager.background)
     }
     
     // MARK: - 顶部导航栏
@@ -142,21 +130,25 @@ struct ImageProcessingView: View {
             VStack {
                 Text(modelType.name)
                     .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(selectedModelType == modelType.id ? .white : .primary)
+                    .foregroundColor(selectedModelType == modelType.id ? 
+                        themeManager.text : 
+                        themeManager.secondaryText)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 10)
                     .background(
                         RoundedRectangle(cornerRadius: 20)
-                            .fill(selectedModelType == modelType.id ? Color.blue : Color.white)
+                            .fill(selectedModelType == modelType.id ? 
+                                themeManager.accent : 
+                                themeManager.secondaryBackground)
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
-                            .stroke(Color.blue, lineWidth: 1)
+                            .stroke(themeManager.accent, lineWidth: 1)
                     )
                 
                 if viewModel.isProcessing && selectedModelType == modelType.id {
                     ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                        .progressViewStyle(CircularProgressViewStyle(tint: themeManager.accent))
                         .scaleEffect(0.7)
                 }
             }

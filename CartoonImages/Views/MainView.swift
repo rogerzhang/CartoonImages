@@ -2,6 +2,8 @@ import SwiftUI
 import ReSwift
 
 struct MainView: View {
+    @EnvironmentObject private var themeManager: ThemeManager
+    
     var body: some View {
         TabView {
             ImageProcessingView()
@@ -15,6 +17,7 @@ struct MainView: View {
                     Label("Settings", systemImage: "gear")
                 }
         }
+        .accentColor(themeManager.accent)
     }
 }
 
@@ -26,12 +29,16 @@ class MainViewModel: ObservableObject {
 
 // 添加一个简单的SettingsView
 struct SettingsView: View {
+    @EnvironmentObject private var themeManager: ThemeManager
+    
     var body: some View {
         List {
             Button("Logout") {
                 mainStore.dispatch(AppAction.auth(.logout))
             }
+            .foregroundColor(themeManager.text)
         }
+        .background(themeManager.background)
         .navigationTitle("Settings")
     }
 } 

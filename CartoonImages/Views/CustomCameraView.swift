@@ -4,27 +4,27 @@ import Photos
 
 struct CustomCameraView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var themeManager: ThemeManager
     @StateObject private var camera = CameraController()
     @Binding var selectedImage: UIImage?
     @Binding var isPresented: Bool
     @Binding var beautyEnabled: Bool
     @State private var showPhotoLibrary = false
-    let backgroundColor: Color = .white.opacity(1)
-    let foregroundColor: Color = Color(uiColor: .darkGray)
-    let cameraButtonColor: Color = .purple
     
     var body: some View {
         GeometryReader { geometry in
             ZStack {
+                themeManager.background
+                    .ignoresSafeArea()
+                
                 VStack(spacing: 0) {
-                    // 顶部工具栏
                     HStack {
                         Button(action: {
                             dismiss()
                         }) {
                             Image(systemName: "xmark")
                                 .font(.title2)
-                                .foregroundColor(foregroundColor)
+                                .foregroundColor(themeManager.foreground)
                                 .padding()
                         }
                         
@@ -33,31 +33,30 @@ struct CustomCameraView: View {
                         Button(action: { camera.switchCamera() }) {
                             Image(systemName: "camera.rotate")
                                 .font(.title2)
-                                .foregroundColor(foregroundColor)
+                                .foregroundColor(themeManager.foreground)
                                 .padding()
                         }
                     }
                     .frame(height: 44)
-                    .background(backgroundColor)
+                    .background(themeManager.background.opacity(0.8))
                     
                     GeometryReader { geometry in
                         ZStack {
                             CameraPreviewView(session: camera.session)
                                 .frame(width: geometry.size.width - 20,
                                       height: geometry.size.height)
-                                .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
+                                .clipShape(RoundedRectangle(cornerRadius: 25.0))
                                 .padding(.horizontal, 10)
                         }
-                        .background(backgroundColor)
+                        .background(themeManager.background)
                     }
                     .frame(maxHeight: .infinity)
                     
-                    // 底部工具栏
                     HStack {
                         Button(action: { showPhotoLibrary = true }) {
                             Image(systemName: "photo.on.rectangle")
                                 .font(.title2)
-                                .foregroundColor(foregroundColor)
+                                .foregroundColor(themeManager.foreground)
                                 .frame(width: 60, height: 60)
                         }
                         
@@ -66,10 +65,10 @@ struct CustomCameraView: View {
                         Button(action: { camera.capturePhoto() }) {
                             ZStack {
                                 Circle()
-                                    .fill(cameraButtonColor)
+                                    .fill(themeManager.accent)
                                     .frame(width: 70, height: 70)
                                 Circle()
-                                    .stroke(cameraButtonColor, lineWidth: 3)
+                                    .stroke(themeManager.accent, lineWidth: 3)
                                     .frame(width: 80, height: 80)
                             }
                         }
@@ -79,24 +78,21 @@ struct CustomCameraView: View {
                         Button(action: { beautyEnabled.toggle() }) {
                             Image(systemName: beautyEnabled ? "sparkles" : "wand.and.stars.inverse")
                                 .font(.title2)
-                                .foregroundColor(beautyEnabled ? .yellow : foregroundColor)
+                                .foregroundColor(beautyEnabled ? .yellow : themeManager.foreground)
                                 .frame(width: 60, height: 60)
                         }
                     }
                     .padding(.horizontal, 30)
                     .frame(height: 100)
-                    .background(backgroundColor)
+                    .background(themeManager.background.opacity(0.8))
                 }
                 
-                // 添加确认视图的覆盖层
                 if camera.showConfirmation {
                     PhotoConfirmationView(
                         selectedImage: .constant(camera.tempImage),
                         onRetake: {
-                            // 重置状态
                             camera.showConfirmation = false
                             camera.tempImage = nil
-                            // 在后台线程重启相机
                             camera.restartSession()
                         },
                         onConfirm: {
@@ -109,7 +105,6 @@ struct CustomCameraView: View {
                 }
             }
         }
-//        .edgesIgnoringSafeArea(.all)
         .fullScreenCover(isPresented: $showPhotoLibrary) {
             ImagePickerView(
                 selectedImage: $selectedImage,
