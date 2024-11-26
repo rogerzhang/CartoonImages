@@ -129,18 +129,17 @@ struct ImageProcessingView: View {
         }) {
             VStack {
                 Text(modelType.name)
-                    .font(.system(size: 14, weight: .medium))
                     .foregroundColor(selectedModelType == modelType.id ? 
                         themeManager.text : 
                         themeManager.secondaryText)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 10)
                     .background(
                         RoundedRectangle(cornerRadius: 20)
                             .fill(selectedModelType == modelType.id ? 
                                 themeManager.accent : 
                                 themeManager.secondaryBackground)
                     )
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 10)
                     .overlay(
                         RoundedRectangle(cornerRadius: 20)
                             .stroke(themeManager.accent, lineWidth: 1)

@@ -12,9 +12,10 @@ struct MainView: View {
                     Text("处理图片")
                 }
             
-            SettingsView()
+            ProfileView()
                 .tabItem {
-                    Label("Settings", systemImage: "gear")
+                    Image(systemName: "person.fill")
+                    Text("我的")
                 }
         }
         .accentColor(themeManager.accent)
@@ -26,19 +27,3 @@ class MainViewModel: ObservableObject {
         // 初始化代码，如果需要的话
     }
 }
-
-// 添加一个简单的SettingsView
-struct SettingsView: View {
-    @EnvironmentObject private var themeManager: ThemeManager
-    
-    var body: some View {
-        List {
-            Button("Logout") {
-                mainStore.dispatch(AppAction.auth(.logout))
-            }
-            .foregroundColor(themeManager.text)
-        }
-        .background(themeManager.background)
-        .navigationTitle("Settings")
-    }
-} 

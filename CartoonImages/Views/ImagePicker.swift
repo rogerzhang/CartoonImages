@@ -3,10 +3,11 @@ import UIKit
 import AVFoundation
 
 struct ImagePicker: UIViewControllerRepresentable {
+    @EnvironmentObject private var themeManager: ThemeManager
     @Binding var selectedImage: UIImage?
     @Binding var sourceType: UIImagePickerController.SourceType
-    @Binding var beautyEnabled: Bool
     @Binding var cameraPosition: AVCaptureDevice.Position
+    @Binding var beautyEnabled: Bool
     @Environment(\.presentationMode) var presentationMode
     
     init(selectedImage: Binding<UIImage?>,
@@ -23,57 +24,21 @@ struct ImagePicker: UIViewControllerRepresentable {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
         picker.sourceType = sourceType
+        picker.allowsEditing = false
         
-        if sourceType == .camera {
-            picker.cameraDevice = cameraPosition == .front ? .front : .rear
-            
-            let overlayView = UIView(frame: picker.view.bounds)
-            overlayView.backgroundColor = .clear
-            
-            let closeButton = UIButton(frame: CGRect(x: 20, y: 40, width: 44, height: 44))
-            closeButton.setImage(UIImage(systemName: "xmark"), for: .normal)
-            closeButton.tintColor = .black
-            closeButton.addTarget(context.coordinator, 
-                                action: #selector(Coordinator.dismissPicker),
-                                for: .touchUpInside)
-            
-            let switchButton = UIButton(frame: CGRect(x: picker.view.bounds.width - 64, y: 40, width: 44, height: 44))
-            switchButton.setImage(UIImage(systemName: "camera.rotate"), for: .normal)
-            switchButton.tintColor = .black
-            switchButton.addTarget(context.coordinator, 
-                                 action: #selector(Coordinator.switchCamera),
-                                 for: .touchUpInside)
-            
-            let albumButton = UIButton(frame: CGRect(x: 20, y: picker.view.bounds.height - 100, width: 44, height: 44))
-            albumButton.setImage(UIImage(systemName: "photo.on.rectangle"), for: .normal)
-            albumButton.tintColor = .black
-            albumButton.addTarget(context.coordinator, 
-                                action: #selector(Coordinator.openPhotoLibrary),
-                                for: .touchUpInside)
-            
-            let beautyButton = UIButton(frame: CGRect(x: picker.view.bounds.width - 64, y: picker.view.bounds.height - 100, width: 44, height: 44))
-            beautyButton.setImage(UIImage(systemName: beautyEnabled ? "sparkles" : "sparkles.slash"), for: .normal)
-            beautyButton.tintColor = beautyEnabled ? .systemYellow : .black
-            beautyButton.addTarget(context.coordinator, 
-                                 action: #selector(Coordinator.toggleBeauty),
-                                 for: .touchUpInside)
-            
-            overlayView.addSubview(closeButton)
-            overlayView.addSubview(switchButton)
-            overlayView.addSubview(albumButton)
-            overlayView.addSubview(beautyButton)
-            
-            picker.view.backgroundColor = .white
-            picker.cameraOverlayView = overlayView
-        }
+        // 设置导航栏颜色
+        picker.navigationBar.barTintColor = UIColor(themeManager.background)
+        picker.navigationBar.tintColor = UIColor(themeManager.accent)
+        picker.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor(themeManager.text)
+        ]
         
         return picker
     }
     
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {
-        if sourceType == .camera {
-            uiViewController.cameraDevice = cameraPosition == .front ? .front : .rear
-        }
+        // 更新UI颜色
+        uiViewController.view.backgroundColor = UIColor(themeManager.background)
     }
     
     func makeCoordinator() -> Coordinator {

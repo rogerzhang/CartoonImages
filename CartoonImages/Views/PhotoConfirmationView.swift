@@ -2,13 +2,12 @@ import SwiftUI
 
 struct PhotoConfirmationView: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var themeManager: ThemeManager
+    
     @Binding var selectedImage: UIImage?
+    
     let onRetake: () -> Void
     let onConfirm: () -> Void
-    
-    // 保持与相机界面一致的颜色
-    let backgroundColor: Color = .white.opacity(1)
-    let foregroundColor: Color = Color(uiColor: .darkGray)
     
     var body: some View {
         VStack(spacing: 0) {
@@ -17,7 +16,7 @@ struct PhotoConfirmationView: View {
                 Button(action: onRetake) {
                     Image(systemName: "xmark")
                         .font(.title2)
-                        .foregroundColor(foregroundColor)
+                        .foregroundColor(themeManager.foreground)
                         .padding()
                 }
                 
@@ -26,12 +25,12 @@ struct PhotoConfirmationView: View {
                 Button(action: onConfirm) {
                     Image(systemName: "checkmark")
                         .font(.title2)
-                        .foregroundColor(foregroundColor)
+                        .foregroundColor(themeManager.foreground)
                         .padding()
                 }
             }
             .frame(height: 44)
-            .background(backgroundColor)
+            .background(themeManager.background)
             
             // 图片预览区域
             GeometryReader { geometry in
@@ -46,7 +45,7 @@ struct PhotoConfirmationView: View {
                             .padding(.horizontal, 10)
                     }
                 }
-                .background(backgroundColor)
+                .background(themeManager.background)
             }
             .frame(maxHeight: .infinity)
             
@@ -59,7 +58,7 @@ struct PhotoConfirmationView: View {
                         Text("重拍")
                             .font(.caption)
                     }
-                    .foregroundColor(foregroundColor)
+                    .foregroundColor(themeManager.foreground)
                     .frame(width: 60, height: 60)
                 }
                 
@@ -78,8 +77,8 @@ struct PhotoConfirmationView: View {
             }
             .padding(.horizontal, 30)
             .frame(height: 100)
-            .background(backgroundColor)
+            .background(themeManager.background)
         }
-        .background(backgroundColor)
+        .background(themeManager.background)
     }
 } 
