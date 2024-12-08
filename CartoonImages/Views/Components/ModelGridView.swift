@@ -14,17 +14,17 @@ struct ModelGridView: View {
         LazyVGrid(columns: columns, spacing: 16) {
             ForEach(models, id: \.id) { model in
                 Button(action: { onModelSelected(model.id) }) {
-                    VStack {
-                        Image(systemName: "wand.and.stars")
-                            .font(.system(size: 30))
+                    ZStack {
+                        Image("test")
                             .foregroundColor(themeManager.accent)
-                            .frame(width: 60, height: 60)
-                            .background(themeManager.secondaryBackground)
-                            .clipShape(Circle())
+                            .frame(width: 120, height: 160)
                         
-                        Text(model.name)
-                            .font(.system(size: 14, weight: .medium))
-                            .foregroundColor(themeManager.text)
+                        HStack {
+                            Text(model.name)
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundColor(themeManager.text)
+                        }
+                        .background(Color.clear)
                     }
                     .frame(maxWidth: .infinity)
                     .padding()

@@ -11,25 +11,45 @@ class ImageProcessingViewModel: ObservableObject {
     @Published var paymentError: String? = nil
     @Published var showPaymentError: Bool = false
     
-    let modelTypes: [(id: String, name: String)] = [
-        ("0", "Style 0"),
-        ("1", "Style 1"),
-        ("2", "Style 2"),
-        ("3", "Style 3"),
-        ("4", "Style 4"),
-        ("5", "Style 5")
-    ]
+//    let modelTypes: [(id: String, name: String)] = [
+//        ("1", "Style 1"),
+//        ("2", "Style 2"),
+//        ("3", "Style 3"),
+//        ("4", "Style 4")
+//    ]
+    
+    let modelTypes = [
+            (id: "1", name: "动漫风格"),
+            (id: "2", name: "素描风格"),
+            (id: "3", name: "油画风格"),
+            (id: "4", name: "水彩风格"),
+            (id: "5", name: "铅笔画"),
+            (id: "6", name: "复古风格")
+        ]
+        
     
     private var cancellables = Set<AnyCancellable>()
     
-    init() {
-        // 订阅 Store 的状态变化
-        mainStore.subscribe(self) { subscription in
-            subscription.select { state in
-                (state.imageState, state.paymentState)
-            }
-        }
-    }
+//    init() {
+//        // 订阅 Store 的状态变化
+//        mainStore.subscribe(self) { subscription in
+//            subscription.select { state in
+//                (state.imageState, state.paymentState)
+//            }
+//        }
+//    }
+    
+    private var initialModelId: String?
+       
+       init(initialModelId: String? = nil) {
+           self.initialModelId = initialModelId
+           
+           mainStore.subscribe(self) { subscription in
+               subscription.select { state in
+                   (state.imageState, state.paymentState)
+               }
+           }
+       }
     
     func processImage(with modelType: String) {
         print("====[CM]Start: \(Date.now)")

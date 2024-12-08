@@ -2,6 +2,8 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject private var themeManager: ThemeManager
+    @Environment(\.presentationMode) var presentationMode
+    
     @State private var showLoginSheet = false
     @State private var showSettingsView = false
     @State private var showShareSheet = false
@@ -79,7 +81,7 @@ struct ProfileView: View {
                     }
                 }
             }
-            .navigationTitle("个人中心")
+//            .navigationTitle("个人中心")
             .sheet(isPresented: $showLoginSheet) {
                 LoginView()
             }
@@ -95,5 +97,22 @@ struct ProfileView: View {
                 Text("客服微信号：YOUR_WECHAT_ID\n工作时间：9:00-18:00")
             }
         }
+        .onAppear {
+            let backButtonAppearance = UIBarButtonItem.appearance()
+            backButtonAppearance.title = "Custom Back"
+        }
+//        .navigationBarBackButtonHidden(true)
+//        .toolbar {
+//            ToolbarItem(placement: .navigationBarLeading) {
+//                Button(action: {
+//                    presentationMode.wrappedValue.dismiss()
+//                }) {
+//                    HStack {
+//                        Image(systemName: "chevron.backward")
+//                        Text("个人中心")
+//                    }
+//                }
+//            }
+//        }
     }
 } 
