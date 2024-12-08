@@ -1,9 +1,23 @@
 import UIKit
 
+extension UIImage {
+    func size() -> Int {
+        guard let imageData = self.jpegData(compressionQuality: 1) else {
+            return 0
+        }
+        
+        let size = imageData.count
+        return size
+    }
+}
+
 class ImageProcessor {
     static func processForUpload(_ image: UIImage, maxSizeKB: Int = 100) -> UIImage? {
+        print("====start: \(Date.now)")
         let processedImage = cropToSquare(image)
-        return compressImage(processedImage, maxSizeKB: maxSizeKB)
+        let res = compressImage(processedImage, maxSizeKB: maxSizeKB)
+        print("====end: \(Date.now)")
+        return res
     }
     
     private static func cropToSquare(_ image: UIImage) -> UIImage {

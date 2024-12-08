@@ -37,6 +37,9 @@ class NetworkService {
     private init() {}
     
     func processImage(_ image: UIImage, modelType: String = "1") -> AnyPublisher<UIImage, ProcessImageError> {
+        let size = image.size()
+        print("size is \(size)")
+        
         return provider.requestPublisher(.processImage(image: image, modelType: modelType))
             .tryMap { response -> UIImage in
                 let imageResponse = try JSONDecoder().decode(ImageResponse.self, from: response.data)
@@ -46,7 +49,7 @@ class NetworkService {
                       let processedImage = UIImage(data: imageData) else {
                     throw ProcessImageError.invalidResponse
                 }
-                
+                print("====[CM]END: \(Date.now)")
                 return processedImage
             }
             .mapError { error -> ProcessImageError in

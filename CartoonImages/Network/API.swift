@@ -10,13 +10,13 @@ enum API {
 
 extension API: TargetType {
     var baseURL: URL {
-        return URL(string: "http://121.41.44.51:8080/")!
+        return URL(string: "https://holymason.cn")!
     }
     
     var path: String {
         switch self {
         case .processImage:
-            return "/process_image/"
+            return "/image/process/"
         case .fetchProducts:
             return "/products"
         case .purchase:

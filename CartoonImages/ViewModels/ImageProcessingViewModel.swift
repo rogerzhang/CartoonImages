@@ -12,10 +12,12 @@ class ImageProcessingViewModel: ObservableObject {
     @Published var showPaymentError: Bool = false
     
     let modelTypes: [(id: String, name: String)] = [
+        ("0", "Style 0"),
         ("1", "Style 1"),
         ("2", "Style 2"),
         ("3", "Style 3"),
-        ("4", "Style 4")
+        ("4", "Style 4"),
+        ("5", "Style 5")
     ]
     
     private var cancellables = Set<AnyCancellable>()
@@ -30,8 +32,9 @@ class ImageProcessingViewModel: ObservableObject {
     }
     
     func processImage(with modelType: String) {
-        guard let image = selectedImage else { return }
-        mainStore.dispatch(AppAction.image(.startProcessing(image, modelType)))
+        print("====[CM]Start: \(Date.now)")
+        guard let image = selectedImage, let img = ImageProcessor.processForUpload(image) else { return }
+        mainStore.dispatch(AppAction.image(.startProcessing(img, modelType)))
     }
     
     func handlePayment(amount: Decimal) {
