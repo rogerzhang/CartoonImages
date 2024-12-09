@@ -37,56 +37,66 @@ struct MainView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
-                topNavigationBar
-                    .padding(.horizontal)
-                    .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
-                    .background(themeManager.background)
+            ZStack(alignment: .top) {
+                // 背景色
+                themeManager.background
+                    .ignoresSafeArea()
                 
-                ScrollView {
-                    VStack(spacing: 20) {
-                        CarouselView(images: carouselImages)
-                            .frame(height: 200)
-                            .cornerRadius(12)
-                            .padding()
-                        
-                        VStack(spacing: 0) {
-                            HStack {
-                                Text("Features")
-                                    .font(.headline)
-                                    .foregroundColor(themeManager.text)
-                                    .padding(.vertical, 0)
-                                    .padding(.horizontal, 20)
-                                Spacer()
-                            }
+                // 主要内容
+                VStack(spacing: 0) {
+                    // 固定在顶部的导航栏
+                    topNavigationBar
+                        .padding(.horizontal)
+                        .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
+                        .background(themeManager.background.opacity(0.98))
+                        .zIndex(1)  // 确保导航栏在最上层
+                    
+                    // 滚动内容
+                    ScrollView {
+                        VStack(spacing: 20) {
+                            CarouselView(images: carouselImages)
+                                .frame(height: 200)
+                                .cornerRadius(12)
+                                .padding()
                             
-                            ModelGridView(models: modelTypes) { modelId in
-                                selectedModelId = modelId
-                            }
-                            .background(
-                                NavigationLink(
-                                    destination: Group {
-                                        if let modelId = selectedModelId {
-                                            let viewModel = ImageProcessingViewModel(initialModelId: modelId)
-                                            ImageProcessingView(viewModel: viewModel)
-                                        } else {
-                                            EmptyView()
-                                        }
-                                    },
-                                    isActive: Binding(
-                                        get: { selectedModelId != nil },
-                                        set: { if !$0 { selectedModelId = nil } }
-                                    )
-                                ) {
-                                    EmptyView()
+                            VStack(spacing: 0) {
+                                HStack {
+                                    Text("Features")
+                                        .font(.headline)
+                                        .foregroundColor(themeManager.text)
+                                        .padding(.vertical, 0)
+                                        .padding(.horizontal, 20)
+                                    Spacer()
                                 }
-                            )
+                                
+                                ModelGridView(models: modelTypes) { modelId in
+                                    selectedModelId = modelId
+                                }
+                                .background(
+                                    NavigationLink(
+                                        destination: Group {
+                                            if let modelId = selectedModelId {
+                                                let viewModel = ImageProcessingViewModel(initialModelId: modelId)
+                                                ImageProcessingView(viewModel: viewModel)
+                                            } else {
+                                                EmptyView()
+                                            }
+                                        },
+                                        isActive: Binding(
+                                            get: { selectedModelId != nil },
+                                            set: { if !$0 { selectedModelId = nil } }
+                                        )
+                                    ) {
+                                        EmptyView()
+                                    }
+                                )
+                            }
                         }
                     }
                 }
+                .edgesIgnoringSafeArea(.top)  // 忽略顶部安全区域
             }
-            .background(themeManager.background.ignoresSafeArea())
-            .edgesIgnoringSafeArea(.top)
+            .navigationBarHidden(true)
         }
         .sheet(isPresented: $showProfile) {
             ProfileView()
@@ -115,17 +125,22 @@ struct MainView: View {
                         .foregroundColor(themeManager.text)
                 }
             }
+            .buttonStyle(PlainButtonStyle())
+            .contentShape(Rectangle())  // 添加这行以扩大点击区域
             
             Spacer()
             
-            NavigationLink(destination: {
-                ProfileView()
-            }, label: {
+            Button {
+                showProfile = true
+            } label: {
                 Image("profiles")
                     .font(.system(size: 32))
                     .foregroundColor(themeManager.accent)
-            })
+            }
+            .buttonStyle(PlainButtonStyle())
+            .contentShape(Rectangle())  // 添加这行以扩大点击区域
         }
+        .frame(height: 44)  // 固定导航栏高度
     }
 }
 

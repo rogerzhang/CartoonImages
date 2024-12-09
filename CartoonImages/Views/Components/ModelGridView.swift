@@ -13,9 +13,10 @@ struct ModelGridView: View {
     var body: some View {
         LazyVGrid(columns: columns, spacing: 16) {
             ForEach(models, id: \.id) { model in
+                let imageName = UIImage(named: model.id) == nil ? "test" : model.id
                 Button(action: { onModelSelected(model.id) }) {
                     ZStack {
-                        Image("test")
+                        Image(imageName)
                             .foregroundColor(themeManager.accent)
                             .frame(width: 120, height: 160)
                         

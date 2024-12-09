@@ -9,7 +9,7 @@ struct ImageProcessingView: View {
     @State private var showPaymentAlert = false
     @State private var selectedModelType: String?
     
-    private let buttonSize: CGFloat = 44
+    private let buttonSize: CGFloat = 32
     
     init(viewModel: ImageProcessingViewModel = ImageProcessingViewModel()) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -17,11 +17,29 @@ struct ImageProcessingView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // 顶部导航栏
-            topNavigationBar
-            
             // 图片预览区域
             imagePreviewArea
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(destination: {
+                            PaymentView(
+                                showPaymentAlert: $showPaymentAlert,
+                                paymentIsProcessing: $viewModel.paymentIsProcessing,
+                                showPaymentError: Binding(
+                                    get: { viewModel.showPaymentError },
+                                    set: { _ in viewModel.dismissPaymentError() }
+                                ),
+                                paymentError: viewModel.paymentError,
+                                handlePayment: viewModel.handlePayment
+                            )
+                        }) {
+                            Image(systemName: "crown.fill")
+                                .font(.headline)
+                                .foregroundColor(.yellow)
+                                .frame(width: buttonSize, height: buttonSize)
+                        }
+                    }
+                }
                 .padding(.vertical)
             
             // 底部模型选择区域
@@ -86,19 +104,18 @@ struct ImageProcessingView: View {
                         isPresented: $showImagePicker,
                         beautyEnabled: $beautyEnabled
                     )
-                    .navigationBarBackButtonHidden(true)
                 }, label: {
                     VStack {
-                        Image(systemName: "camera.fill")
+                        Image("camera")
                             .font(.largeTitle)
                             .foregroundColor(.gray)
                         Text("点击拍照")
-                            .foregroundColor(.gray)
+                            .foregroundColor(themeManager.text)
                     }
                     .frame(maxWidth: .infinity, maxHeight: UIScreen.main.bounds.height * 0.6)
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.gray.opacity(0.3), lineWidth: 2)
+                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
                             .background(Color.gray.opacity(0.1))
                     )
                 })
