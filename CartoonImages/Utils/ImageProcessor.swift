@@ -12,10 +12,10 @@ extension UIImage {
 }
 
 class ImageProcessor {
-    static func processForUpload(_ image: UIImage, maxSizeKB: Int = 100) -> UIImage? {
+    static func processForUpload(_ image: UIImage, maxSizeKB: Int = 100) -> Data? {
         print("====start: \(Date.now)")
-        let processedImage = cropToSquare(image)
-        let res = compressImage(processedImage, maxSizeKB: maxSizeKB)
+//        let processedImage = cropToSquare(image)
+        let res = compressImage(image, maxSizeKB: maxSizeKB)
         print("====end: \(Date.now)")
         return res
     }
@@ -36,7 +36,7 @@ class ImageProcessor {
         return image
     }
     
-    private static func compressImage(_ image: UIImage, maxSizeKB: Int) -> UIImage? {
+    private static func compressImage(_ image: UIImage, maxSizeKB: Int) -> Data? {
         let maxSize = maxSizeKB * 1024
         var compression: CGFloat = 1.0
         let maxCompression: CGFloat = 0.1
@@ -54,7 +54,7 @@ class ImageProcessor {
             }
         }
         
-        return UIImage(data: imageData)
+        return imageData
     }
     
     private static func resizeImage(_ image: UIImage, maxLength: CGFloat) -> UIImage {

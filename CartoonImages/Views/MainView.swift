@@ -24,16 +24,14 @@ struct MainView: View {
     @State private var selectedModelId: String?
     @State private var selectedImage: UIImage?
     
+    @StateObject var viewModel: MainViewModel = .init()
+    
     // 示例数据
     private let carouselImages = ["banner1", "banner2", "banner3"]
-    private let modelTypes = [
-        (id: "1", name: "动漫风格"),
-        (id: "2", name: "素描风格"),
-        (id: "3", name: "油画风格"),
-        (id: "4", name: "水彩风格"),
-        (id: "5", name: "铅笔画"),
-        (id: "6", name: "复古风格")
-    ]
+    
+    private lazy var modelTypes = {
+        mainStore.state.imageState.modelTypes
+    }()
     
     var body: some View {
         NavigationView {
@@ -68,28 +66,30 @@ struct MainView: View {
                                         .padding(.horizontal, 20)
                                     Spacer()
                                 }
-                                
-                                ModelGridView(models: modelTypes) { modelId in
-                                    selectedModelId = modelId
-                                }
-                                .background(
-                                    NavigationLink(
-                                        destination: Group {
-                                            if let modelId = selectedModelId {
-                                                let viewModel = ImageProcessingViewModel(initialModelId: modelId)
-                                                ImageProcessingView(viewModel: viewModel)
-                                            } else {
-                                                EmptyView()
-                                            }
-                                        },
-                                        isActive: Binding(
-                                            get: { selectedModelId != nil },
-                                            set: { if !$0 { selectedModelId = nil } }
-                                        )
-                                    ) {
-                                        EmptyView()
+                                if let modelTypes = viewModel.modelTypes {
+                                    ModelGridView(models: modelTypes) { model in
+                                        selectedModelId = model.id
+                                        mainStore.dispatch(AppAction.image(.selectImageModelType(model)))
                                     }
-                                )
+                                    .background(
+                                        NavigationLink(
+                                            destination: Group {
+                                                if let modelId = selectedModelId {
+                                                    let viewModel = ImageProcessingViewModel(initialModelId: modelId)
+                                                    ImageProcessingView(viewModel: viewModel)
+                                                } else {
+                                                    EmptyView()
+                                                }
+                                            },
+                                            isActive: Binding(
+                                                get: { selectedModelId != nil },
+                                                set: { if !$0 { selectedModelId = nil } }
+                                            )
+                                        ) {
+                                            EmptyView()
+                                        }
+                                    )
+                                }
                             }
                         }
                     }
@@ -145,8 +145,22 @@ struct MainView: View {
 }
 
 class MainViewModel: ObservableObject {
+    @Published var modelTypes: [ImageModelType]?
+    
     init() {
-        // 初始化代码，如果需要的话
+        mainStore.subscribe(self) { subscription in
+            subscription.select { state in
+                (state.imageState, state.paymentState)
+            }
+        }
+    }
+}
+
+extension MainViewModel: StoreSubscriber {
+    func newState(state: (imageState: ImageState, paymentState: PaymentState)) {
+        DispatchQueue.main.async {
+            self.modelTypes = state.imageState.modelTypes
+        }
     }
 }
 

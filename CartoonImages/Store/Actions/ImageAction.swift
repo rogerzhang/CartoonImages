@@ -2,8 +2,9 @@ import UIKit
 import Foundation
 
 enum ImageAction {
+    case selectImageModelType(ImageModelType)
     case selectImage(UIImage?)
-    case startProcessing(UIImage, String)
+    case startProcessing(Data, String)
     case processSuccess(UIImage)
     case processFailure(Error)
     case updateProcessingStatus(Bool)

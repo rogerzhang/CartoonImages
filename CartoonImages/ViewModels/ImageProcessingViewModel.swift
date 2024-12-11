@@ -10,51 +10,26 @@ class ImageProcessingViewModel: ObservableObject {
     @Published var paymentIsProcessing: Bool = false
     @Published var paymentError: String? = nil
     @Published var showPaymentError: Bool = false
-    
-//    let modelTypes: [(id: String, name: String)] = [
-//        ("1", "Style 1"),
-//        ("2", "Style 2"),
-//        ("3", "Style 3"),
-//        ("4", "Style 4")
-//    ]
-    
-    let modelTypes = [
-            (id: "1", name: "动漫风格"),
-            (id: "2", name: "素描风格"),
-            (id: "3", name: "油画风格"),
-            (id: "4", name: "水彩风格"),
-            (id: "5", name: "铅笔画"),
-            (id: "6", name: "复古风格")
-        ]
-        
+    @Published var modelTypes: [ImageModelType] = []
+    @Published var currentModelType: ImageModelType?
     
     private var cancellables = Set<AnyCancellable>()
-    
-//    init() {
-//        // 订阅 Store 的状态变化
-//        mainStore.subscribe(self) { subscription in
-//            subscription.select { state in
-//                (state.imageState, state.paymentState)
-//            }
-//        }
-//    }
-    
     private var initialModelId: String?
        
-       init(initialModelId: String? = nil) {
-           self.initialModelId = initialModelId
-           
-           mainStore.subscribe(self) { subscription in
-               subscription.select { state in
-                   (state.imageState, state.paymentState)
-               }
-           }
-       }
+    init(initialModelId: String? = nil) {
+        self.initialModelId = initialModelId
+        
+        mainStore.subscribe(self) { subscription in
+            subscription.select { state in
+                (state.imageState, state.paymentState)
+            }
+        }
+    }
     
     func processImage(with modelType: String) {
         print("====[CM]Start: \(Date.now)")
-        guard let image = selectedImage, let img = ImageProcessor.processForUpload(image) else { return }
-        mainStore.dispatch(AppAction.image(.startProcessing(img, modelType)))
+        guard let image = selectedImage, let imageData = ImageProcessor.processForUpload(image) else { return }
+        mainStore.dispatch(AppAction.image(.startProcessing(imageData, modelType)))
     }
     
     func handlePayment(amount: Decimal) {
@@ -79,6 +54,8 @@ extension ImageProcessingViewModel: StoreSubscriber {
             self.paymentIsProcessing = state.paymentState.isProcessing
             self.paymentError = state.paymentState.error
             self.showPaymentError = state.paymentState.showError
+            self.modelTypes = state.imageState.modelTypes ?? []
+            self.currentModelType = state.imageState.currentModelType
         }
     }
 } 

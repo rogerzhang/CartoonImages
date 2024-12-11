@@ -36,11 +36,10 @@ class NetworkService {
     
     private init() {}
     
-    func processImage(_ image: UIImage, modelType: String = "1") -> AnyPublisher<UIImage, ProcessImageError> {
-        let size = image.size()
-        print("size is \(size)")
-        
-        return provider.requestPublisher(.processImage(image: image, modelType: modelType))
+    func processImage(_ imageData: Data, modelType: String = "1") -> AnyPublisher<UIImage, ProcessImageError> {
+        let size = imageData.count
+        print("size === \(size / 1000)KB")
+        return provider.requestPublisher(.processImage(imageData: imageData, modelType: modelType))
             .tryMap { response -> UIImage in
                 let imageResponse = try JSONDecoder().decode(ImageResponse.self, from: response.data)
                 

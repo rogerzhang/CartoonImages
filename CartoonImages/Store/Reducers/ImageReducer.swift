@@ -4,6 +4,8 @@ func imageReducer(action: ImageAction, state: ImageState) -> ImageState {
     var newState = state
     
     switch action {
+    case let .selectImageModelType(modelType):
+        newState.currentModelType = modelType
     case let .selectImage(image):
         newState.selectedImage = image
         newState.processedImage = nil

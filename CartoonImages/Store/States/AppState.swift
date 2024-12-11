@@ -15,6 +15,8 @@ struct ImageState {
     var error: String?
     var showError: Bool = false
     var showTips: Bool = false
+    var modelTypes: [ImageModelType]?
+    var currentModelType: ImageModelType?
 }
 
 // Payment State
@@ -34,6 +36,14 @@ struct AppState {
     init() {
         self.authState = AuthState()
         self.imageState = ImageState()
+        self.imageState.modelTypes = [
+            .init(id: "1", name: "动漫风格", imageName: "1"),
+            .init(id: "2", name: "素描风格", imageName: "2"),
+            .init(id: "3", name: "油画风格", imageName: "3"),
+            .init(id: "4", name: "水彩风格", imageName: "4"),
+            .init(id: "5", name: "铅笔画", imageName: "5"),
+            .init(id: "6", name: "复古风格", imageName: "6"),
+        ]
         self.paymentState = PaymentState()
     }
 } 

@@ -28,10 +28,10 @@ let networkMiddleware: Middleware<AppState> = { dispatch, getState in
                 
             case let .image(imageAction):
                 switch imageAction {
-                case let .startProcessing(image, modelType):
+                case let .startProcessing(imageData, modelType):
                     dispatch(AppAction.image(.updateProcessingStatus(true)))
                     
-                    NetworkService.shared.processImage(image, modelType: modelType)
+                    NetworkService.shared.processImage(imageData, modelType: modelType)
                         .receive(on: DispatchQueue.main)
                         .sink(
                             receiveCompletion: { completion in

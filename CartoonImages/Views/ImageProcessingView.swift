@@ -43,9 +43,10 @@ struct ImageProcessingView: View {
                 .padding(.vertical)
             
             // 底部模型选择区域
-            modelSelectionArea
+//            modelSelectionArea
         }
         .background(themeManager.background)
+        .environmentObject(viewModel)
     }
     
     // MARK: - 顶部导航栏
@@ -98,45 +99,25 @@ struct ImageProcessingView: View {
                     .cornerRadius(10)
                     .shadow(radius: 5)
             } else {
-                NavigationLink(destination: {
-                    CustomCameraView(
-                        selectedImage: $viewModel.selectedImage,
-                        isPresented: $showImagePicker,
-                        beautyEnabled: $beautyEnabled
-                    )
-                }, label: {
-                    VStack {
-                        Image("camera")
-                            .font(.largeTitle)
-                            .foregroundColor(.gray)
-                        Text("点击拍照")
-                            .foregroundColor(themeManager.text)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: UIScreen.main.bounds.height * 0.6)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                            .background(Color.gray.opacity(0.1))
-                    )
-                })
+                ImageModelTypeSelectionView()
             }
         }
         .padding(.horizontal)
     }
     
     // MARK: - 底部模型选择区域
-    private var modelSelectionArea: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack(spacing: 15) {
-                ForEach(viewModel.modelTypes, id: \.id) { modelType in
-                    modelTypeButton(for: modelType)
-                }
-            }
-            .padding()
-        }
-        .frame(height: 100)
-        .background(Color.gray.opacity(0.1))
-    }
+//    private var modelSelectionArea: some View {
+//        ScrollView(.horizontal, showsIndicators: false) {
+//            LazyHStack(spacing: 15) {
+//                ForEach(viewModel.modelTypes, id: \.id) { modelType in
+//                    modelTypeButton(for: modelType)
+//                }
+//            }
+//            .padding()
+//        }
+//        .frame(height: 100)
+//        .background(Color.gray.opacity(0.1))
+//    }
     
     private func modelTypeButton(for modelType: (id: String, name: String)) -> some View {
         Button(action: {

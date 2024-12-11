@@ -3,7 +3,7 @@ import Moya
 import UIKit
 
 enum API {
-    case processImage(image: UIImage, modelType: String)
+    case processImage(imageData: Data, modelType: String)
     case fetchProducts
     case purchase(productId: String)
 }
@@ -11,6 +11,7 @@ enum API {
 extension API: TargetType {
     var baseURL: URL {
         return URL(string: "https://holymason.cn")!
+//        return URL(string: "https://test.holymason.cn")!
     }
     
     var path: String {
@@ -35,10 +36,10 @@ extension API: TargetType {
     
     var task: Task {
         switch self {
-        case let .processImage(image, modelType):
-            guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-                return .requestPlain
-            }
+        case let .processImage(imageData, modelType):
+//            guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+//                return .requestPlain
+//            }
             
             let formData = [
                 MultipartFormData(provider: .data(imageData),
