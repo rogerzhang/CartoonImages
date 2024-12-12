@@ -21,6 +21,7 @@
 		DB2F12022CDBA404005EF0E5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F12002CDBA404005EF0E5 /* NetworkService.swift */; };
 		DB2F12032CDBA404005EF0E5 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F12012CDBA404005EF0E5 /* API.swift */; };
 		DB37E12E2D087F0100319037 /* ImageModelTypeSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB37E12D2D087F0100319037 /* ImageModelTypeSelectionView.swift */; };
+		DB37E1302D09DA1000319037 /* PaymentPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB37E12F2D09DA1000319037 /* PaymentPlanView.swift */; };
 		DB5A681B2CD7968800F1D151 /* CartoonImagesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5A681A2CD7968800F1D151 /* CartoonImagesApp.swift */; };
 		DB5A681F2CD7968A00F1D151 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB5A681E2CD7968A00F1D151 /* Assets.xcassets */; };
 		DB5A68222CD7968A00F1D151 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB5A68212CD7968A00F1D151 /* Preview Assets.xcassets */; };
@@ -90,6 +91,7 @@
 		DB2F12002CDBA404005EF0E5 /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		DB2F12012CDBA404005EF0E5 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		DB37E12D2D087F0100319037 /* ImageModelTypeSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModelTypeSelectionView.swift; sourceTree = "<group>"; };
+		DB37E12F2D09DA1000319037 /* PaymentPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentPlanView.swift; sourceTree = "<group>"; };
 		DB5A68172CD7968800F1D151 /* CartoonImages.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CartoonImages.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB5A681A2CD7968800F1D151 /* CartoonImagesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartoonImagesApp.swift; sourceTree = "<group>"; };
 		DB5A681E2CD7968A00F1D151 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 				DBFCDD832CF5B6690067D73C /* ModelGridView.swift */,
 				DBFCDD842CF5B6690067D73C /* CarouselView.swift */,
 				DB37E12D2D087F0100319037 /* ImageModelTypeSelectionView.swift */,
+				DB37E12F2D09DA1000319037 /* PaymentPlanView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -618,6 +621,7 @@
 				DBFCDD7E2CF407870067D73C /* ProfileView.swift in Sources */,
 				DB2F12022CDBA404005EF0E5 /* NetworkService.swift in Sources */,
 				DBABC63D2CDC6A3B001FD8C0 /* ImageReducer.swift in Sources */,
+				DB37E1302D09DA1000319037 /* PaymentPlanView.swift in Sources */,
 				DBABC63C2CDC6A3B001FD8C0 /* Store.swift in Sources */,
 				DB2F11E62CD7A0D5005EF0E5 /* ImagePicker.swift in Sources */,
 				DBABC6512CDC717C001FD8C0 /* AuthReducer.swift in Sources */,
