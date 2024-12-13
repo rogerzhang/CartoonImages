@@ -10,7 +10,7 @@ struct SettingsView: View {
             // Header Section
             Section {
                 HStack {
-                    Image("AppIcon")
+                    Image("image2")
                         .resizable()
                         .frame(width: 60, height: 60)
                         .cornerRadius(12)

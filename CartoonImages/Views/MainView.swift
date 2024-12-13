@@ -1,22 +1,6 @@
 import SwiftUI
 import ReSwift
 
-extension View {
-    /// 一个自定义modifier简化 navigationLink 的书写
-    func navigationLink<Destination: View>(
-        destination: @escaping () -> Destination,
-        isActive: Binding<Bool>
-    ) -> some View {
-        background(
-            NavigationLink(
-                destination: destination(),
-                isActive: isActive,
-                label: { EmptyView() }
-            )
-        )
-    }
-}
-
 struct MainView: View {
     @EnvironmentObject private var themeManager: ThemeManager
     @State private var showProfile = false
@@ -34,72 +18,64 @@ struct MainView: View {
     }()
     
     var body: some View {
-        NavigationView {
-            ZStack(alignment: .top) {
-                // 背景色
-                themeManager.background
-                    .ignoresSafeArea()
+        ZStack(alignment: .top) {
+            themeManager.background
+                .ignoresSafeArea()
+            
+            VStack(spacing: 0) {
+                // 固定在顶部的导航栏
+                topNavigationBar
+                    .padding(.horizontal)
+                    .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
+                    .background(themeManager.background.opacity(0.98))
+                    .zIndex(1)  // 确保导航栏在最上层
                 
-                // 主要内容
-                VStack(spacing: 0) {
-                    // 固定在顶部的导航栏
-                    topNavigationBar
-                        .padding(.horizontal)
-                        .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
-                        .background(themeManager.background.opacity(0.98))
-                        .zIndex(1)  // 确保导航栏在最上层
-                    
-                    // 滚动内容
-                    ScrollView {
-                        VStack(spacing: 20) {
-                            CarouselView(images: carouselImages)
-                                .frame(height: 200)
-                                .cornerRadius(12)
-                                .padding()
-                            
-                            VStack(spacing: 0) {
-                                HStack {
-                                    Text("Features")
-                                        .font(.headline)
-                                        .foregroundColor(themeManager.text)
-                                        .padding(.vertical, 0)
-                                        .padding(.horizontal, 20)
-                                    Spacer()
+                // 滚动内容
+                ScrollView {
+                    VStack(spacing: 20) {
+                        CarouselView(images: carouselImages)
+                            .frame(height: 200)
+                            .cornerRadius(12)
+                            .padding()
+                        
+                        VStack(spacing: 0) {
+                            HStack {
+                                Text("Features")
+                                    .font(.headline)
+                                    .foregroundColor(themeManager.text)
+                                    .padding(.vertical, 0)
+                                    .padding(.horizontal, 20)
+                                Spacer()
+                            }
+                            if let modelTypes = viewModel.modelTypes {
+                                ModelGridView(models: modelTypes) { model in
+                                    selectedModelId = model.id
+                                    mainStore.dispatch(AppAction.image(.selectImageModelType(model)))
                                 }
-                                if let modelTypes = viewModel.modelTypes {
-                                    ModelGridView(models: modelTypes) { model in
-                                        selectedModelId = model.id
-                                        mainStore.dispatch(AppAction.image(.selectImageModelType(model)))
+                                .background(
+                                    NavigationLink(
+                                        destination: Group {
+                                            if let modelId = selectedModelId {
+                                                let viewModel = ImageProcessingViewModel(initialModelId: modelId)
+                                                ImageProcessingView(viewModel: viewModel)
+                                            } else {
+                                                EmptyView()
+                                            }
+                                        },
+                                        isActive: Binding(
+                                            get: { selectedModelId != nil },
+                                            set: { if !$0 { selectedModelId = nil } }
+                                        )
+                                    ) {
+                                        EmptyView()
                                     }
-                                    .background(
-                                        NavigationLink(
-                                            destination: Group {
-                                                if let modelId = selectedModelId {
-                                                    let viewModel = ImageProcessingViewModel(initialModelId: modelId)
-                                                    ImageProcessingView(viewModel: viewModel)
-                                                } else {
-                                                    EmptyView()
-                                                }
-                                            },
-                                            isActive: Binding(
-                                                get: { selectedModelId != nil },
-                                                set: { if !$0 { selectedModelId = nil } }
-                                            )
-                                        ) {
-                                            EmptyView()
-                                        }
-                                    )
-                                }
+                                )
                             }
                         }
                     }
                 }
-                .edgesIgnoringSafeArea(.top)  // 忽略顶部安全区域
             }
-            .navigationBarHidden(true)
-        }
-        .sheet(isPresented: $showProfile) {
-            ProfileView()
+            .edgesIgnoringSafeArea(.top)
         }
         .sheet(isPresented: $showPayment) {
             PaymentView(
@@ -109,6 +85,9 @@ struct MainView: View {
                 paymentError: nil,
                 handlePayment: { _ in }
             )
+        }
+        .sheet(isPresented: $showProfile) {
+            ProfileView()
         }
     }
     
@@ -134,11 +113,20 @@ struct MainView: View {
                 showProfile = true
             } label: {
                 Image("profiles")
-                    .font(.system(size: 32))
+                    .font(.system(size: 44))
                     .foregroundColor(themeManager.accent)
             }
             .buttonStyle(PlainButtonStyle())
             .contentShape(Rectangle())  // 添加这行以扩大点击区域
+  
+            
+//            NavigationLink(destination: {
+//                ProfileView()
+//            }) {
+//                Image("profiles")
+//                    .font(.system(size: 44))
+//                    .foregroundColor(themeManager.accent)
+//            }
         }
         .frame(height: 44)  // 固定导航栏高度
     }
