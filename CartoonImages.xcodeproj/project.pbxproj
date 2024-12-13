@@ -42,6 +42,7 @@
 		DBABC6582CDE512B001FD8C0 /* AuthAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC6572CDE512B001FD8C0 /* AuthAction.swift */; };
 		DBABC65A2CDE513D001FD8C0 /* PaymentReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC6592CDE513D001FD8C0 /* PaymentReducer.swift */; };
 		DBABC65D2CDE567F001FD8C0 /* ImageProcessingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC65C2CDE567F001FD8C0 /* ImageProcessingViewModel.swift */; };
+		DBDE9CC02D0B3354005EBAFC /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDE9CBF2D0B3354005EBAFC /* UserProfileView.swift */; };
 		DBEE755C2CF17B6A00A833AD /* PhotoConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEE755B2CF17B6A00A833AD /* PhotoConfirmationView.swift */; };
 		DBFCDD772CF2DEEA0067D73C /* PaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */; };
 		DBFCDD7B2CF374EB0067D73C /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFCDD7A2CF374EB0067D73C /* ThemeManager.swift */; };
@@ -115,6 +116,7 @@
 		DBABC6572CDE512B001FD8C0 /* AuthAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthAction.swift; sourceTree = "<group>"; };
 		DBABC6592CDE513D001FD8C0 /* PaymentReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentReducer.swift; sourceTree = "<group>"; };
 		DBABC65C2CDE567F001FD8C0 /* ImageProcessingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessingViewModel.swift; sourceTree = "<group>"; };
+		DBDE9CBF2D0B3354005EBAFC /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		DBEE755B2CF17B6A00A833AD /* PhotoConfirmationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoConfirmationView.swift; sourceTree = "<group>"; };
 		DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentView.swift; sourceTree = "<group>"; };
 		DBFCDD7A2CF374EB0067D73C /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				DBFCDD822CF5B6690067D73C /* Components */,
 				DBFCDD802CF408410067D73C /* ShareSheet.swift */,
 				DBFCDD7C2CF407870067D73C /* ProfileView.swift */,
+				DBDE9CBF2D0B3354005EBAFC /* UserProfileView.swift */,
 				DBFCDD7D2CF407870067D73C /* SettingsView.swift */,
 				DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */,
 				DBEE755B2CF17B6A00A833AD /* PhotoConfirmationView.swift */,
@@ -623,6 +626,7 @@
 				DBABC63D2CDC6A3B001FD8C0 /* ImageReducer.swift in Sources */,
 				DB37E1302D09DA1000319037 /* PaymentPlanView.swift in Sources */,
 				DBABC63C2CDC6A3B001FD8C0 /* Store.swift in Sources */,
+				DBDE9CC02D0B3354005EBAFC /* UserProfileView.swift in Sources */,
 				DB2F11E62CD7A0D5005EF0E5 /* ImagePicker.swift in Sources */,
 				DBABC6512CDC717C001FD8C0 /* AuthReducer.swift in Sources */,
 				DBFCDD7F2CF407870067D73C /* SettingsView.swift in Sources */,

@@ -1,5 +1,23 @@
 import SwiftUI
 
+struct CustomLabelStyle: LabelStyle {
+    var imageColor: Color
+    var textColor: Color
+    var fontSize: CGFloat = 20
+    var spacing: CGFloat = 15
+
+    func makeBody(configuration: Configuration) -> some View {
+        HStack(spacing: spacing) {
+            configuration.icon
+                .foregroundColor(imageColor)
+                .font(.system(size: fontSize)) // 设置图标大小
+            configuration.title
+                .foregroundColor(textColor)
+                .font(.system(size: 17)) // 设置文字大小
+        }
+    }
+}
+
 struct ProfileView: View {
     @EnvironmentObject private var themeManager: ThemeManager
     @Environment(\.presentationMode) var presentationMode
@@ -55,8 +73,9 @@ struct ProfileView: View {
                             UIApplication.shared.open(url)
                         }
                     }) {
-                        Label("给我们评分", systemImage: "star.fill")
-                            .foregroundColor(themeManager.text)
+                        Label("给我们评分", systemImage: "star")
+                            .labelStyle(CustomLabelStyle(imageColor: themeManager.accent, textColor: themeManager.text))
+//                            .foregroundColor(themeManager.text)
                     }
                     
                     Button(action: { showShareSheet = true }) {
@@ -68,7 +87,7 @@ struct ProfileView: View {
                 // Section 3: 客服
                 Section {
                     Button(action: { showContactSheet = true }) {
-                        Label("联系客服", systemImage: "message.fill")
+                        Label("联系客服", systemImage: "message")
                             .foregroundColor(themeManager.text)
                     }
                 }
