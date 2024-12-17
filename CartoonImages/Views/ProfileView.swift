@@ -102,7 +102,8 @@ struct ProfileView: View {
             }
 //            .navigationTitle("个人中心")
             .sheet(isPresented: $showLoginSheet) {
-                LoginView()
+//                LoginView()
+                VerificationLoginView()
             }
             .sheet(isPresented: $showShareSheet) {
                 ShareSheet(items: ["分享文本内容", URL(string: "https://your-app-url.com")!])

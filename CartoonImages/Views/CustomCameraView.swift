@@ -5,6 +5,7 @@ import Photos
 struct CustomCameraView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var themeManager: ThemeManager
+    @EnvironmentObject private var viewModel: ImageProcessingViewModel
     @StateObject private var camera = CameraController()
     @Binding var selectedImage: UIImage?
     @Binding var isPresented: Bool
@@ -98,6 +99,10 @@ struct CustomCameraView: View {
                         onConfirm: {
                             selectedImage = camera.tempImage
                             dismiss()
+                            guard let model = viewModel.currentModelType else {
+                                return
+                            }
+                            viewModel.processImage(with: model.id)
                         }
                     )
                     .transition(.opacity)

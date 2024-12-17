@@ -11,7 +11,7 @@ struct ImageModelTypeSelectionView: View {
     @State private var currentIndex = mainStore.state.imageState.currentModelType?.id ?? "0"
     @State private var beautyEnabled = true
     @State private var showImagePicker = false
-    @State private var showCameraView = false
+    @State var showCameraView: Bool = false
     
     @EnvironmentObject var viewModel: ImageProcessingViewModel
     @EnvironmentObject private var themeManager: ThemeManager
@@ -26,6 +26,11 @@ struct ImageModelTypeSelectionView: View {
                         .scaledToFit()
                         .tag(model.id)
                         .cornerRadius(20)
+                }
+            }
+            .onChange(of: currentIndex) {
+                if let model = viewModel.modelTypes.filter({ $0.id == currentIndex }).first {
+                    mainStore.dispatch(AppAction.image(.selectImageModelType(model)))
                 }
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
@@ -59,8 +64,4 @@ struct ImageModelTypeSelectionView: View {
             )
         }
     }
-}
-
-#Preview {
-    ImageModelTypeSelectionView()
 }
