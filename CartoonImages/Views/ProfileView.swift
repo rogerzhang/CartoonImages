@@ -34,36 +34,22 @@ struct ProfileView: View {
     var body: some View {
         NavigationView {
             List {
-                // Section 1: 用户信息
                 Section {
-                    Button(action: { showLoginSheet = true }) {
-                        HStack {
-                            Image(systemName: isLoggedIn ? "person.circle.fill" : "person.circle")
-                                .font(.system(size: 50))
-                                .foregroundColor(themeManager.accent)
-                            
-                            VStack(alignment: .leading, spacing: 4) {
-                                HStack {
-                                    Text(isLoggedIn ? "用户名" : "点击登录")
-                                        .font(.headline)
-                                    if isVipMember {
-                                        Image(systemName: "crown.fill")
-                                            .foregroundColor(.yellow)
-                                    }
-                                }
-                                if isLoggedIn {
-                                    Text("VIP会员")
-                                        .font(.subheadline)
-                                        .foregroundColor(themeManager.secondaryText)
-                                }
-                            }
-                            
-                            Spacer()
-                            
-                            Image(systemName: "chevron.right")
+                    HStack {
+                        Image("image2")
+                            .resizable()
+                            .frame(width: 60, height: 60)
+                            .cornerRadius(12)
+                        
+                        VStack(alignment: .leading) {
+                            Text("画影")
+                                .font(.headline)
+                            Text("版本 1.0.0")
+                                .font(.subheadline)
                                 .foregroundColor(themeManager.secondaryText)
                         }
                     }
+                    .padding(.vertical, 8)
                 }
                 
                 // Section 2: 评分和分享
@@ -74,8 +60,8 @@ struct ProfileView: View {
                         }
                     }) {
                         Label("给我们评分", systemImage: "star")
-                            .labelStyle(CustomLabelStyle(imageColor: themeManager.accent, textColor: themeManager.text))
-//                            .foregroundColor(themeManager.text)
+//                            .labelStyle(CustomLabelStyle(imageColor: themeManager.accent, textColor: themeManager.text))
+                            .foregroundColor(themeManager.text)
                     }
                     
                     Button(action: { showShareSheet = true }) {
@@ -92,10 +78,15 @@ struct ProfileView: View {
                     }
                 }
                 
-                // Section 4: 设置
+                // 隐私和协议
                 Section {
-                    NavigationLink(destination: SettingsView()) {
-                        Label("设置", systemImage: "gear")
+                    NavigationLink(destination: PrivacyPolicyView()) {
+                        Label("隐私政策", systemImage: "hand.raised")
+                            .foregroundColor(themeManager.text)
+                    }
+                    
+                    NavigationLink(destination: UserAgreementView()) {
+                        Label("用户协议", systemImage: "doc.text")
                             .foregroundColor(themeManager.text)
                     }
                 }

@@ -72,12 +72,19 @@ struct PrivacyPolicyView: View {
     
     var body: some View {
         ScrollView {
-            Text("隐私政策内容...")
+            Text(loadPrivacyPolicy())
                 .foregroundColor(themeManager.text)
                 .padding()
         }
         .navigationTitle("隐私政策")
         .background(themeManager.background)
+    }
+    
+    func loadPrivacyPolicy() -> String {
+        if let path = Bundle.main.path(forResource: "PrivacyPolicy", ofType: "txt") {
+            return (try? String(contentsOfFile: path)) ?? "Privacy Policy not available."
+        }
+        return "Privacy Policy not available."
     }
 }
 
