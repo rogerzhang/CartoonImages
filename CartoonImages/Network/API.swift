@@ -37,10 +37,6 @@ extension API: TargetType {
     var task: Task {
         switch self {
         case let .processImage(imageData, modelType):
-//            guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-//                return .requestPlain
-//            }
-            
             let formData = [
                 MultipartFormData(provider: .data(imageData),
                                 name: "file",

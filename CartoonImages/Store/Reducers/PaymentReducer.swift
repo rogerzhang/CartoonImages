@@ -22,12 +22,12 @@ func paymentReducer(action: Action, state: PaymentState?) -> PaymentState {
                 if let transaction = try await PaymentService.shared.purchase(planType) {
                     // 购买成功
                     await MainActor.run {
-                        mainStore.dispatch(PaymentAction.paymentSuccess)
+                        mainStore.dispatch(AppAction.payment(.paymentSuccess))
                     }
                 }
             } catch {
                 await MainActor.run {
-                    mainStore.dispatch(PaymentAction.paymentFailure(error))
+                    mainStore.dispatch(AppAction.payment(.paymentFailure(error)))
                 }
             }
         }

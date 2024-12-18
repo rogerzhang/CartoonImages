@@ -14,7 +14,7 @@ struct PaymentPlan: Identifiable {
     var price: String
     var pricePerDay: String
     
-    func toPaymentType() -> PaymentPlanType {
+    var paymentType: PaymentPlanType {
         if id == PaymentPlanType.weekly.rawValue {
             return .weekly
         } else if id == PaymentPlanType.yearly.rawValue {
@@ -70,7 +70,7 @@ struct PaymentPlanView: View {
             if let plans = plans, plans.count > 1 {
                 let plan = plans[1]
                 self.selectedPlan = plans[1]
-                mainStore.dispatch(AppAction.payment(.selectPlan(plan.toPaymentType())))
+                mainStore.dispatch(AppAction.payment(.selectPlan(plan.paymentType)))
             }
         }
     }
@@ -78,7 +78,7 @@ struct PaymentPlanView: View {
     private func paymentButton(for plan: PaymentPlan) -> some View {
         Button(action: {
             selectedPlan = plan
-            mainStore.dispatch(AppAction.payment(.selectPlan(plan.toPaymentType())))
+            mainStore.dispatch(AppAction.payment(.selectPlan(plan.paymentType)))
         }) {
             VStack(spacing: 10) {
                 Text(plan.type)
