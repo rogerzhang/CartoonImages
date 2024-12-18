@@ -12,6 +12,13 @@ import ReSwift
 struct CartoonImagesApp: App {
     @StateObject private var themeManager = ThemeManager()
     
+    init() {
+        // 设置订阅状态变化的监听
+        PaymentService.shared.onSubscriptionStatusChanged = { isPremium in
+            mainStore.dispatch(AppAction.payment(.updateSubscriptionStatus(isPremium)))
+        }
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()

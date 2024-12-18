@@ -4,30 +4,42 @@ struct PaymentView: View {
     @Binding var showPaymentAlert: Bool
     @Binding var paymentIsProcessing: Bool
     @Binding var showPaymentError: Bool
+    @Binding var isSubscribed: Bool
+    
     var paymentError: String?
-    var handlePayment: (Decimal) -> Void
+    var handlePayment: () -> Void
     
     @EnvironmentObject private var themeManager: ThemeManager
+    @Environment(\.dismiss) private var dismiss
+    @State private var isRestoringPurchases = false
+    @State private var showRestoreError = false
+    @State private var restoreError: String?
     @State var isLoggedIn: Bool = false
 
     var body: some View {
         VStack {
             HStack {
                 HStack {
-                    Image(systemName: isLoggedIn ? "person.circle.fill" : "person.circle")
-                        .font(.system(size: 50))
-                        .foregroundColor(themeManager.accent)
+                    Image(systemName: self.isSubscribed ? "crown.fill" : "crown")
+                        .font(.system(size: 38))
+                        .foregroundColor(self.isSubscribed ? .yellow : .gray)
                     VStack {
-                        Text("会飞的鱼")
+                        Text(self.isSubscribed ? "你是尊贵的会员" : "非会员")
                             .font(.headline)
                             .foregroundStyle(.primary)
-                        Text("2025/12/05到期")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
+                        if self.isSubscribed {
+                            let dataString = PaymentService.shared.formartedExpirationDate()
+                            Text("到期时间：" + dataString)
+                                .font(.system(size: 14))
+                                .foregroundStyle(.secondary)
+                        }
                     }
                 }
+                .padding(.leading, 20)
+                Spacer()
                 
                 Image("viplogo")
+                    .padding(.trailing, 20)
             }
             
             HStack {
@@ -42,7 +54,7 @@ struct PaymentView: View {
                                         )
                         )
                         .padding(.bottom, 0)
-                    
+                
                     ZStack(alignment: .leading) {
                         Image("vipstate")
                             .frame(width: 175, height: 114)
@@ -59,9 +71,10 @@ struct PaymentView: View {
                             .background(Color.black)
                             .cornerRadius(15)
                             
-                            Text("已开通")
+                            Text(self.isSubscribed ? "已开通" : "未开通")
                                 .font(.headline)
-                            Text("会员还有9天到期")
+                            let leftDays = PaymentService.shared.expirationDaysFromToday()
+                            Text(self.isSubscribed ? "会员还有\(leftDays)天到期" : "请升级到VIP")
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                         }
@@ -96,13 +109,13 @@ struct PaymentView: View {
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(.green)
-                        Text("高级滤镜效果")
+                        Text("去除效果图片水印")
                     }
                     
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(.green)
-                        Text("批量处理功能")
+                        Text("及时更新和使用最新特效")
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -117,14 +130,13 @@ struct PaymentView: View {
                 )
                 
                 Spacer()
-                // 价格和支付按钮
+                
                 VStack(spacing: 10) {
-//                    Text("¥1.99/月")
-//                        .font(.title2)
-//                        .fontWeight(.bold)
-                    
                     Button(action: {
-                        showPaymentAlert = true
+                        guard let plan = mainStore.state.paymentState.selectedPlan else {
+                            fatalError("no selected plan")
+                        }
+                        mainStore.dispatch(AppAction.payment(.startPayment(plan)))
                     }) {
                         HStack {
                             Image(systemName: "applelogo")
@@ -143,22 +155,63 @@ struct PaymentView: View {
             }
             .padding(.horizontal)
         }
-      
-        .alert("确认支付", isPresented: $showPaymentAlert) {
-            Button("确认") {
-                if let amount = Decimal(string: "1.99") {
-                    handlePayment(amount)
-                }
-                showPaymentAlert = false
-            }
-            Button("取消", role: .cancel) { }
-        } message: {
-            Text("开通会员服务 ¥1.99/月")
-        }
         .alert("支付错误", isPresented: $showPaymentError) {
             Button("OK", role: .cancel) { }
         } message: {
             Text(paymentError ?? "未知错误")
+        }
+        .alert("恢复失败", isPresented: $showRestoreError) {
+            Button("确定", role: .cancel) { }
+        } message: {
+            Text(restoreError ?? "未知错误")
+        }
+    }
+    
+    private func restorePurchases() {
+        isRestoringPurchases = true
+        
+        Task {
+            do {
+                try await PaymentService.shared.restorePurchases()
+                await MainActor.run {
+                    isRestoringPurchases = false
+                    dismiss()
+                }
+            } catch {
+                await MainActor.run {
+                    isRestoringPurchases = false
+                    restoreError = error.localizedDescription
+                    showRestoreError = true
+                }
+            }
+        }
+    }
+    
+    private func handlePurchase(planType: PaymentPlanType) {
+        Task {
+            do {
+                paymentIsProcessing = true
+                
+                // 先加载产品
+                try await PaymentService.shared.loadProducts()
+                
+                // 执行购买
+                if let transaction = try await PaymentService.shared.purchase(planType) {
+                    // 更新购买状态
+                    await PaymentService.shared.updatePurchaseStatus(for: planType, transaction: transaction)
+                    
+                    await MainActor.run {
+                        paymentIsProcessing = false
+                        dismiss()
+                    }
+                }
+            } catch {
+                await MainActor.run {
+                    paymentIsProcessing = false
+                    showPaymentError = true
+                    // 使用 error.localizedDescription 显示错误信息
+                }
+            }
         }
     }
 } 

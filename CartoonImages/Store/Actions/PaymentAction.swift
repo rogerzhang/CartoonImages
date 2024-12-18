@@ -1,9 +1,13 @@
 import Foundation
+import ReSwift
+import StoreKit
 
-enum PaymentAction {
-    case startPayment(amount: Decimal)
+enum PaymentAction: Action {
+    case startPayment(PaymentPlanType)
     case paymentSuccess
     case paymentFailure(Error)
-    case updatePaymentStatus(Bool)
-    case dismissError
-} 
+    case updateSubscriptionStatus(Bool)
+    case selectPlan(PaymentPlanType?)
+    case updateProcessingStep(Int)
+    case updateProducts([SKProduct])
+}

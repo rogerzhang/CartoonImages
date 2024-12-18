@@ -14,6 +14,7 @@ class ImageProcessingViewModel: ObservableObject {
     @Published var showPaymentError: Bool = false
     @Published var modelTypes: [ImageModelType] = []
     @Published var currentModelType: ImageModelType?
+    @Published var isSubscribed: Bool = false
     
     private var cancellables = Set<AnyCancellable>()
     private var initialModelId: String?
@@ -75,13 +76,48 @@ class ImageProcessingViewModel: ObservableObject {
             }
         }
     }
-    
-    func handlePayment(amount: Decimal) {
-        mainStore.dispatch(AppAction.payment(.startPayment(amount: amount)))
+    //func handlePayment(amount: Decimal) {
+    func handlePayment() {
+        guard let currentPlan = self.currentModelType else {
+            return
+        }
+        
+        var type: PaymentPlanType = .monthly
+        
+        if currentPlan.id == "1" {
+            type = .weekly
+        } else if currentPlan.id == "3" {
+            type = .yearly
+        }
+        
+        mainStore.dispatch(AppAction.payment(.startPayment(type)))
     }
     
     func dismissPaymentError() {
-        mainStore.dispatch(AppAction.payment(.dismissError))
+//        mainStore.dispatch(AppAction.payment(.dismissError))
+    }
+    
+    func handlePurchase(planType: PaymentPlanType) {
+        Task {
+            do {
+                mainStore.dispatch(PaymentAction.startPayment(planType))
+                
+                // 加载商品
+                try await PaymentService.shared.loadProducts()
+                
+                // 执行购买
+                if let transaction = try await PaymentService.shared.purchase(planType) {
+                    // 购买成功
+                    await MainActor.run {
+                        mainStore.dispatch(PaymentAction.paymentSuccess)
+                    }
+                }
+            } catch {
+                await MainActor.run {
+                    mainStore.dispatch(PaymentAction.paymentFailure(error))
+                }
+            }
+        }
     }
     
     deinit {
@@ -97,9 +133,10 @@ extension ImageProcessingViewModel: StoreSubscriber {
             self.isProcessing = state.imageState.isProcessing
             self.paymentIsProcessing = state.paymentState.isProcessing
             self.paymentError = state.paymentState.error
-            self.showPaymentError = state.paymentState.showError
+//            self.showPaymentError = state.paymentState.showError
             self.modelTypes = state.imageState.modelTypes ?? []
             self.currentModelType = state.imageState.currentModelType
+            self.isSubscribed = state.paymentState.isSubscribed
         }
     }
 } 

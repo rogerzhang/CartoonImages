@@ -1,4 +1,5 @@
 import UIKit
+import StoreKit
 
 // Auth State
 struct AuthState {
@@ -19,12 +20,13 @@ struct ImageState {
     var currentModelType: ImageModelType?
 }
 
-// Payment State
 struct PaymentState {
     var isProcessing: Bool = false
-    var error: String? = nil
-    var showError: Bool = false
-    var lastTransactionId: String? = nil
+    var error: String?
+    var selectedPlan: PaymentPlanType?
+    var isSubscribed: Bool = false
+    var processingStep: Int = 0
+    var products: [SKProduct] = []
 }
 
 // App State

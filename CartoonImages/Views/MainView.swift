@@ -82,8 +82,9 @@ struct MainView: View {
                 showPaymentAlert: .constant(false),
                 paymentIsProcessing: .constant(false),
                 showPaymentError: .constant(false),
+                isSubscribed: $viewModel.isSubscribed,
                 paymentError: nil,
-                handlePayment: { _ in }
+                handlePayment: {  }
             )
         }
         .sheet(isPresented: $showProfile) {
@@ -134,6 +135,7 @@ struct MainView: View {
 
 class MainViewModel: ObservableObject {
     @Published var modelTypes: [ImageModelType]?
+    @Published var isSubscribed: Bool = false
     
     init() {
         mainStore.subscribe(self) { subscription in
@@ -148,6 +150,7 @@ extension MainViewModel: StoreSubscriber {
     func newState(state: (imageState: ImageState, paymentState: PaymentState)) {
         DispatchQueue.main.async {
             self.modelTypes = state.imageState.modelTypes
+            self.isSubscribed = state.paymentState.isSubscribed
         }
     }
 }

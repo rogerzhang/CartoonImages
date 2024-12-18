@@ -117,6 +117,7 @@
 		DBABC6592CDE513D001FD8C0 /* PaymentReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentReducer.swift; sourceTree = "<group>"; };
 		DBABC65C2CDE567F001FD8C0 /* ImageProcessingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessingViewModel.swift; sourceTree = "<group>"; };
 		DBDE9CBF2D0B3354005EBAFC /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		DBE1F8262D1010C600084871 /* Test1.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Test1.storekit; sourceTree = "<group>"; };
 		DBEE755B2CF17B6A00A833AD /* PhotoConfirmationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoConfirmationView.swift; sourceTree = "<group>"; };
 		DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentView.swift; sourceTree = "<group>"; };
 		DBFCDD7A2CF374EB0067D73C /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
@@ -220,6 +221,7 @@
 		DB5A680E2CD7968800F1D151 = {
 			isa = PBXGroup;
 			children = (
+				DBE1F8262D1010C600084871 /* Test1.storekit */,
 				DB5A68192CD7968800F1D151 /* CartoonImages */,
 				DB5A682A2CD7968A00F1D151 /* CartoonImagesTests */,
 				DB5A68342CD7968A00F1D151 /* CartoonImagesUITests */,

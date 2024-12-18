@@ -6,24 +6,35 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct PaymentPlan: Identifiable {
     var id: String
     var type: String
     var price: String
     var pricePerDay: String
+    
+    func toPaymentType() -> PaymentPlanType {
+        if id == "1" {
+            return .weekly
+        } else if id == "3" {
+            return .yearly
+        } else {
+            return .monthly
+        }
+    }
 }
 
 struct PaymentPlanView: View {
     @EnvironmentObject private var themeManager: ThemeManager
 
     let plans: [PaymentPlan] = [
-        .init(id: "1", type: "周订阅", price: "6元", pricePerDay: "1元/天"),
-        .init(id: "2", type: "月订阅", price: "14元", pricePerDay: "0.8元/天"),
-        .init(id: "3", type: "年订阅", price: "222元", pricePerDay: "0.6元/天")
+        .init(id: "1", type: "周订阅", price: "7元", pricePerDay: "/天"),
+        .init(id: "2", type: "月订阅", price: "14元", pricePerDay: "/月"),
+        .init(id: "3", type: "年订阅", price: "199元", pricePerDay: "/年")
     ]
 
-    @State var selectedPlan: PaymentPlan = .init(id: "1", type: "周订阅", price: "6元", pricePerDay: "1元/天")
+    @State var selectedPlan: PaymentPlan = .init(id: "2", type: "月订阅", price: "14元", pricePerDay: "/月")
 
     var body: some View {
         GeometryReader { geometry in
@@ -46,11 +57,15 @@ struct PaymentPlanView: View {
             }
             .padding(.horizontal, 20) // Add padding on both sides
         }
+        .onAppear {
+            mainStore.dispatch(AppAction.payment(.selectPlan(selectedPlan.toPaymentType())))
+        }
     }
 
     private func paymentButton(for plan: PaymentPlan) -> some View {
         Button(action: {
             selectedPlan = plan
+            mainStore.dispatch(AppAction.payment(.selectPlan(plan.toPaymentType())))
         }) {
             VStack(spacing: 10) {
                 Text(plan.type)
@@ -74,8 +89,14 @@ struct PaymentPlanView: View {
             .padding(.horizontal, 10)
         }
     }
-}
-
-#Preview {
-    PaymentPlanView()
+    
+    // 在适当的生命周期检查订阅状态
+    func checkSubscriptionStatus() {
+        Task {
+            let isSubscribed = await PaymentService.shared.verifyReceipt()
+            await MainActor.run {
+                mainStore.dispatch(AppAction.payment(.updateSubscriptionStatus(isSubscribed)))
+            }
+        }
+    }
 }

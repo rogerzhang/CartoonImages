@@ -32,7 +32,7 @@ struct ImageProcessingView: View {
                                 showPaymentError: Binding(
                                     get: { viewModel.showPaymentError },
                                     set: { _ in viewModel.dismissPaymentError() }
-                                ),
+                                ), isSubscribed: $viewModel.isSubscribed,
                                 paymentError: viewModel.paymentError,
                                 handlePayment: viewModel.handlePayment
                             )
@@ -104,6 +104,7 @@ struct ImageProcessingView: View {
                         get: { viewModel.showPaymentError },
                         set: { _ in viewModel.dismissPaymentError() }
                     ),
+                    isSubscribed: $viewModel.isSubscribed,
                     paymentError: viewModel.paymentError,
                     handlePayment: viewModel.handlePayment
                 )

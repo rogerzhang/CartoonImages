@@ -1,32 +1,59 @@
-import Foundation
+import ReSwift
+import StoreKit
 
-func paymentReducer(action: PaymentAction, state: PaymentState) -> PaymentState {
-    var newState = state
+// 如果 PaymentState 和 PaymentAction 已经在其他地方声明，
+// 我们只需要实现 reducer 部分
+
+func paymentReducer(action: Action, state: PaymentState?) -> PaymentState {
+    var state = state ?? PaymentState()
+    
+    guard let action = action as? PaymentAction else { return state }
     
     switch action {
-    case .startPayment:
-        newState.isProcessing = true
-        newState.error = nil
-        newState.showError = false
-        newState.lastTransactionId = nil
+    case .startPayment(let planType):
+        state.isProcessing = true
+        state.error = nil
+        state.selectedPlan = planType
+        
+        Task {
+            do {
+                try await PaymentService.shared.loadProducts()
+                
+                if let transaction = try await PaymentService.shared.purchase(planType) {
+                    // 购买成功
+                    await MainActor.run {
+                        mainStore.dispatch(PaymentAction.paymentSuccess)
+                    }
+                }
+            } catch {
+                await MainActor.run {
+                    mainStore.dispatch(PaymentAction.paymentFailure(error))
+                }
+            }
+        }
         
     case .paymentSuccess:
-        newState.isProcessing = false
-        newState.error = nil
-        newState.showError = false
+        state.isProcessing = false
+        state.error = nil
+        state.isSubscribed = true
         
-    case let .paymentFailure(error):
-        newState.isProcessing = false
-        newState.error = error.localizedDescription
-        newState.showError = true
+    case .paymentFailure(let error):
+        state.isProcessing = false
+        state.error = error.localizedDescription
+        state.isSubscribed = false
         
-    case let .updatePaymentStatus(isProcessing):
-        newState.isProcessing = isProcessing
+    case .updateSubscriptionStatus(let isSubscribed):
+        state.isSubscribed = isSubscribed
         
-    case .dismissError:
-        newState.showError = false
-        newState.error = nil
+    case .selectPlan(let plan):
+        state.selectedPlan = plan
+        
+    case .updateProcessingStep(let step):
+        state.processingStep = step
+    case .updateProducts(_):
+        //
+        break
     }
     
-    return newState
+    return state
 } 
