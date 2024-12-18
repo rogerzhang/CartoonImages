@@ -12,6 +12,7 @@ struct ImageProcessingView: View {
     
     @State private var alertMessage: String = ""
     @State private var showAlert: Bool = false
+    @State private var showPayment: Bool = false
     
     private let buttonSize: CGFloat = 32
     
@@ -25,23 +26,14 @@ struct ImageProcessingView: View {
             imagePreviewArea
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: {
-                            PaymentView(
-                                showPaymentAlert: $showPaymentAlert,
-                                paymentIsProcessing: $viewModel.paymentIsProcessing,
-                                showPaymentError: Binding(
-                                    get: { viewModel.showPaymentError },
-                                    set: { _ in viewModel.dismissPaymentError() }
-                                ), isSubscribed: $viewModel.isSubscribed,
-                                paymentError: viewModel.paymentError,
-                                handlePayment: viewModel.handlePayment
-                            )
-                        }) {
+                        Button(action: {
+                            showPayment.toggle()
+                        }, label: {
                             Image(systemName: "crown.fill")
                                 .font(.headline)
                                 .foregroundColor(.yellow)
                                 .frame(width: buttonSize, height: buttonSize)
-                        }
+                        })
                     }
                 }
                 .padding(.vertical)
@@ -85,51 +77,21 @@ struct ImageProcessingView: View {
             // 底部模型选择区域
 //            modelSelectionArea
         }
+        .sheet(isPresented: $showPayment) {
+            PaymentView(
+                showPaymentAlert: .constant(false),
+                paymentIsProcessing: $viewModel.paymentIsProcessing,
+                showPaymentError: .constant(false),
+                isSubscribed: $viewModel.isSubscribed,
+                paymentError: nil,
+                handlePayment: {}
+            )
+        }
         .alert(isPresented: $showAlert) {
                    Alert(title: Text("提示"), message: Text(alertMessage), dismissButton: .default(Text("确定")))
                }
         .background(themeManager.background)
         .environmentObject(viewModel)
-    }
-    
-    // MARK: - 顶部导航栏
-    private var topNavigationBar: some View {
-        HStack {
-            // 会员支付按钮
-            NavigationLink(destination: {
-                PaymentView(
-                    showPaymentAlert: $showPaymentAlert,
-                    paymentIsProcessing: $viewModel.paymentIsProcessing,
-                    showPaymentError: Binding(
-                        get: { viewModel.showPaymentError },
-                        set: { _ in viewModel.dismissPaymentError() }
-                    ),
-                    isSubscribed: $viewModel.isSubscribed,
-                    paymentError: viewModel.paymentError,
-                    handlePayment: viewModel.handlePayment
-                )
-            }) {
-                Image(systemName: "diamond.fill")
-                    .font(.title2)
-                    .foregroundColor(.yellow)
-                    .frame(width: buttonSize, height: buttonSize)
-                    .background(Circle().fill(Color.blue.opacity(0.2)))
-            }
-            
-            Spacer()
-            
-            // 用户信息按钮
-            Button(action: {
-                // 处理用户信息按钮点击
-            }) {
-                Image(systemName: "person.crop.circle.fill")
-                    .font(.title2)
-                    .foregroundColor(.gray)
-                    .frame(width: buttonSize, height: buttonSize)
-                    .background(Circle().fill(Color.gray.opacity(0.2)))
-            }
-        }
-        .padding()
     }
     
     // MARK: - 图片预览区域
