@@ -4,6 +4,36 @@ enum PaymentPlanType: String {
     case weekly = "toon.week"
     case monthly = "toon.month"
     case yearly = "toon.year"
+    
+    var sortOrder: Int {
+        switch self {
+        case .weekly: return 0
+        case .monthly: return 1
+        case .yearly: return 2
+        }
+    }
+    
+    var type: String {
+        switch self {
+        case .weekly:
+            return "周订阅"
+        case .monthly:
+            return "月订阅"
+        case .yearly:
+            return "年订阅"
+        }
+    }
+    
+    var per: String {
+        switch self {
+        case .weekly:
+            return "/周"
+        case .monthly:
+            return "/月"
+        case .yearly:
+            return "/年"
+        }
+    }
 }
 
 enum PaymentError: Error {
@@ -36,7 +66,7 @@ enum PaymentError: Error {
 class PaymentService: NSObject, ObservableObject {
     static let shared = PaymentService()
     
-    private var products: [SKProduct] = []
+    var products: [SKProduct] = []
     private let paymentQueue = SKPaymentQueue.default()
     private let userDefaults = UserDefaults.standard
     private var transactionDelegate: TransactionDelegate? // 保持强引用
