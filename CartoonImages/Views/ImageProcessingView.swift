@@ -4,6 +4,8 @@ import Photos
 
 struct ImageProcessingView: View {
     @EnvironmentObject private var themeManager: ThemeManager
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
     @StateObject private var viewModel: ImageProcessingViewModel
     @State private var showCameraView = false
     @State private var beautyEnabled = true
@@ -34,6 +36,15 @@ struct ImageProcessingView: View {
                                 .foregroundColor(.yellow)
                                 .frame(width: buttonSize, height: buttonSize)
                         })
+                    }
+                    
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            self.presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Image(systemName: "chevron.backward")
+                                .foregroundColor(themeManager.accent)
+                        }
                     }
                 }
                 .padding(.vertical)
@@ -87,6 +98,7 @@ struct ImageProcessingView: View {
                 handlePayment: {}
             )
         }
+        .navigationBarBackButtonHidden(true)
         .alert(isPresented: $showAlert) {
                    Alert(title: Text("提示"), message: Text(alertMessage), dismissButton: .default(Text("确定")))
                }

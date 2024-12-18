@@ -69,6 +69,7 @@ struct SettingsView: View {
 // 隐私政策视图
 struct PrivacyPolicyView: View {
     @EnvironmentObject private var themeManager: ThemeManager
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
         ScrollView {
@@ -78,6 +79,17 @@ struct PrivacyPolicyView: View {
         }
         .navigationTitle("隐私政策")
         .background(themeManager.background)
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    Image(systemName: "chevron.backward")
+                        .foregroundColor(themeManager.text)
+                }
+            }
+        }
     }
     
     func loadPrivacyPolicy() -> String {
@@ -91,6 +103,7 @@ struct PrivacyPolicyView: View {
 // 用户协议视图
 struct UserAgreementView: View {
     @EnvironmentObject private var themeManager: ThemeManager
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
         ScrollView {
@@ -100,5 +113,16 @@ struct UserAgreementView: View {
         }
         .navigationTitle("用户协议")
         .background(themeManager.background)
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    Image(systemName: "chevron.backward")
+                        .foregroundColor(themeManager.text)
+                }
+            }
+        }
     }
 } 
