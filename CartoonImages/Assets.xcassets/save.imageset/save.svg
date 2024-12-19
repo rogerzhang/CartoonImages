@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>下载APP</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="拍摄完成-加载备份" transform="translate(-101, -733)">
+            <g id="编组-14" transform="translate(101, 733)">
+                <rect id="矩形备份" transform="translate(12, 12) rotate(-90) translate(-12, -12)" x="0" y="0" width="24" height="24"></rect>
+                <g id="编组-6" transform="translate(3.8535, 3.6)">
+                    <path d="M16.9633724,8.97518921 L16.9633724,15.6 C16.9633724,16.2627417 16.4261141,16.8 15.7633724,16.8 L1.2,16.8 C0.5372583,16.8 0,16.2627417 0,15.6 L0,9.17539673" id="路径" stroke="#060530" stroke-width="1.8" stroke-linecap="round"></path>
+                    <g id="编组-10" transform="translate(8.5405, 6.7779) rotate(-270) translate(-8.5405, -6.7779)translate(1.7626, 1.7221)" fill="#060530">
+                        <g id="编组-9" transform="translate(8.5, 5.0558) rotate(-315) translate(-8.5, -5.0558)translate(4.925, 1.4808)">
+                            <rect id="矩形" x="-1.4556456e-12" y="2.99291591e-12" width="7" height="1.8" rx="0.9"></rect>
+                            <path d="M3.65,2.75 L8.85,2.75 C9.34705627,2.75 9.75,3.15294373 9.75,3.65 C9.75,4.14705627 9.34705627,4.55 8.85,4.55 L3.65,4.55 C3.15294373,4.55 2.75,4.14705627 2.75,3.65 C2.75,3.15294373 3.15294373,2.75 3.65,2.75 Z" id="矩形备份-8" transform="translate(6.25, 3.65) rotate(-270) translate(-6.25, -3.65)"></path>
+                        </g>
+                        <rect id="矩形" x="0" y="4.21860733" width="12" height="1.8" rx="0.75"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

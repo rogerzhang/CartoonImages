@@ -116,49 +116,48 @@ struct ImageProcessingView: View {
                     .frame(maxHeight: UIScreen.main.bounds.height * 0.6)
                     .cornerRadius(10)
                     .shadow(radius: 5)
-                HStack {
+                HStack(spacing: UIScreen.main.bounds.width / 3) {
                     Button(action: {
                         saveImageToPhotoLibrary()
                     }, label: {
-                        Text("保存")
-                            .foregroundColor(.white) // 设置文字颜色
-                            .font(.headline)
-                            .frame(width: 80, height: 44)
-                            .background(
-                                LinearGradient(
-                                    gradient: Gradient(colors: [Color(hex: 0x9D40F5), Color(hex: 0xFFB979)]),
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                            )
-                            .overlay( // 为按钮添加边框
-                                RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                            )
+                        VStack {
+                            Image("save")
+                                .font(.largeTitle)
+                                .foregroundColor(themeManager.text)
+                            Text("保存")
+                                .foregroundColor(.black)
+                        }
+                        
+//                        Text("保存")
+//                            .foregroundColor(.white) // 设置文字颜色
+//                            .font(.headline)
+//                            .frame(width: 80, height: 44)
+//                            .background(
+//                                LinearGradient(
+//                                    gradient: Gradient(colors: [Color(hex: 0x9D40F5), Color(hex: 0xFFB979)]),
+//                                    startPoint: .leading,
+//                                    endPoint: .trailing
+//                                )
+//                                .clipShape(RoundedRectangle(cornerRadius: 20))
+//                            )
+//                            .overlay( // 为按钮添加边框
+//                                RoundedRectangle(cornerRadius: 20)
+//                                    .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+//                            )
                     })
-                    Spacer()
+
                     Button(action: {
                         viewModel.selectedImage = nil
                         viewModel.processedImage = nil
                         showCameraView = true
                     }, label: {
-                        Text("重新创作")
-                            .foregroundColor(.white) // 设置文字颜色
-                            .font(.headline)
-                            .frame(width: 80, height: 44)
-                            .background(
-                                LinearGradient(
-                                    gradient: Gradient(colors: [Color(hex: 0x9D40F5), Color(hex: 0xFFB979)]),
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                            )
-                            .overlay( // 为按钮添加边框
-                                RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                            )
+                        VStack {
+                            Image("retake")
+                                .font(.largeTitle)
+                                .foregroundColor(themeManager.text)
+                            Text("重拍")
+                                .foregroundColor(.black)
+                        }
                     })
                 }
             } else if  let image = viewModel.selectedImage {

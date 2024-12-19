@@ -33,6 +33,10 @@ struct PaymentView: View {
                                 Text("到期时间：" + dataString)
                                     .font(.system(size: 14))
                                     .foregroundStyle(.secondary)
+                            } else {
+                                Text("会员享受更多精彩哟")
+                                    .font(.system(size: 14))
+                                    .foregroundStyle(.secondary)
                             }
                         }
                     }
