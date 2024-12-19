@@ -107,7 +107,7 @@ struct UserAgreementView: View {
     
     var body: some View {
         ScrollView {
-            Text("用户协议内容...")
+            Text(loadPrivacyPolicy())
                 .foregroundColor(themeManager.text)
                 .padding()
         }
@@ -125,4 +125,11 @@ struct UserAgreementView: View {
             }
         }
     }
-} 
+    
+    func loadPrivacyPolicy() -> String {
+        if let path = Bundle.main.path(forResource: "UserAgreement", ofType: "txt") {
+            return (try? String(contentsOfFile: path)) ?? "UserAgreement not available."
+        }
+        return "UserAgreement not available."
+    }
+}

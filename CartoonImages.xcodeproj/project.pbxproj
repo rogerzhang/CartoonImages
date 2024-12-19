@@ -46,6 +46,7 @@
 		DBE1F8292D12F80800084871 /* PrivacyPolicy.txt in Resources */ = {isa = PBXBuildFile; fileRef = DBE1F8282D12F80800084871 /* PrivacyPolicy.txt */; };
 		DBE1F82B2D1301B200084871 /* UINavigationController+BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1F82A2D1301B200084871 /* UINavigationController+BackButton.swift */; };
 		DBEE755C2CF17B6A00A833AD /* PhotoConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEE755B2CF17B6A00A833AD /* PhotoConfirmationView.swift */; };
+		DBF1EF442D13F730000FA4FE /* UserAgreement.txt in Resources */ = {isa = PBXBuildFile; fileRef = DBF1EF432D13F730000FA4FE /* UserAgreement.txt */; };
 		DBFCDD772CF2DEEA0067D73C /* PaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */; };
 		DBFCDD7B2CF374EB0067D73C /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFCDD7A2CF374EB0067D73C /* ThemeManager.swift */; };
 		DBFCDD7E2CF407870067D73C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFCDD7C2CF407870067D73C /* ProfileView.swift */; };
@@ -123,6 +124,7 @@
 		DBE1F8282D12F80800084871 /* PrivacyPolicy.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = PrivacyPolicy.txt; sourceTree = "<group>"; };
 		DBE1F82A2D1301B200084871 /* UINavigationController+BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+BackButton.swift"; sourceTree = "<group>"; };
 		DBEE755B2CF17B6A00A833AD /* PhotoConfirmationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoConfirmationView.swift; sourceTree = "<group>"; };
+		DBF1EF432D13F730000FA4FE /* UserAgreement.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserAgreement.txt; sourceTree = "<group>"; };
 		DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentView.swift; sourceTree = "<group>"; };
 		DBFCDD7A2CF374EB0067D73C /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		DBFCDD7C2CF407870067D73C /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				DBE1F8282D12F80800084871 /* PrivacyPolicy.txt */,
+				DBF1EF432D13F730000FA4FE /* UserAgreement.txt */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -495,6 +498,7 @@
 			files = (
 				DB5A68222CD7968A00F1D151 /* Preview Assets.xcassets in Resources */,
 				DBE1F8292D12F80800084871 /* PrivacyPolicy.txt in Resources */,
+				DBF1EF442D13F730000FA4FE /* UserAgreement.txt in Resources */,
 				DBFEA4992D0182FF007C73AE /*  LaunchScreen.storyboard in Resources */,
 				DB5A681F2CD7968A00F1D151 /* Assets.xcassets in Resources */,
 			);
