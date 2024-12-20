@@ -47,6 +47,7 @@
 		DBE1F82B2D1301B200084871 /* UINavigationController+BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1F82A2D1301B200084871 /* UINavigationController+BackButton.swift */; };
 		DBEE755C2CF17B6A00A833AD /* PhotoConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEE755B2CF17B6A00A833AD /* PhotoConfirmationView.swift */; };
 		DBF1EF442D13F730000FA4FE /* UserAgreement.txt in Resources */ = {isa = PBXBuildFile; fileRef = DBF1EF432D13F730000FA4FE /* UserAgreement.txt */; };
+		DBF1EF462D15A0B0000FA4FE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBF1EF452D15A0B0000FA4FE /* StoreKit.framework */; };
 		DBFCDD772CF2DEEA0067D73C /* PaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */; };
 		DBFCDD7B2CF374EB0067D73C /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFCDD7A2CF374EB0067D73C /* ThemeManager.swift */; };
 		DBFCDD7E2CF407870067D73C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFCDD7C2CF407870067D73C /* ProfileView.swift */; };
@@ -125,6 +126,7 @@
 		DBE1F82A2D1301B200084871 /* UINavigationController+BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+BackButton.swift"; sourceTree = "<group>"; };
 		DBEE755B2CF17B6A00A833AD /* PhotoConfirmationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoConfirmationView.swift; sourceTree = "<group>"; };
 		DBF1EF432D13F730000FA4FE /* UserAgreement.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserAgreement.txt; sourceTree = "<group>"; };
+		DBF1EF452D15A0B0000FA4FE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentView.swift; sourceTree = "<group>"; };
 		DBFCDD7A2CF374EB0067D73C /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		DBFCDD7C2CF407870067D73C /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3E579A77711374CA7E9B8D6 /* Pods_CartoonImages.framework in Frameworks */,
+				DBF1EF462D15A0B0000FA4FE /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,6 +182,7 @@
 		CF2F80AC905B8926B1C82204 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DBF1EF452D15A0B0000FA4FE /* StoreKit.framework */,
 				96D342CDF58A28354F783AFE /* Pods_CartoonImages.framework */,
 				27B7592F3C5C08AEAABCB37B /* Pods_CartoonImages_CartoonImagesUITests.framework */,
 				3343FEB1234EE9272DA26412 /* Pods_CartoonImagesTests.framework */,
