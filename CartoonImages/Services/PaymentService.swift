@@ -162,42 +162,56 @@ class PaymentService: NSObject, ObservableObject {
     
     // 验证收据
     func verifyReceipt() async -> Bool {
-        guard let receiptURL = Bundle.main.appStoreReceiptURL,
-              let receiptData = try? Data(contentsOf: receiptURL) else {
-            return false
+        // 验证应用内购买交易
+        for await result in Transaction.currentEntitlements {
+            do {
+                let transaction = try result.payloadValue
+                
+                // 检查是否是有效的订阅
+                if transaction.revocationDate == nil && !transaction.isUpgraded {
+                    switch transaction.productType {
+                    case .autoRenewable:
+                        // 检查订阅是否过期
+                        if let expirationDate = transaction.expirationDate,
+                           expirationDate > Date() {
+                            return true
+                        }
+                    case .nonConsumable:
+                        // 永久购买的情况
+                        return true
+                    default:
+                        break
+                    }
+                }
+            } catch {
+                print("Failed to verify transaction: \(error)")
+            }
         }
-        
-        let receiptString = receiptData.base64EncodedString()
-        
-        // TODO: 实现服务器端验证
-        // 这里应该发送收据到你的服务器进行验证
-        // 当前仅作为示例，返回false
-        return true
+        return false
     }
     
     // 更新购买状态
     func updatePurchaseStatus(for planType: PaymentPlanType, transaction: SKPaymentTransaction) {
-        userDefaults.set(true, forKey: UserDefaultsKeys.isPremiumUser)
-        userDefaults.set(planType.rawValue, forKey: UserDefaultsKeys.purchasedPlan)
-        userDefaults.set(Date(), forKey: UserDefaultsKeys.purchaseDate)
-        
-        // 设置过期时间
-        var expirationDate: Date?
-        switch planType {
-        case .monthly:
-            expirationDate = Calendar.current.date(byAdding: .month, value: 1, to: Date())
-        case .yearly:
-            expirationDate = Calendar.current.date(byAdding: .year, value: 1, to: Date())
-        case .weekly:
-            expirationDate = Calendar.current.date(byAdding: .weekday, value: 1, to: Date())
+        // StoreKit 2 方式
+        Task {
+            for await result in Transaction.currentEntitlements {
+                if let transaction = try? result.payloadValue {
+                    // 更新过期时间
+                    if let expirationDate = transaction.expirationDate {
+                        userDefaults.set(expirationDate, forKey: UserDefaultsKeys.expirationDate)
+                    }
+                    
+                    userDefaults.set(true, forKey: UserDefaultsKeys.isPremiumUser)
+                    userDefaults.set(planType.rawValue, forKey: UserDefaultsKeys.purchasedPlan)
+                    userDefaults.set(Date(), forKey: UserDefaultsKeys.purchaseDate)
+                    userDefaults.synchronize()
+                    
+                    // 通知状态变化
+                    onSubscriptionStatusChanged?(true)
+                    break
+                }
+            }
         }
-        
-        if let expirationDate = expirationDate {
-            userDefaults.set(expirationDate, forKey: UserDefaultsKeys.expirationDate)
-        }
-        
-        // 同步 UserDefaults
-        userDefaults.synchronize()
     }
     
     // 清除购买状态（用于测试或重置）

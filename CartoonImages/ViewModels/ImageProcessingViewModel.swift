@@ -106,7 +106,7 @@ class ImageProcessingViewModel: ObservableObject {
                 try await PaymentService.shared.loadProducts()
                 
                 // 执行购买
-                if let transaction = try await PaymentService.shared.purchase(planType) {
+                if (try await PaymentService.shared.purchase(planType)) != nil {
                     // 购买成功
                     await MainActor.run {
                         mainStore.dispatch(PaymentAction.paymentSuccess)
