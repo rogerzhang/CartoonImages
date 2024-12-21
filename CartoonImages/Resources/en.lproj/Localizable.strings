@@ -1,5 +1,5 @@
 // App Name
-"APP_NAME" = "Toon Art";
+"APP_NAME" = "ToonYou";
 
 // Common
 "OK" = "OK";
@@ -11,6 +11,7 @@
 // Main View
 "FEATURES" = "Features";
 "VIP" = "VIP";
+"VERSION" = "Version:";
 
 // Payment
 "UPGRADE_TO_PRO" = "Upgrade to Pro";

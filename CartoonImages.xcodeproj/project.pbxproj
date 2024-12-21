@@ -50,6 +50,8 @@
 		DBF1EF462D15A0B0000FA4FE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBF1EF452D15A0B0000FA4FE /* StoreKit.framework */; };
 		DBF1EF4B2D1694FE000FA4FE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DBF1EF482D1694FE000FA4FE /* Localizable.strings */; };
 		DBF1EF4D2D16951A000FA4FE /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF1EF4C2D16951A000FA4FE /* LocalizationManager.swift */; };
+		DBF1EF502D169F45000FA4FE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DBF1EF4E2D169F45000FA4FE /* InfoPlist.strings */; };
+		DBF1EF542D16A03E000FA4FE /* Bundle+Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF1EF532D16A03E000FA4FE /* Bundle+Version.swift */; };
 		DBFCDD772CF2DEEA0067D73C /* PaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */; };
 		DBFCDD7B2CF374EB0067D73C /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFCDD7A2CF374EB0067D73C /* ThemeManager.swift */; };
 		DBFCDD7E2CF407870067D73C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFCDD7C2CF407870067D73C /* ProfileView.swift */; };
@@ -132,6 +134,10 @@
 		DBF1EF492D1694FE000FA4FE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		DBF1EF4A2D1694FE000FA4FE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		DBF1EF4C2D16951A000FA4FE /* LocalizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
+		DBF1EF4F2D169F45000FA4FE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DBF1EF512D169F5D000FA4FE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		DBF1EF532D16A03E000FA4FE /* Bundle+Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Version.swift"; sourceTree = "<group>"; };
+		DBF1EF552D16A091000FA4FE /* SharedConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SharedConfig.xcconfig; sourceTree = "<group>"; };
 		DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentView.swift; sourceTree = "<group>"; };
 		DBFCDD7A2CF374EB0067D73C /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		DBFCDD7C2CF407870067D73C /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -236,6 +242,7 @@
 		DB5A680E2CD7968800F1D151 = {
 			isa = PBXGroup;
 			children = (
+				DBF1EF552D16A091000FA4FE /* SharedConfig.xcconfig */,
 				DBE1F8262D1010C600084871 /* Test1.storekit */,
 				DB5A68192CD7968800F1D151 /* CartoonImages */,
 				DB5A682A2CD7968A00F1D151 /* CartoonImagesTests */,
@@ -259,6 +266,7 @@
 		DB5A68192CD7968800F1D151 /* CartoonImages */ = {
 			isa = PBXGroup;
 			children = (
+				DBF1EF522D16A03E000FA4FE /* Extensions */,
 				DBF1EF472D1694FE000FA4FE /* Resources */,
 				DBE1F8272D12F7CC00084871 /* Resource */,
 				DBABC65B2CDE567F001FD8C0 /* ViewModels */,
@@ -389,9 +397,18 @@
 		DBF1EF472D1694FE000FA4FE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DBF1EF4E2D169F45000FA4FE /* InfoPlist.strings */,
 				DBF1EF482D1694FE000FA4FE /* Localizable.strings */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		DBF1EF522D16A03E000FA4FE /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DBF1EF532D16A03E000FA4FE /* Bundle+Version.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		DBFCDD822CF5B6690067D73C /* Components */ = {
@@ -517,6 +534,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB5A68222CD7968A00F1D151 /* Preview Assets.xcassets in Resources */,
+				DBF1EF502D169F45000FA4FE /* InfoPlist.strings in Resources */,
 				DBF1EF4B2D1694FE000FA4FE /* Localizable.strings in Resources */,
 				DBE1F8292D12F80800084871 /* PrivacyPolicy.txt in Resources */,
 				DBF1EF442D13F730000FA4FE /* UserAgreement.txt in Resources */,
@@ -659,6 +677,7 @@
 				DBFCDD862CF5B6690067D73C /* CarouselView.swift in Sources */,
 				DB5A681B2CD7968800F1D151 /* CartoonImagesApp.swift in Sources */,
 				DBABC6542CDE5100001FD8C0 /* PaymentService.swift in Sources */,
+				DBF1EF542D16A03E000FA4FE /* Bundle+Version.swift in Sources */,
 				DBFCDD772CF2DEEA0067D73C /* PaymentView.swift in Sources */,
 				DBABC6262CDC5281001FD8C0 /* ImageProcessor.swift in Sources */,
 				DB2F11FA2CDB9FC9005EF0E5 /* User.swift in Sources */,
@@ -732,11 +751,21 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
+		DBF1EF4E2D169F45000FA4FE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DBF1EF4F2D169F45000FA4FE /* en */,
+				DBF1EF512D169F5D000FA4FE /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		DB5A68392CD7968A00F1D151 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DBF1EF552D16A091000FA4FE /* SharedConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -800,6 +829,7 @@
 		};
 		DB5A683A2CD7968A00F1D151 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DBF1EF552D16A091000FA4FE /* SharedConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -881,7 +911,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.roger.zhang.CartoonImages;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -918,7 +947,6 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.roger.zhang.CartoonImages;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -939,7 +967,6 @@
 				DEVELOPMENT_TEAM = ZLNRJW7978;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.roger.zhang.CartoonImagesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -960,7 +987,6 @@
 				DEVELOPMENT_TEAM = ZLNRJW7978;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.roger.zhang.CartoonImagesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -979,7 +1005,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZLNRJW7978;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.roger.zhang.CartoonImagesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -998,7 +1023,6 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZLNRJW7978;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.roger.zhang.CartoonImagesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;

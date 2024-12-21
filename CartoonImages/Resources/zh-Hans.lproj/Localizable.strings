@@ -7,6 +7,7 @@
 "CLOSE" = "关闭";
 "CONFIRM" = "确认";
 "PROCESSING" = "处理中...";
+"VERSION" = "版本:";
 
 // Main View
 "FEATURES" = "特效";

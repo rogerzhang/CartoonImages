@@ -44,7 +44,7 @@ struct ProfileView: View {
                         VStack(alignment: .leading) {
                             Text("APP_NAME".localized)
                                 .font(.headline)
-                            Text("VERSION".localized)
+                            Text("VERSION".localized + " " + Bundle.version())
                                 .font(.subheadline)
                                 .foregroundColor(themeManager.secondaryText)
                         }
