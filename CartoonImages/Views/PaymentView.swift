@@ -25,16 +25,16 @@ struct PaymentView: View {
                             .font(.system(size: 38))
                             .foregroundColor(self.isSubscribed ? .yellow : .gray)
                         VStack {
-                            Text(self.isSubscribed ? "你是尊贵的会员" : "非会员")
+                            Text(self.isSubscribed ? "SUBSCRIBED".localized : "NOT_SUBSCRIBED".localized)
                                 .font(.headline)
                                 .foregroundStyle(.primary)
                             if self.isSubscribed {
                                 let dataString = PaymentService.shared.formartedExpirationDate()
-                                Text("到期时间：" + dataString)
+                                Text("EXPIRES_ON".localizedFormat(dataString))
                                     .font(.system(size: 14))
                                     .foregroundStyle(.secondary)
                             } else {
-                                Text("会员享受更多精彩哟")
+                                Text("UPGRADE_TO_VIP".localized)
                                     .font(.system(size: 14))
                                     .foregroundStyle(.secondary)
                             }
@@ -49,7 +49,7 @@ struct PaymentView: View {
                 
                 HStack {
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("会员状态")
+                        Text("MEMBER_STATUS".localized)
                             .font(.headline)
                             .foregroundStyle(
                                             LinearGradient(
@@ -67,7 +67,7 @@ struct PaymentView: View {
                             VStack(alignment: .leading, spacing: 5) {
                                 HStack {
                                     Image("diamon")
-                                    Text("会员类型")
+                                    Text("MEMBER_TYPE".localized)
                                         .font(.system(size: 10))
                                         .foregroundColor(.init(hex: 0xEEA47D))
                                 }
@@ -76,10 +76,10 @@ struct PaymentView: View {
                                 .background(Color.black)
                                 .cornerRadius(15)
                                 
-                                Text(self.isSubscribed ? "已开通" : "未开通")
+                                Text(self.isSubscribed ? "SUBSCRIBED".localized : "NOT_SUBSCRIBED".localized)
                                     .font(.headline)
                                 let leftDays = PaymentService.shared.expirationDaysFromToday()
-                                Text(self.isSubscribed ? "会员还有\(leftDays)天到期" : "请升级到VIP")
+                                Text(self.isSubscribed ? "DAYS_LEFT".localizedFormat(leftDays) : "UPGRADE_TO_VIP".localized)
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
                             }
@@ -102,25 +102,25 @@ struct PaymentView: View {
                     
                     // 会员服务说明
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("会员服务")
+                        Text("MEMBER_BENEFITS".localized)
                             .font(.headline)
                         
                         HStack {
                             Image(systemName: "checkmark.circle.fill")
                                 .foregroundColor(.green)
-                            Text("无限次数处理图片")
+                            Text("BENEFIT_1".localized)
                         }
                         
                         HStack {
                             Image(systemName: "checkmark.circle.fill")
                                 .foregroundColor(.green)
-                            Text("去除效果图片水印")
+                            Text("BENEFIT_2".localized)
                         }
                         
                         HStack {
                             Image(systemName: "checkmark.circle.fill")
                                 .foregroundColor(.green)
-                            Text("及时更新和使用最新特效")
+                            Text("BENEFIT_3".localized)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -145,7 +145,7 @@ struct PaymentView: View {
                         }) {
                             HStack {
                                 Image(systemName: "applelogo")
-                                Text("立即开通")
+                                Text("SUBSCRIBE_NOW".localized)
                             }
                             .frame(maxWidth: .infinity)
                             .padding()
@@ -170,7 +170,7 @@ struct PaymentView: View {
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                         .scaleEffect(1.5)
                     
-                    Text("处理中...")
+                    Text("PROCESSING".localized)
                         .font(.system(size: 14))
                         .foregroundColor(.white)
                 }
@@ -181,15 +181,15 @@ struct PaymentView: View {
             }
         }
   
-        .alert("支付错误", isPresented: $showPaymentError) {
-            Button("OK", role: .cancel) { }
+        .alert("PAYMENT_ERROR".localized, isPresented: $showPaymentError) {
+            Button("OK".localized, role: .cancel) { }
         } message: {
-            Text(paymentError ?? "未知错误")
+            Text(paymentError ?? "UNKNOWN_ERROR".localized)
         }
-        .alert("恢复失败", isPresented: $showRestoreError) {
-            Button("确定", role: .cancel) { }
+        .alert("RESTORE_FAILED".localized, isPresented: $showRestoreError) {
+            Button("OK".localized, role: .cancel) { }
         } message: {
-            Text(restoreError ?? "未知错误")
+            Text(restoreError ?? "UNKNOWN_ERROR".localized)
         }
     }
     

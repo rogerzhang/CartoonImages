@@ -48,6 +48,8 @@
 		DBEE755C2CF17B6A00A833AD /* PhotoConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEE755B2CF17B6A00A833AD /* PhotoConfirmationView.swift */; };
 		DBF1EF442D13F730000FA4FE /* UserAgreement.txt in Resources */ = {isa = PBXBuildFile; fileRef = DBF1EF432D13F730000FA4FE /* UserAgreement.txt */; };
 		DBF1EF462D15A0B0000FA4FE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBF1EF452D15A0B0000FA4FE /* StoreKit.framework */; };
+		DBF1EF4B2D1694FE000FA4FE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DBF1EF482D1694FE000FA4FE /* Localizable.strings */; };
+		DBF1EF4D2D16951A000FA4FE /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF1EF4C2D16951A000FA4FE /* LocalizationManager.swift */; };
 		DBFCDD772CF2DEEA0067D73C /* PaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */; };
 		DBFCDD7B2CF374EB0067D73C /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFCDD7A2CF374EB0067D73C /* ThemeManager.swift */; };
 		DBFCDD7E2CF407870067D73C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFCDD7C2CF407870067D73C /* ProfileView.swift */; };
@@ -127,6 +129,9 @@
 		DBEE755B2CF17B6A00A833AD /* PhotoConfirmationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoConfirmationView.swift; sourceTree = "<group>"; };
 		DBF1EF432D13F730000FA4FE /* UserAgreement.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserAgreement.txt; sourceTree = "<group>"; };
 		DBF1EF452D15A0B0000FA4FE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		DBF1EF492D1694FE000FA4FE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		DBF1EF4A2D1694FE000FA4FE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DBF1EF4C2D16951A000FA4FE /* LocalizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentView.swift; sourceTree = "<group>"; };
 		DBFCDD7A2CF374EB0067D73C /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		DBFCDD7C2CF407870067D73C /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -254,6 +259,7 @@
 		DB5A68192CD7968800F1D151 /* CartoonImages */ = {
 			isa = PBXGroup;
 			children = (
+				DBF1EF472D1694FE000FA4FE /* Resources */,
 				DBE1F8272D12F7CC00084871 /* Resource */,
 				DBABC65B2CDE567F001FD8C0 /* ViewModels */,
 				DBABC6522CDE5100001FD8C0 /* Services */,
@@ -298,6 +304,7 @@
 		DBABC6242CDC5281001FD8C0 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				DBF1EF4C2D16951A000FA4FE /* LocalizationManager.swift */,
 				DBFCDD7A2CF374EB0067D73C /* ThemeManager.swift */,
 				DBABC6252CDC5281001FD8C0 /* ImageProcessor.swift */,
 			);
@@ -377,6 +384,14 @@
 				DBF1EF432D13F730000FA4FE /* UserAgreement.txt */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		DBF1EF472D1694FE000FA4FE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DBF1EF482D1694FE000FA4FE /* Localizable.strings */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		DBFCDD822CF5B6690067D73C /* Components */ = {
@@ -482,6 +497,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = DB5A680E2CD7968800F1D151;
 			productRefGroup = DB5A68182CD7968800F1D151 /* Products */;
@@ -501,6 +517,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB5A68222CD7968A00F1D151 /* Preview Assets.xcassets in Resources */,
+				DBF1EF4B2D1694FE000FA4FE /* Localizable.strings in Resources */,
 				DBE1F8292D12F80800084871 /* PrivacyPolicy.txt in Resources */,
 				DBF1EF442D13F730000FA4FE /* UserAgreement.txt in Resources */,
 				DBFEA4992D0182FF007C73AE /*  LaunchScreen.storyboard in Resources */,
@@ -654,6 +671,7 @@
 				DBABC63C2CDC6A3B001FD8C0 /* Store.swift in Sources */,
 				DBDE9CC02D0B3354005EBAFC /* UserProfileView.swift in Sources */,
 				DB2F11E62CD7A0D5005EF0E5 /* ImagePicker.swift in Sources */,
+				DBF1EF4D2D16951A000FA4FE /* LocalizationManager.swift in Sources */,
 				DBABC6512CDC717C001FD8C0 /* AuthReducer.swift in Sources */,
 				DBFCDD7F2CF407870067D73C /* SettingsView.swift in Sources */,
 				DB2CEB112CF077B7006D7C52 /* CustomCameraView.swift in Sources */,
@@ -703,6 +721,18 @@
 			targetProxy = DB5A68322CD7968A00F1D151 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DBF1EF482D1694FE000FA4FE /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DBF1EF492D1694FE000FA4FE /* zh-Hans */,
+				DBF1EF4A2D1694FE000FA4FE /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		DB5A68392CD7968A00F1D151 /* Debug */ = {

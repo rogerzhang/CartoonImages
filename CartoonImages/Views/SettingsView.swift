@@ -16,9 +16,9 @@ struct SettingsView: View {
                         .cornerRadius(12)
                     
                     VStack(alignment: .leading) {
-                        Text("卡通化")
+                        Text("APP_NAME".localized)
                             .font(.headline)
-                        Text("版本 1.0.0")
+                        Text("VERSION".localized)
                             .font(.subheadline)
                             .foregroundColor(themeManager.secondaryText)
                     }
@@ -29,39 +29,38 @@ struct SettingsView: View {
             // 隐私和协议
             Section {
                 NavigationLink(destination: PrivacyPolicyView()) {
-                    Label("隐私政策", systemImage: "hand.raised.fill")
+                    Label("PRIVACY_POLICY".localized, systemImage: "hand.raised.fill")
                 }
                 
                 NavigationLink(destination: UserAgreementView()) {
-                    Label("用户协议", systemImage: "doc.text.fill")
+                    Label("USER_AGREEMENT".localized, systemImage: "doc.text.fill")
                 }
             }
             
             // 账号相关
             Section {
                 Button(action: { showDeleteAccountAlert = true }) {
-                    Label("注销账号", systemImage: "person.crop.circle.badge.minus")
+                    Label("DELETE_ACCOUNT".localized, systemImage: "person.crop.circle.badge.minus")
                         .foregroundColor(.red)
                 }
                 
                 Button(action: {
-                    // 执行登出操作
                     mainStore.dispatch(AppAction.auth(.logout))
                 }) {
-                    Label("退出登录", systemImage: "rectangle.portrait.and.arrow.right")
+                    Label("LOGOUT".localized, systemImage: "rectangle.portrait.and.arrow.right")
                         .foregroundColor(.red)
                 }
             }
         }
-        .navigationTitle("设置")
+        .navigationTitle("SETTINGS".localized)
         .navigationBarTitleDisplayMode(.inline)
-        .alert("确认注销账号", isPresented: $showDeleteAccountAlert) {
-            Button("取消", role: .cancel) { }
-            Button("确认注销", role: .destructive) {
+        .alert("DELETE_ACCOUNT_CONFIRM".localized, isPresented: $showDeleteAccountAlert) {
+            Button("CANCEL".localized, role: .cancel) { }
+            Button("CONFIRM_DELETE".localized, role: .destructive) {
                 // 执行注销账号操作
             }
         } message: {
-            Text("注销账号后，所有数据将被清除且无法恢复")
+            Text("DELETE_ACCOUNT_WARNING".localized)
         }
     }
 }

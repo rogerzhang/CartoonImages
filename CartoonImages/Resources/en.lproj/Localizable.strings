@@ -1,0 +1,81 @@
+// App Name
+"APP_NAME" = "Toon Art";
+
+// Common
+"OK" = "OK";
+"CANCEL" = "Cancel";
+"CLOSE" = "Close";
+"CONFIRM" = "Confirm";
+"PROCESSING" = "Processing...";
+
+// Main View
+"FEATURES" = "Features";
+"VIP" = "VIP";
+
+// Payment
+"UPGRADE_TO_PRO" = "Upgrade to Pro";
+"UNLOCK_FEATURES" = "Unlock All Features";
+"WEEKLY_PLAN" = "Weekly";
+"MONTHLY_PLAN" = "Monthly";
+"YEARLY_PLAN" = "Yearly";
+"WEEKLY_PLAN" = "Weekly Plan";
+"MONTHLY_PLAN" = "Monthly Plan";
+"YEARLY_PLAN" = "Yearly Plan";
+"PER_WEEKLY" = "/Weak";
+"PER_MONTHLY" = "/Month";
+"PER_YEARLY" = "/Year";
+"SUBSCRIBE_NOW" = "Subscribe Now";
+"RESTORE_PURCHASES" = "Restore Purchases";
+"MEMBER_STATUS" = "Member Status";
+"MEMBER_TYPE" = "Member Type";
+"NOT_SUBSCRIBED" = "Not Subscribed";
+"SUBSCRIBED" = "Subscribed";
+"EXPIRES_ON" = "Expires on: %@";
+"DAYS_LEFT" = "%d days left";
+"UPGRADE_TO_VIP" = "Upgrade to VIP";
+"TAKE_PHOTO" = "Take a photo";
+
+// Member Benefits
+"MEMBER_BENEFITS" = "Member Benefits";
+"BENEFIT_1" = "Unlimited Image Processing";
+"BENEFIT_2" = "Remove Watermark";
+"BENEFIT_3" = "Access Latest Effects";
+
+// Image Processing
+"PROCESSING_INIT" = "Initializing...";
+"PROCESSING_MODEL" = "Loading model...";
+"PROCESSING_ANALYZE" = "Analyzing image...";
+"PROCESSING_EFFECT" = "Applying effect...";
+"PROCESSING_OPTIMIZE" = "Optimizing result...";
+"PROCESSING_COMPLETE" = "Almost done...";
+"SAVE" = "Save";
+"RETAKE" = "Retake";
+"PROCESS" = "Process";
+
+// Camera
+"BEAUTY" = "Beauty";
+
+// Profile
+"PROFILE" = "Profile";
+"RATE_US" = "Rate Us";
+"SHARE" = "Share";
+"CONTACT_US" = "Contact Us";
+"PRIVACY_POLICY" = "Privacy Policy";
+"USER_AGREEMENT" = "User Agreement";
+"SETTINGS" = "Settings";
+"LOGOUT" = "Logout";
+"DELETE_ACCOUNT" = "Delete Account";
+
+// Alerts
+"SAVE_SUCCESS" = "Image saved successfully";
+"SAVE_FAILED" = "Failed to save image";
+"NO_PERMISSION" = "No permission to access photos";
+"UNKNOWN_ERROR" = "Unknown error";
+
+// Settings
+"DELETE_ACCOUNT_CONFIRM" = "Confirm Account Deletion";
+"CONFIRM_DELETE" = "Delete";
+"DELETE_ACCOUNT_WARNING" = "After deleting your account, all data will be cleared and cannot be recovered";
+"COPY_WECHAT" = "Copy WeChat ID";
+"CONTACT_INFO" = "WeChat ID: YOUR_WECHAT_ID\nWorking Hours: 9:00-18:00";
+  

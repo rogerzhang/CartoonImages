@@ -42,9 +42,9 @@ struct ProfileView: View {
                             .cornerRadius(12)
                         
                         VStack(alignment: .leading) {
-                            Text("画影")
+                            Text("APP_NAME".localized)
                                 .font(.headline)
-                            Text("版本 1.0.0")
+                            Text("VERSION".localized)
                                 .font(.subheadline)
                                 .foregroundColor(themeManager.secondaryText)
                         }
@@ -59,13 +59,12 @@ struct ProfileView: View {
                             UIApplication.shared.open(url)
                         }
                     }) {
-                        Label("给我们评分", systemImage: "star")
-//                            .labelStyle(CustomLabelStyle(imageColor: themeManager.accent, textColor: themeManager.text))
+                        Label("RATE_US".localized, systemImage: "star")
                             .foregroundColor(themeManager.text)
                     }
                     
                     Button(action: { showShareSheet = true }) {
-                        Label("分享给好友", systemImage: "square.and.arrow.up")
+                        Label("SHARE".localized, systemImage: "square.and.arrow.up")
                             .foregroundColor(themeManager.text)
                     }
                 }
@@ -73,7 +72,7 @@ struct ProfileView: View {
                 // Section 3: 客服
                 Section {
                     Button(action: { showContactSheet = true }) {
-                        Label("联系客服", systemImage: "message")
+                        Label("CONTACT_US".localized, systemImage: "message")
                             .foregroundColor(themeManager.text)
                     }
                 }
@@ -81,12 +80,12 @@ struct ProfileView: View {
                 // 隐私和协议
                 Section {
                     NavigationLink(destination: PrivacyPolicyView()) {
-                        Label("隐私政策", systemImage: "hand.raised")
+                        Label("PRIVACY_POLICY".localized, systemImage: "hand.raised")
                             .foregroundColor(themeManager.text)
                     }
                     
                     NavigationLink(destination: UserAgreementView()) {
-                        Label("用户协议", systemImage: "doc.text")
+                        Label("USER_AGREEMENT".localized, systemImage: "doc.text")
                             .foregroundColor(themeManager.text)
                     }
                 }
@@ -99,13 +98,13 @@ struct ProfileView: View {
             .sheet(isPresented: $showShareSheet) {
                 ShareSheet(items: ["分享文本内容", URL(string: "https://your-app-url.com")!])
             }
-            .alert("联系客服", isPresented: $showContactSheet) {
-                Button("复制客服微信", action: {
+            .alert("CONTACT_US".localized, isPresented: $showContactSheet) {
+                Button("COPY_WECHAT".localized, action: {
                     UIPasteboard.general.string = "客服微信号"
                 })
-                Button("取消", role: .cancel) { }
+                Button("CANCEL".localized, role: .cancel) { }
             } message: {
-                Text("客服微信号：YOUR_WECHAT_ID\n工作时间：9:00-18:00")
+                Text("CONTACT_INFO".localized)
             }
         }
         .onAppear {

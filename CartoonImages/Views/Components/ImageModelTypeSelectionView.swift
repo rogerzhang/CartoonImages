@@ -38,7 +38,7 @@ struct ImageModelTypeSelectionView: View {
             Button(action: {
                 showCameraView = true
             }) {
-                Text("点击拍照")
+                Text("TAKE_PHOTO".localized)
                     .foregroundColor(.white) // 设置文字颜色
                     .font(.headline)
                     .frame(width: 200, height: 60)

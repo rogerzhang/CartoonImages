@@ -1,0 +1,77 @@
+// App Name
+"APP_NAME" = "画影";
+
+// Common
+"OK" = "确定";
+"CANCEL" = "取消";
+"CLOSE" = "关闭";
+"CONFIRM" = "确认";
+"PROCESSING" = "处理中...";
+
+// Main View
+"FEATURES" = "特效";
+"VIP" = "会员";
+
+// Payment
+"UPGRADE_TO_PRO" = "升级到专业版";
+"UNLOCK_FEATURES" = "解锁所有高级功能";
+"WEEKLY_PLAN" = "周订阅";
+"MONTHLY_PLAN" = "月订阅";
+"YEARLY_PLAN" = "年订阅";
+"PER_WEEKLY" = "/周";
+"PER_MONTHLY" = "/月";
+"PER_YEARLY" = "/年";
+"SUBSCRIBE_NOW" = "立即开通";
+"RESTORE_PURCHASES" = "恢复购买";
+"MEMBER_STATUS" = "会员状态";
+"MEMBER_TYPE" = "会员类型";
+"NOT_SUBSCRIBED" = "未开通";
+"SUBSCRIBED" = "已开通";
+"EXPIRES_ON" = "到期时间：%@";
+"DAYS_LEFT" = "会员还有%d天到期";
+"UPGRADE_TO_VIP" = "请升级到VIP";
+
+// Member Benefits
+"MEMBER_BENEFITS" = "会员服务";
+"BENEFIT_1" = "无限次数处理图片";
+"BENEFIT_2" = "去除效果图片水印";
+"BENEFIT_3" = "及时更新和使用最新特效";
+
+// Image Processing
+"PROCESSING_INIT" = "正在初始化...";
+"PROCESSING_MODEL" = "正在加载模型...";
+"PROCESSING_ANALYZE" = "正在分析图片...";
+"PROCESSING_EFFECT" = "正在应用效果...";
+"PROCESSING_OPTIMIZE" = "正在优化结果...";
+"PROCESSING_COMPLETE" = "即将完成...";
+"SAVE" = "保存";
+"RETAKE" = "重拍";
+"PROCESS" = "处理";
+"TAKE_PHOTO" = "点击拍照";
+
+// Camera
+"BEAUTY" = "美颜";
+
+// Profile
+"PROFILE" = "个人中心";
+"RATE_US" = "给我们评分";
+"SHARE" = "分享给好友";
+"CONTACT_US" = "联系客服";
+"PRIVACY_POLICY" = "隐私政策";
+"USER_AGREEMENT" = "用户协议";
+"SETTINGS" = "设置";
+"LOGOUT" = "退出登录";
+"DELETE_ACCOUNT" = "注销账号";
+
+// Alerts
+"SAVE_SUCCESS" = "图片已成功保存到相册";
+"SAVE_FAILED" = "保存失败";
+"NO_PERMISSION" = "没有相册访问权限，请到设置中开启权限";
+"UNKNOWN_ERROR" = "未知错误";
+
+// Settings
+"DELETE_ACCOUNT_CONFIRM" = "确认注销账号";
+"CONFIRM_DELETE" = "确认注销";
+"DELETE_ACCOUNT_WARNING" = "注销账号后，所有数据将被清除且无法恢复";
+"COPY_WECHAT" = "复制客服微信";
+"CONTACT_INFO" = "客服微信号：YOUR_WECHAT_ID\n工作时间：9:00-18:00"; 

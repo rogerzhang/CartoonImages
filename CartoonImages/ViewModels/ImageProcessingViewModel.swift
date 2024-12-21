@@ -33,7 +33,7 @@ class ImageProcessingViewModel: ObservableObject {
         guard !isProcessing else { return }
         isProcessing = true
         processProgress = 0
-        processMessage = "正在初始化..."
+        processMessage = "PROCESSING_INIT".localized
         
         guard let image = selectedImage, let imageData = ImageProcessor.processForUpload(image) else { return }
         mainStore.dispatch(AppAction.image(.startProcessing(imageData, modelId)))
@@ -48,15 +48,15 @@ class ImageProcessingViewModel: ObservableObject {
             
             switch currentStep {
             case 1:
-                processMessage = "正在加载模型..."
+                processMessage = "PROCESSING_MODEL".localized
             case 2:
-                processMessage = "正在分析图片..."
+                processMessage = "PROCESSING_ANALYZE".localized
             case 3:
-                processMessage = "正在应用效果..."
+                processMessage = "PROCESSING_EFFECT".localized
             case 4:
-                processMessage = "正在优化结果..."
+                processMessage = "PROCESSING_OPTIMIZE".localized
             case 5:
-                processMessage = "即将完成..."
+                processMessage = "PROCESSING_COMPLETE".localized
             default:
                 break
             }

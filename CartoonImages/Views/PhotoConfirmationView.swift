@@ -55,7 +55,7 @@ struct PhotoConfirmationView: View {
                     VStack(spacing: 8) {
                         Image(systemName: "arrow.counterclockwise")
                             .font(.title2)
-                        Text("重拍")
+                        Text("RETAKE".localized)
                             .font(.caption)
                     }
                     .foregroundColor(themeManager.foreground)
@@ -68,7 +68,7 @@ struct PhotoConfirmationView: View {
                     VStack(spacing: 8) {
                         Image(systemName: "checkmark.circle.fill")
                             .font(.title2)
-                        Text("使用")
+                        Text("PROCESS".localized)
                             .font(.caption)
                     }
                     .foregroundColor(.purple)  // 使用与拍照按钮相同的颜色

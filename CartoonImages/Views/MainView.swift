@@ -40,7 +40,7 @@ struct MainView: View {
                         
                         VStack(spacing: 0) {
                             HStack {
-                                Text("Features")
+                                Text("FEATURES".localized)
                                     .font(.headline)
                                     .foregroundColor(themeManager.text)
                                     .padding(.vertical, 0)
@@ -100,13 +100,13 @@ struct MainView: View {
             } label: {
                 ZStack {
                     Image("vip")
-                    Text("   VIP")
+                    Text("VIP".localized)
                         .font(.system(size: 14, weight: .medium))
                         .foregroundColor(themeManager.text)
                 }
             }
             .buttonStyle(PlainButtonStyle())
-            .contentShape(Rectangle())  // 添加这行以扩大点击区域
+            .contentShape(Rectangle())
             
             Spacer()
             
@@ -118,18 +118,9 @@ struct MainView: View {
                     .foregroundColor(themeManager.accent)
             }
             .buttonStyle(PlainButtonStyle())
-            .contentShape(Rectangle())  // 添加这行以扩大点击区域
-  
-            
-//            NavigationLink(destination: {
-//                ProfileView()
-//            }) {
-//                Image("profiles")
-//                    .font(.system(size: 44))
-//                    .foregroundColor(themeManager.accent)
-//            }
+            .contentShape(Rectangle())
         }
-        .frame(height: 44)  // 固定导航栏高度
+        .frame(height: 44)
     }
 }
 

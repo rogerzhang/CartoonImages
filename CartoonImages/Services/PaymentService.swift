@@ -16,22 +16,22 @@ enum PaymentPlanType: String {
     var type: String {
         switch self {
         case .weekly:
-            return "周订阅"
+            return "WEEKLY_PLAN".localized
         case .monthly:
-            return "月订阅"
+            return "MONTHLY_PLAN".localized
         case .yearly:
-            return "年订阅"
+            return "YEARLY_PLAN".localized
         }
     }
     
     var per: String {
         switch self {
         case .weekly:
-            return "/周"
+            return "PER_WEEKLY".localized
         case .monthly:
-            return "/月"
+            return "PER_MONTHLY".localized
         case .yearly:
-            return "/年"
+            return "PER_YEARLY".localized
         }
     }
 }

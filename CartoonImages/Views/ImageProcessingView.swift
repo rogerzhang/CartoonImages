@@ -124,7 +124,7 @@ struct ImageProcessingView: View {
                             Image("save")
                                 .font(.largeTitle)
                                 .foregroundColor(themeManager.text)
-                            Text("保存")
+                            Text("SAVE".localized)
                                 .foregroundColor(.black)
                         }
                         
@@ -155,7 +155,7 @@ struct ImageProcessingView: View {
                             Image("retake")
                                 .font(.largeTitle)
                                 .foregroundColor(themeManager.text)
-                            Text("重拍")
+                            Text("RETAKE".localized)
                                 .foregroundColor(.black)
                         }
                     })
@@ -174,8 +174,8 @@ struct ImageProcessingView: View {
                     }
                     viewModel.processImage(with: model.id)
                 }, label: {
-                    Text("处理")
-                        .foregroundColor(.white) // 设置文字颜色
+                    Text("PROCESS".localized)
+                        .foregroundColor(.white)
                         .font(.headline)
                         .frame(width: 200, height: 60)
                         .background(
@@ -209,7 +209,7 @@ struct ImageProcessingView: View {
     // 保存图片到相册
        private func saveImageToPhotoLibrary() {
            guard let image = viewModel.processedImage else {
-               alertMessage = "没有可保存的图片"
+               alertMessage = "UNKNOWN_ERROR".localized
                showAlert = true
                return
            }
@@ -218,16 +218,16 @@ struct ImageProcessingView: View {
                switch status {
                case .authorized, .limited:
                    UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-                   alertMessage = "图片已成功保存到相册"
+                   alertMessage = "SAVE_SUCCESS".localized
                    showAlert = true
                case .denied, .restricted:
-                   alertMessage = "没有相册访问权限，请到设置中开启权限"
+                   alertMessage = "NO_PERMISSION".localized
                    showAlert = true
                case .notDetermined:
-                   alertMessage = "用户未决定是否授权访问"
+                   alertMessage = "UNKNOWN_ERROR".localized
                    showAlert = true
                @unknown default:
-                   alertMessage = "未知错误"
+                   alertMessage = "UNKNOWN_ERROR".localized
                    showAlert = true
                }
            }
