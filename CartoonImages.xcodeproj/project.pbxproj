@@ -43,15 +43,19 @@
 		DBABC65A2CDE513D001FD8C0 /* PaymentReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC6592CDE513D001FD8C0 /* PaymentReducer.swift */; };
 		DBABC65D2CDE567F001FD8C0 /* ImageProcessingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBABC65C2CDE567F001FD8C0 /* ImageProcessingViewModel.swift */; };
 		DBDE9CC02D0B3354005EBAFC /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDE9CBF2D0B3354005EBAFC /* UserProfileView.swift */; };
-		DBE1F8292D12F80800084871 /* PrivacyPolicy.txt in Resources */ = {isa = PBXBuildFile; fileRef = DBE1F8282D12F80800084871 /* PrivacyPolicy.txt */; };
 		DBE1F82B2D1301B200084871 /* UINavigationController+BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE1F82A2D1301B200084871 /* UINavigationController+BackButton.swift */; };
 		DBEE755C2CF17B6A00A833AD /* PhotoConfirmationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEE755B2CF17B6A00A833AD /* PhotoConfirmationView.swift */; };
-		DBF1EF442D13F730000FA4FE /* UserAgreement.txt in Resources */ = {isa = PBXBuildFile; fileRef = DBF1EF432D13F730000FA4FE /* UserAgreement.txt */; };
 		DBF1EF462D15A0B0000FA4FE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DBF1EF452D15A0B0000FA4FE /* StoreKit.framework */; };
 		DBF1EF4B2D1694FE000FA4FE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DBF1EF482D1694FE000FA4FE /* Localizable.strings */; };
 		DBF1EF4D2D16951A000FA4FE /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF1EF4C2D16951A000FA4FE /* LocalizationManager.swift */; };
 		DBF1EF502D169F45000FA4FE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DBF1EF4E2D169F45000FA4FE /* InfoPlist.strings */; };
 		DBF1EF542D16A03E000FA4FE /* Bundle+Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBF1EF532D16A03E000FA4FE /* Bundle+Version.swift */; };
+		DBF1EF5A2D16A31C000FA4FE /* PrivacyPolicy.txt in Resources */ = {isa = PBXBuildFile; fileRef = DBF1EF562D16A31C000FA4FE /* PrivacyPolicy.txt */; };
+		DBF1EF5B2D16A31C000FA4FE /* UserAgreement.txt in Resources */ = {isa = PBXBuildFile; fileRef = DBF1EF582D16A31C000FA4FE /* UserAgreement.txt */; };
+		DBF1EF622D16AA86000FA4FE /* PrivacyPolicy_en.txt in Resources */ = {isa = PBXBuildFile; fileRef = DBF1EF5E2D16AA86000FA4FE /* PrivacyPolicy_en.txt */; };
+		DBF1EF632D16AA86000FA4FE /* UserAgreement_zh.txt in Resources */ = {isa = PBXBuildFile; fileRef = DBF1EF5F2D16AA86000FA4FE /* UserAgreement_zh.txt */; };
+		DBF1EF642D16AA86000FA4FE /* PrivacyPolicy_zh.txt in Resources */ = {isa = PBXBuildFile; fileRef = DBF1EF602D16AA86000FA4FE /* PrivacyPolicy_zh.txt */; };
+		DBF1EF652D16AA86000FA4FE /* UserAgreement_en.txt in Resources */ = {isa = PBXBuildFile; fileRef = DBF1EF612D16AA86000FA4FE /* UserAgreement_en.txt */; };
 		DBFCDD772CF2DEEA0067D73C /* PaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */; };
 		DBFCDD7B2CF374EB0067D73C /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFCDD7A2CF374EB0067D73C /* ThemeManager.swift */; };
 		DBFCDD7E2CF407870067D73C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFCDD7C2CF407870067D73C /* ProfileView.swift */; };
@@ -126,10 +130,8 @@
 		DBABC65C2CDE567F001FD8C0 /* ImageProcessingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessingViewModel.swift; sourceTree = "<group>"; };
 		DBDE9CBF2D0B3354005EBAFC /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		DBE1F8262D1010C600084871 /* Test1.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Test1.storekit; sourceTree = "<group>"; };
-		DBE1F8282D12F80800084871 /* PrivacyPolicy.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = PrivacyPolicy.txt; sourceTree = "<group>"; };
 		DBE1F82A2D1301B200084871 /* UINavigationController+BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+BackButton.swift"; sourceTree = "<group>"; };
 		DBEE755B2CF17B6A00A833AD /* PhotoConfirmationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoConfirmationView.swift; sourceTree = "<group>"; };
-		DBF1EF432D13F730000FA4FE /* UserAgreement.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = UserAgreement.txt; sourceTree = "<group>"; };
 		DBF1EF452D15A0B0000FA4FE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		DBF1EF492D1694FE000FA4FE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		DBF1EF4A2D1694FE000FA4FE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -138,6 +140,14 @@
 		DBF1EF512D169F5D000FA4FE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		DBF1EF532D16A03E000FA4FE /* Bundle+Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+Version.swift"; sourceTree = "<group>"; };
 		DBF1EF552D16A091000FA4FE /* SharedConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SharedConfig.xcconfig; sourceTree = "<group>"; };
+		DBF1EF572D16A31C000FA4FE /* en */ = {isa = PBXFileReference; lastKnownFileType = text; name = en; path = en.lproj/PrivacyPolicy.txt; sourceTree = "<group>"; };
+		DBF1EF592D16A31C000FA4FE /* en */ = {isa = PBXFileReference; lastKnownFileType = text; name = en; path = en.lproj/UserAgreement.txt; sourceTree = "<group>"; };
+		DBF1EF5C2D16A349000FA4FE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text; name = "zh-Hans"; path = "zh-Hans.lproj/PrivacyPolicy.txt"; sourceTree = "<group>"; };
+		DBF1EF5D2D16A349000FA4FE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text; name = "zh-Hans"; path = "zh-Hans.lproj/UserAgreement.txt"; sourceTree = "<group>"; };
+		DBF1EF5E2D16AA86000FA4FE /* PrivacyPolicy_en.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PrivacyPolicy_en.txt; sourceTree = "<group>"; };
+		DBF1EF5F2D16AA86000FA4FE /* UserAgreement_zh.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserAgreement_zh.txt; sourceTree = "<group>"; };
+		DBF1EF602D16AA86000FA4FE /* PrivacyPolicy_zh.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PrivacyPolicy_zh.txt; sourceTree = "<group>"; };
+		DBF1EF612D16AA86000FA4FE /* UserAgreement_en.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserAgreement_en.txt; sourceTree = "<group>"; };
 		DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentView.swift; sourceTree = "<group>"; };
 		DBFCDD7A2CF374EB0067D73C /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		DBFCDD7C2CF407870067D73C /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -388,8 +398,10 @@
 		DBE1F8272D12F7CC00084871 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				DBE1F8282D12F80800084871 /* PrivacyPolicy.txt */,
-				DBF1EF432D13F730000FA4FE /* UserAgreement.txt */,
+				DBF1EF5E2D16AA86000FA4FE /* PrivacyPolicy_en.txt */,
+				DBF1EF602D16AA86000FA4FE /* PrivacyPolicy_zh.txt */,
+				DBF1EF612D16AA86000FA4FE /* UserAgreement_en.txt */,
+				DBF1EF5F2D16AA86000FA4FE /* UserAgreement_zh.txt */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -397,6 +409,8 @@
 		DBF1EF472D1694FE000FA4FE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DBF1EF562D16A31C000FA4FE /* PrivacyPolicy.txt */,
+				DBF1EF582D16A31C000FA4FE /* UserAgreement.txt */,
 				DBF1EF4E2D169F45000FA4FE /* InfoPlist.strings */,
 				DBF1EF482D1694FE000FA4FE /* Localizable.strings */,
 			);
@@ -534,11 +548,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB5A68222CD7968A00F1D151 /* Preview Assets.xcassets in Resources */,
+				DBF1EF642D16AA86000FA4FE /* PrivacyPolicy_zh.txt in Resources */,
 				DBF1EF502D169F45000FA4FE /* InfoPlist.strings in Resources */,
+				DBF1EF632D16AA86000FA4FE /* UserAgreement_zh.txt in Resources */,
+				DBF1EF622D16AA86000FA4FE /* PrivacyPolicy_en.txt in Resources */,
 				DBF1EF4B2D1694FE000FA4FE /* Localizable.strings in Resources */,
-				DBE1F8292D12F80800084871 /* PrivacyPolicy.txt in Resources */,
-				DBF1EF442D13F730000FA4FE /* UserAgreement.txt in Resources */,
+				DBF1EF5A2D16A31C000FA4FE /* PrivacyPolicy.txt in Resources */,
+				DBF1EF652D16AA86000FA4FE /* UserAgreement_en.txt in Resources */,
 				DBFEA4992D0182FF007C73AE /*  LaunchScreen.storyboard in Resources */,
+				DBF1EF5B2D16A31C000FA4FE /* UserAgreement.txt in Resources */,
 				DB5A681F2CD7968A00F1D151 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -758,6 +776,24 @@
 				DBF1EF512D169F5D000FA4FE /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DBF1EF562D16A31C000FA4FE /* PrivacyPolicy.txt */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DBF1EF572D16A31C000FA4FE /* en */,
+				DBF1EF5C2D16A349000FA4FE /* zh-Hans */,
+			);
+			name = PrivacyPolicy.txt;
+			sourceTree = "<group>";
+		};
+		DBF1EF582D16A31C000FA4FE /* UserAgreement.txt */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DBF1EF592D16A31C000FA4FE /* en */,
+				DBF1EF5D2D16A349000FA4FE /* zh-Hans */,
+			);
+			name = UserAgreement.txt;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -26,9 +26,12 @@ class LocalizationManager {
                let language = Language(rawValue: savedLanguage) {
                 return language
             }
-            // 如果没有保存的语言设置，使用系统语言
-            let preferredLanguage = Bundle.main.preferredLocalizations.first ?? "en"
-            return Language(rawValue: preferredLanguage) ?? .english
+            // 使用系统语言
+            let preferredLanguage = Locale.current.languageCode ?? "en"
+            if preferredLanguage.starts(with: "zh") {
+                return .chinese
+            }
+            return .english
         }
         set {
             defaults.set(newValue.rawValue, forKey: languageKey)
@@ -39,7 +42,6 @@ class LocalizationManager {
                 Bundle.main.setValue(languageBundle, forKey: "localizationBundle")
             }
             
-            // 发送通知
             NotificationCenter.default.post(name: .languageChanged, object: nil)
         }
     }

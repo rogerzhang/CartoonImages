@@ -76,7 +76,7 @@ struct PrivacyPolicyView: View {
                 .foregroundColor(themeManager.text)
                 .padding()
         }
-        .navigationTitle("隐私政策")
+        .navigationTitle("PRIVACY_POLICY".localized)
         .background(themeManager.background)
         .navigationBarBackButtonHidden()
         .toolbar {
@@ -92,9 +92,16 @@ struct PrivacyPolicyView: View {
     }
     
     func loadPrivacyPolicy() -> String {
-        if let path = Bundle.main.path(forResource: "PrivacyPolicy", ofType: "txt") {
-            return (try? String(contentsOfFile: path)) ?? "Privacy Policy not available."
+        let preferredLanguages = Bundle.main.preferredLocalizations
+        let language = preferredLanguages.first ?? "en"
+        let fileName = language.starts(with: "zh") ? "PrivacyPolicy_zh" : "PrivacyPolicy_en"
+
+        if let path = Bundle.main.path(forResource: fileName, ofType: "txt", inDirectory: nil, forLocalization: language) {
+            if let content = try? String(contentsOfFile: path, encoding: .utf8) {
+                return content
+            }
         }
+        
         return "Privacy Policy not available."
     }
 }
@@ -110,7 +117,7 @@ struct UserAgreementView: View {
                 .foregroundColor(themeManager.text)
                 .padding()
         }
-        .navigationTitle("用户协议")
+        .navigationTitle("USER_AGREEMENT".localized)
         .background(themeManager.background)
         .navigationBarBackButtonHidden()
         .toolbar {
@@ -126,9 +133,16 @@ struct UserAgreementView: View {
     }
     
     func loadPrivacyPolicy() -> String {
-        if let path = Bundle.main.path(forResource: "UserAgreement", ofType: "txt") {
-            return (try? String(contentsOfFile: path)) ?? "UserAgreement not available."
+        let preferredLanguages = Bundle.main.preferredLocalizations
+        let language = preferredLanguages.first ?? "en"        
+        let fileName = language.starts(with: "zh") ? "UserAgreement_zh" : "UserAgreement_en"
+
+        if let path = Bundle.main.path(forResource: fileName, ofType: "txt", inDirectory: nil, forLocalization: language) {
+            if let content = try? String(contentsOfFile: path, encoding: .utf8) {
+                return content
+            }
         }
-        return "UserAgreement not available."
+        
+        return "User Agreement not available."
     }
 }
