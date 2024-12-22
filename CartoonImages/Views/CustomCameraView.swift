@@ -102,7 +102,7 @@ struct CustomCameraView: View {
                             guard let model = viewModel.currentModelType else {
                                 return
                             }
-                            viewModel.selectedImage = selectedImage
+                            mainStore.dispatch(AppAction.image(.selectImage(selectedImage)))
                             viewModel.processImage(with: model.id)
                         }
                     )

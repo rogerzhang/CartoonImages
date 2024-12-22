@@ -40,6 +40,9 @@ struct ImageProcessingView: View {
                     
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button(action: {
+                            viewModel.selectedImage = nil
+                            viewModel.processedImage = nil
+                            mainStore.dispatch(AppAction.image(.selectImage(nil)))
                             self.presentationMode.wrappedValue.dismiss()
                         }) {
                             Image(systemName: "chevron.backward")
@@ -97,10 +100,15 @@ struct ImageProcessingView: View {
         }
         .navigationBarBackButtonHidden(true)
         .alert(isPresented: $showAlert) {
-                   Alert(title: Text("提示"), message: Text(alertMessage), dismissButton: .default(Text("确定")))
-               }
+            Alert(title: Text("提示"), message: Text(alertMessage), dismissButton: .default(Text("确定")))
+        }
         .background(themeManager.background)
         .environmentObject(viewModel)
+        .onDisappear {
+            viewModel.selectedImage = nil
+            viewModel.processedImage = nil
+            mainStore.dispatch(AppAction.image(.selectImage(nil)))
+        }
     }
     
     // MARK: - 图片预览区域
