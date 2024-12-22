@@ -79,4 +79,8 @@
 "DELETE_ACCOUNT_WARNING" = "After deleting your account, all data will be cleared and cannot be recovered";
 "COPY_WECHAT" = "Copy WeChat ID";
 "CONTACT_INFO" = "WeChat ID: YOUR_WECHAT_ID\nWorking Hours: 9:00-18:00";
+
+// Network
+"NETWORK_PERMISSION_TITLE" = "Network Access Required";
+"NETWORK_PERMISSION_MESSAGE" = "This app requires network access to function properly. Please allow network access in your device settings.";
   

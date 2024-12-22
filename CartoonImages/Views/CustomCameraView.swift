@@ -102,6 +102,7 @@ struct CustomCameraView: View {
                             guard let model = viewModel.currentModelType else {
                                 return
                             }
+                            viewModel.selectedImage = selectedImage
                             viewModel.processImage(with: model.id)
                         }
                     )

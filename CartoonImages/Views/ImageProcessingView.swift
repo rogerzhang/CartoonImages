@@ -84,9 +84,6 @@ struct ImageProcessingView: View {
                 .transition(.opacity)
                 .animation(.easeInOut, value: viewModel.isProcessing)
             }
-            
-            // 底部模型选择区域
-//            modelSelectionArea
         }
         .sheet(isPresented: $showPayment) {
             PaymentView(
@@ -127,23 +124,6 @@ struct ImageProcessingView: View {
                             Text("SAVE".localized)
                                 .foregroundColor(.black)
                         }
-                        
-//                        Text("保存")
-//                            .foregroundColor(.white) // 设置文字颜色
-//                            .font(.headline)
-//                            .frame(width: 80, height: 44)
-//                            .background(
-//                                LinearGradient(
-//                                    gradient: Gradient(colors: [Color(hex: 0x9D40F5), Color(hex: 0xFFB979)]),
-//                                    startPoint: .leading,
-//                                    endPoint: .trailing
-//                                )
-//                                .clipShape(RoundedRectangle(cornerRadius: 20))
-//                            )
-//                            .overlay( // 为按钮添加边框
-//                                RoundedRectangle(cornerRadius: 20)
-//                                    .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-//                            )
                     })
 
                     Button(action: {

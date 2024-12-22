@@ -11,6 +11,7 @@ import ReSwift
 @main
 struct CartoonImagesApp: App {
     @StateObject private var themeManager = ThemeManager()
+    @StateObject private var networkManager = NetworkPermissionManager.shared
     
     init() {
         // 设置订阅状态变化的监听
@@ -23,6 +24,13 @@ struct CartoonImagesApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(themeManager)
+                .alert("NETWORK_PERMISSION_TITLE".localized, isPresented: Binding<Bool>(
+                    get: { !networkManager.isNetworkAuthorized },
+                    set: { networkManager.isNetworkAuthorized = !$0 })) {
+                    Button("OK".localized) { }
+                } message: {
+                    Text("NETWORK_PERMISSION_MESSAGE".localized)
+                }
         }
     }
 }
