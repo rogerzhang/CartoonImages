@@ -63,13 +63,17 @@ class ImageProcessingViewModel: ObservableObject {
         }
         
         // 模拟处理过程
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
+            guard let self = self else { return }
             DispatchQueue.main.async {
                 if currentStep < totalSteps {
                     updateProgress()
                 } else {
                     timer.invalidate()
-                    self.processedImage = self.processedImage // 实际应用中这里是处理后的图片
+                    // 如果不是会员，添加水印
+                    if !self.isSubscribed, let processedImage = self.processedImage {
+                        self.processedImage = WatermarkManager.addWatermark(to: processedImage)
+                    }
                     self.isProcessing = false
                     self.processProgress = 0
                 }

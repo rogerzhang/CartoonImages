@@ -49,7 +49,12 @@ class NetworkService {
                     throw ProcessImageError.invalidResponse
                 }
                 print("====[CM]END: \(Date.now)")
-                return processedImage
+                if mainStore.state.paymentState.isSubscribed {
+                    return processedImage
+                } else {
+                    return WatermarkManager.addWatermark(to: processedImage)
+
+                }
             }
             .mapError { error -> ProcessImageError in
                 if let processError = error as? ProcessImageError {
