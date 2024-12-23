@@ -1,1 +1,4 @@
-CFBundleDisplayName = "画影"; 
+CFBundleDisplayName = "画影";
+NSCameraUsageDescription = "需要相机权限来拍摄照片并进行处理";
+NSPhotoLibraryUsageDescription = "需要相册权限来保存和处理您的照片";
+NSPhotoLibraryAddUsageDescription = "需要相册权限来保存处理后的照片";

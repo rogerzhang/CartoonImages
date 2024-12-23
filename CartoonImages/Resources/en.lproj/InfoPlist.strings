@@ -1,1 +1,4 @@
-CFBundleDisplayName = "ToonYou"; 
+CFBundleDisplayName = "ToonYou";
+NSCameraUsageDescription = "Camera access is required to take photos for image processing";
+NSPhotoLibraryUsageDescription = "Photo Library access is required to save and process your photos";
+NSPhotoLibraryAddUsageDescription = "Photo Library access is required to save processed photos";
