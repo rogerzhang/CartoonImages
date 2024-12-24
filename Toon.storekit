@@ -1,5 +1,5 @@
 {
-  "identifier" : "39A7FE22",
+  "identifier" : "56AB8013",
   "nonRenewingSubscriptions" : [
 
   ],
@@ -7,7 +7,12 @@
 
   ],
   "settings" : {
+    "_applicationInternalID" : "6739438626",
+    "_developerTeamID" : "ZLNRJW7978",
     "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 756697256.57849503,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
     "_storeKitErrors" : [
       {
         "current" : null,
@@ -58,37 +63,12 @@
   },
   "subscriptionGroups" : [
     {
-      "id" : "D2C39097",
+      "id" : "21607725",
       "localizations" : [
 
       ],
-      "name" : "toon_you",
+      "name" : "ToonSub",
       "subscriptions" : [
-        {
-          "adHocOffers" : [
-
-          ],
-          "codeOffers" : [
-
-          ],
-          "displayPrice" : "0.99",
-          "familyShareable" : false,
-          "groupNumber" : 1,
-          "internalID" : "21F4305F",
-          "introductoryOffer" : null,
-          "localizations" : [
-            {
-              "description" : "",
-              "displayName" : "",
-              "locale" : "en_US"
-            }
-          ],
-          "productID" : "toon.week",
-          "recurringSubscriptionPeriod" : "P1W",
-          "referenceName" : "Week",
-          "subscriptionGroupID" : "D2C39097",
-          "type" : "RecurringSubscription"
-        },
         {
           "adHocOffers" : [
 
@@ -98,20 +78,50 @@
           ],
           "displayPrice" : "1.99",
           "familyShareable" : false,
-          "groupNumber" : 1,
-          "internalID" : "579082A4",
+          "groupNumber" : 3,
+          "internalID" : "6739792203",
           "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "",
-              "displayName" : "",
+              "description" : "AI cartoon avatar, photo to cartoon, anime",
+              "displayName" : "ToonYou",
               "locale" : "en_US"
+            },
+            {
+              "description" : "一键卡通化，让肖像变艺术！",
+              "displayName" : "画影",
+              "locale" : "zh_CN"
             }
           ],
           "productID" : "toon.month",
           "recurringSubscriptionPeriod" : "P1M",
-          "referenceName" : "Month",
-          "subscriptionGroupID" : "D2C39097",
+          "referenceName" : "monthly",
+          "subscriptionGroupID" : "21607725",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "6739792087",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "AI cartoon avatar, photo to cartoon, anime",
+              "displayName" : "ToonYou",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "toon.week",
+          "recurringSubscriptionPeriod" : "P1W",
+          "referenceName" : "weekly",
+          "subscriptionGroupID" : "21607725",
           "type" : "RecurringSubscription"
         },
         {
@@ -123,20 +133,25 @@
           ],
           "displayPrice" : "14.99",
           "familyShareable" : false,
-          "groupNumber" : 1,
-          "internalID" : "ACBAD49B",
+          "groupNumber" : 4,
+          "internalID" : "6739792499",
           "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "",
-              "displayName" : "",
+              "description" : "AI cartoon avatar, photo to cartoon, anime",
+              "displayName" : "ToonYou",
               "locale" : "en_US"
+            },
+            {
+              "description" : "一键卡通化，让肖像变艺术！",
+              "displayName" : "画影",
+              "locale" : "zh_CN"
             }
           ],
           "productID" : "toon.year",
           "recurringSubscriptionPeriod" : "P1Y",
-          "referenceName" : "Year",
-          "subscriptionGroupID" : "D2C39097",
+          "referenceName" : "yearly",
+          "subscriptionGroupID" : "21607725",
           "type" : "RecurringSubscription"
         }
       ]

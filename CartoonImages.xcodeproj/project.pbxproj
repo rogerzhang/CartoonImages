@@ -153,6 +153,7 @@
 		DBF1EF662D182EAA000FA4FE /* NetworkPermissionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkPermissionManager.swift; sourceTree = "<group>"; };
 		DBF1EF682D183929000FA4FE /* WatermarkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatermarkManager.swift; sourceTree = "<group>"; };
 		DBF1EF6A2D184968000FA4FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		DBF1EF6C2D1A4878000FA4FE /* Toon.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Toon.storekit; sourceTree = "<group>"; };
 		DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentView.swift; sourceTree = "<group>"; };
 		DBFCDD7A2CF374EB0067D73C /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		DBFCDD7C2CF407870067D73C /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
@@ -257,6 +258,7 @@
 		DB5A680E2CD7968800F1D151 = {
 			isa = PBXGroup;
 			children = (
+				DBF1EF6C2D1A4878000FA4FE /* Toon.storekit */,
 				DBF1EF552D16A091000FA4FE /* SharedConfig.xcconfig */,
 				DBE1F8262D1010C600084871 /* Test1.storekit */,
 				DB5A68192CD7968800F1D151 /* CartoonImages */,
