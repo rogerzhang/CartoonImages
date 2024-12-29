@@ -4,13 +4,14 @@ import UIKit
 
 enum API {
     case processImage(imageData: Data, modelType: String)
+    case clearerImage(imageData: Data, modelType: String)
     case fetchProducts
     case purchase(productId: String)
 }
 
 extension API: TargetType {
     var baseURL: URL {
-        return URL(string: "https://holymason.cn")!
+        return URL(string: "https://hk.holymason.cn")!
 //        return URL(string: "https://test.holymason.cn")!
     }
     
@@ -18,6 +19,8 @@ extension API: TargetType {
         switch self {
         case .processImage:
             return "/image/process/"
+        case .clearerImage:
+            return "/clearer/process/"
         case .fetchProducts:
             return "/products"
         case .purchase:
@@ -27,7 +30,7 @@ extension API: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .processImage:
+        case .processImage, .clearerImage:
             return .post
         case .fetchProducts, .purchase:
             return .get
@@ -36,7 +39,7 @@ extension API: TargetType {
     
     var task: Task {
         switch self {
-        case let .processImage(imageData, modelType):
+        case let .processImage(imageData, modelType), let .clearerImage(imageData, modelType):
             let formData = [
                 MultipartFormData(provider: .data(imageData),
                                 name: "file",

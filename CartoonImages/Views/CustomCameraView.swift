@@ -103,7 +103,7 @@ struct CustomCameraView: View {
                                 return
                             }
                             mainStore.dispatch(AppAction.image(.selectImage(selectedImage)))
-                            viewModel.processImage(with: model.modelId)
+                            viewModel.processImage(with: model)
                         }
                     )
                     .transition(.opacity)

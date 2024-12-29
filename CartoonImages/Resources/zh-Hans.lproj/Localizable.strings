@@ -66,6 +66,11 @@
 "LOGOUT" = "退出登录";
 "DELETE_ACCOUNT" = "注销账号";
 
+// Error
+"TRY_IT_LATER" = "出错啦，请重试...";
+"ERROR_OCCURRED" = "发生一个错误";
+"HINT_TITLE" = "提示";
+
 // Alerts
 "SAVE_SUCCESS" = "图片已成功保存到相册";
 "SAVE_FAILED" = "保存失败";
@@ -77,7 +82,7 @@
 "CONFIRM_DELETE" = "确认注销";
 "DELETE_ACCOUNT_WARNING" = "注销账号后，所有数据将被清除且无法恢复";
 "COPY_WECHAT" = "复制客服微信";
-"CONTACT_INFO" = "客服微信号：YOUR_WECHAT_ID\n工作时间：9:00-18:00"; 
+"CONTACT_INFO" = "客服微信号：FelixChen33\n工作时间：9:00-18:00"; 
 
 // Network
 "NETWORK_PERMISSION_TITLE" = "需要网络访问权限";

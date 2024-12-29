@@ -8,6 +8,8 @@ class ImageProcessingViewModel: ObservableObject {
     @Published var processedImage: UIImage?
     @Published var isProcessing = false
     @Published var processProgress: Double = 0
+    @Published var showProcessError = false
+    @Published var processErrorMsg: String?
     @Published var processMessage: String = "处理中..."
     @Published var paymentIsProcessing: Bool = false
     @Published var paymentError: String? = nil
@@ -29,14 +31,14 @@ class ImageProcessingViewModel: ObservableObject {
         }
     }
     
-    func processImage(with modelId: String) {
+    func processImage(with model: ImageModelType) {
         guard !isProcessing else { return }
         isProcessing = true
         processProgress = 0
         processMessage = "PROCESSING_INIT".localized
         
         guard let image = selectedImage, let imageData = ImageProcessor.processForUpload(image) else { return }
-        mainStore.dispatch(AppAction.image(.startProcessing(imageData, modelId)))
+        mainStore.dispatch(AppAction.image(.startProcessing(imageData, model)))
 
         // 模拟处理过程
         let totalSteps = 5
@@ -137,6 +139,8 @@ extension ImageProcessingViewModel: StoreSubscriber {
             self.isProcessing = state.imageState.isProcessing
             self.paymentIsProcessing = state.paymentState.isProcessing
             self.paymentError = state.paymentState.error
+            self.showProcessError = state.imageState.showError
+            self.processErrorMsg = state.imageState.error
 //            self.showPaymentError = state.paymentState.showError
             self.modelTypes = state.imageState.modelTypes ?? []
             self.currentModelType = state.imageState.currentModelType

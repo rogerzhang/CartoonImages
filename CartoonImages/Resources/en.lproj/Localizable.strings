@@ -69,6 +69,11 @@
 "LOGOUT" = "Logout";
 "DELETE_ACCOUNT" = "Delete Account";
 
+// Error
+"TRY_IT_LATER" = "Please try it later...";
+"ERROR_OCCURRED" = "An error occurred";
+"HINT_TITLE" = "Hint";
+
 // Alerts
 "SAVE_SUCCESS" = "Image saved successfully";
 "SAVE_FAILED" = "Failed to save image";

@@ -36,7 +36,55 @@ class NetworkService {
     
     private init() {}
     
-    func processImage(_ imageData: Data, modelType: String = "1") -> AnyPublisher<UIImage, ProcessImageError> {
+    func processImage(_ imageData: Data, model: ImageModelType) -> AnyPublisher<UIImage, ProcessImageError> {
+        let size = imageData.count
+        print("size === \(size / 1000)KB")
+        
+        var target = API.processImage(imageData: imageData, modelType: model.modelId)
+        if model.id == "7" {
+            target = API.clearerImage(imageData: imageData, modelType: model.modelId)
+        }
+        
+        return provider.requestPublisher(target)
+            .tryMap { response -> UIImage in
+                let imageResponse = try JSONDecoder().decode(ImageResponse.self, from: response.data)
+                
+                guard imageResponse.status == "success",
+                      let imageData = Data(base64Encoded: imageResponse.images),
+                      let processedImage = UIImage(data: imageData) else {
+                    throw ProcessImageError.invalidResponse
+                }
+                print("====[CM]END: \(Date.now)")
+                if mainStore.state.paymentState.isSubscribed {
+                    return processedImage
+                } else {
+                    return WatermarkManager.addWatermark(to: processedImage)
+
+                }
+            }
+            .mapError { error -> ProcessImageError in
+                if let processError = error as? ProcessImageError {
+                    return processError
+                }
+                if let moyaError = error as? MoyaError {
+                    switch moyaError {
+                    case .statusCode(let response):
+                        if response.statusCode == 400 {
+                            if let json = try? JSONSerialization.jsonObject(with: response.data) as? [String: String],
+                               let errorMessage = json["error"] {
+                                return .serverError(errorMessage)
+                            }
+                        }
+                    default:
+                        break
+                    }
+                }
+                return .unknown(error)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func processImage1(_ imageData: Data, modelType: String = "1") -> AnyPublisher<UIImage, ProcessImageError> {
         let size = imageData.count
         print("size === \(size / 1000)KB")
         return provider.requestPublisher(.processImage(imageData: imageData, modelType: modelType))

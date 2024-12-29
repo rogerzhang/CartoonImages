@@ -26,7 +26,7 @@ struct CartoonImagesApp: App {
                 .environmentObject(themeManager)
                 .alert("NETWORK_PERMISSION_TITLE".localized, isPresented: Binding<Bool>(
                     get: { !networkManager.isNetworkAuthorized },
-                    set: { networkManager.isNetworkAuthorized = !$0 })) {
+                    set: { newValue in networkManager.isNetworkAuthorized = !newValue })) {
                     Button("OK".localized) { }
                 } message: {
                     Text("NETWORK_PERMISSION_MESSAGE".localized)

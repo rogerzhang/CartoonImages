@@ -100,7 +100,10 @@ struct ImageProcessingView: View {
         }
         .navigationBarBackButtonHidden(true)
         .alert(isPresented: $showAlert) {
-            Alert(title: Text("提示"), message: Text(alertMessage), dismissButton: .default(Text("确定")))
+            Alert(title: Text("HINT_TITLE".localized), message: Text(alertMessage), dismissButton: .default(Text("OK".localized)))
+        }
+        .alert(isPresented: $viewModel.showProcessError) {
+            Alert(title: Text("ERROR_OCCURRED".localized), message: Text(viewModel.processErrorMsg ?? "TRY_IT_LATER".localized), dismissButton: .default(Text("OK".localized)))
         }
         .background(themeManager.background)
         .environmentObject(viewModel)
@@ -160,7 +163,7 @@ struct ImageProcessingView: View {
                     guard let model = viewModel.currentModelType else {
                         return
                     }
-                    viewModel.processImage(with: model.modelId)
+                    viewModel.processImage(with: model)
                 }, label: {
                     Text("PROCESS".localized)
                         .foregroundColor(.white)
