@@ -20,6 +20,7 @@ class ImageProcessingViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     private var initialModelId: String?
+    private var timer: Timer?
        
     init(initialModelId: String? = nil) {
         self.initialModelId = initialModelId
@@ -39,12 +40,17 @@ class ImageProcessingViewModel: ObservableObject {
         
         guard let image = selectedImage, let imageData = ImageProcessor.processForUpload(image) else { return }
         mainStore.dispatch(AppAction.image(.startProcessing(imageData, model)))
-
+        
+        startSimulateProgress()
+    }
+    
+    func startSimulateProgress() {
         // 模拟处理过程
-        let totalSteps = 5
+        let totalSteps = 6
         var currentStep = 0
         
         func updateProgress() {
+            guard currentStep < 5 else { return }
             currentStep += 1
             processProgress = Double(currentStep) / Double(totalSteps)
             
@@ -64,24 +70,21 @@ class ImageProcessingViewModel: ObservableObject {
             }
         }
         
+        self.timer?.invalidate()
         // 模拟处理过程
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] timer in
-            guard let self = self else { return }
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             DispatchQueue.main.async {
                 if currentStep < totalSteps {
                     updateProgress()
-                } else {
-                    timer.invalidate()
-                    // 如果不是会员，添加水印
-                    if !self.isSubscribed, let processedImage = self.processedImage {
-                        self.processedImage = WatermarkManager.addWatermark(to: processedImage)
-                    }
-                    self.isProcessing = false
-                    self.processProgress = 0
                 }
             }
         }
     }
+    
+    func stopSimulateProgress() {
+        self.processProgress = 0
+    }
+    
     //func handlePayment(amount: Decimal) {
     func handlePayment() {
         guard let currentPlan = self.currentModelType else {
@@ -145,6 +148,10 @@ extension ImageProcessingViewModel: StoreSubscriber {
             self.modelTypes = state.imageState.modelTypes ?? []
             self.currentModelType = state.imageState.currentModelType
             self.isSubscribed = state.paymentState.isSubscribed
+            
+            if !self.isProcessing {
+                self.stopSimulateProgress()
+            }
         }
     }
 } 
