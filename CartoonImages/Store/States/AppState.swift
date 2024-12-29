@@ -39,12 +39,12 @@ struct AppState {
         self.authState = AuthState()
         self.imageState = ImageState()
         self.imageState.modelTypes = [
-            .init(id: "1", name: "动漫风格", imageName: "1"),
-            .init(id: "2", name: "素描风格", imageName: "2"),
-            .init(id: "3", name: "油画风格", imageName: "3"),
-            .init(id: "4", name: "水彩风格", imageName: "4"),
-            .init(id: "5", name: "铅笔画", imageName: "5"),
-            .init(id: "6", name: "复古风格", imageName: "6"),
+            .init(id: "1", name: "动漫风格", imageName: "1", modelId: "0"),
+            .init(id: "2", name: "油画风格", imageName: "2", modelId: "2"),
+            .init(id: "3", name: "水彩风格", imageName: "3", modelId: "3"),
+            .init(id: "4", name: "素描风格", imageName: "4", modelId: "1"),
+            .init(id: "5", name: "铅笔画", imageName: "5", modelId: "4"),
+            .init(id: "6", name: "复古风格", imageName: "6", modelId: "5"),
         ]
         self.paymentState = PaymentState()
     }

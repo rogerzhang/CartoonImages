@@ -43,6 +43,7 @@ func paymentReducer(action: Action, state: PaymentState?) -> PaymentState {
         state.isSubscribed = false
         
     case .updateSubscriptionStatus(let isSubscribed):
+        logInfo("updateSubscriptionStatus: \(isSubscribed)")
         state.isSubscribed = isSubscribed
         
     case .selectPlan(let plan):

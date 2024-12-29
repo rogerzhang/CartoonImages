@@ -160,7 +160,7 @@ struct ImageProcessingView: View {
                     guard let model = viewModel.currentModelType else {
                         return
                     }
-                    viewModel.processImage(with: model.id)
+                    viewModel.processImage(with: model.modelId)
                 }, label: {
                     Text("PROCESS".localized)
                         .foregroundColor(.white)
@@ -220,52 +220,4 @@ struct ImageProcessingView: View {
                }
            }
        }
-    
-    // MARK: - 底部模型选择区域
-//    private var modelSelectionArea: some View {
-//        ScrollView(.horizontal, showsIndicators: false) {
-//            LazyHStack(spacing: 15) {
-//                ForEach(viewModel.modelTypes, id: \.id) { modelType in
-//                    modelTypeButton(for: modelType)
-//                }
-//            }
-//            .padding()
-//        }
-//        .frame(height: 100)
-//        .background(Color.gray.opacity(0.1))
-//    }
-    
-    private func modelTypeButton(for modelType: (id: String, name: String)) -> some View {
-        Button(action: {
-            guard viewModel.selectedImage != nil else { return }
-            selectedModelType = modelType.id
-            viewModel.processImage(with: modelType.id)
-        }) {
-            VStack {
-                Text(modelType.name)
-                    .foregroundColor(selectedModelType == modelType.id ? 
-                        themeManager.text : 
-                        themeManager.secondaryText)
-                    .background(
-                        RoundedRectangle(cornerRadius: 20)
-                            .fill(selectedModelType == modelType.id ? 
-                                themeManager.accent : 
-                                themeManager.secondaryBackground)
-                    )
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 10)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20)
-                            .stroke(themeManager.accent, lineWidth: 1)
-                    )
-                
-                if viewModel.isProcessing && selectedModelType == modelType.id {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: themeManager.accent))
-                        .scaleEffect(0.7)
-                }
-            }
-        }
-        .disabled(viewModel.isProcessing || viewModel.selectedImage == nil)
-    }
 } 

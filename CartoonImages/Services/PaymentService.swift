@@ -109,6 +109,7 @@ class PaymentService: NSObject, ObservableObject {
            isPremium {
             // 如果是订阅会员，检查是否过期
             if let expirationDate = userDefaults.value(forKey: UserDefaultsKeys.expirationDate) as? Date {
+                logWarning("UserDefaultsKeys.expirationDate is \(formartedExpirationDate())")
                 if expirationDate > Date() {
                     return true
                 }
@@ -162,6 +163,7 @@ class PaymentService: NSObject, ObservableObject {
     
     // 验证收据
     func verifyReceipt() async -> Bool {
+        logInfo("verifyReceipt")
         // 验证应用内购买交易
         for await result in Transaction.currentEntitlements {
             do {
@@ -174,6 +176,7 @@ class PaymentService: NSObject, ObservableObject {
                         // 检查订阅是否过期
                         if let expirationDate = transaction.expirationDate,
                            expirationDate > Date() {
+                            logInfo("verifyReceipt: true, expirationDate is \(expirationDate)")
                             return true
                         }
                     case .nonConsumable:
@@ -184,14 +187,16 @@ class PaymentService: NSObject, ObservableObject {
                     }
                 }
             } catch {
-                print("Failed to verify transaction: \(error)")
+                logError("Failed to verify transaction: \(error)")
             }
         }
+        logInfo("verifyReceipt false")
         return false
     }
     
     // 更新购买状态
     func updatePurchaseStatus(for planType: PaymentPlanType, transaction: SKPaymentTransaction) {
+        logInfo("updatePurchaseStatus")
         // StoreKit 2 方式
         Task {
             for await result in Transaction.currentEntitlements {
@@ -200,7 +205,7 @@ class PaymentService: NSObject, ObservableObject {
                     if let expirationDate = transaction.expirationDate {
                         userDefaults.set(expirationDate, forKey: UserDefaultsKeys.expirationDate)
                     }
-                    
+                    logWarning("updatePurchaseStatus date: \(Date()), transaction.expirationDate  is: \(String(describing: transaction.expirationDate))")
                     userDefaults.set(true, forKey: UserDefaultsKeys.isPremiumUser)
                     userDefaults.set(planType.rawValue, forKey: UserDefaultsKeys.purchasedPlan)
                     userDefaults.set(Date(), forKey: UserDefaultsKeys.purchaseDate)
@@ -341,6 +346,8 @@ private class TransactionDelegate: NSObject, SKPaymentTransactionObserver {
         for transaction in transactions {
             // 确保只调用一次 completion
             guard !hasCompleted else { return }
+            
+            logInfo("transaction.transactionState is: \(transaction.transactionState)")
             
             switch transaction.transactionState {
             case .purchased:

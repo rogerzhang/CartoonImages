@@ -58,6 +58,8 @@
 "RATE_US" = "给我们评分";
 "SHARE" = "分享给好友";
 "CONTACT_US" = "联系客服";
+"COUSTOMER_SUPPORT_DES" = "请描述你的问题:";
+"COUSTOMER_SUPPORT" = "客服支持";
 "PRIVACY_POLICY" = "隐私政策";
 "USER_AGREEMENT" = "用户协议";
 "SETTINGS" = "设置";

@@ -4,6 +4,7 @@ struct SettingsView: View {
     @EnvironmentObject private var themeManager: ThemeManager
     @Environment(\.dismiss) private var dismiss
     @State private var showDeleteAccountAlert = false
+    @State private var showLogs = false
     
     var body: some View {
         List {
@@ -51,6 +52,20 @@ struct SettingsView: View {
                         .foregroundColor(.red)
                 }
             }
+            
+            // 调试部分（仅在 DEBUG 模式下显示）
+//            #if DEBUG
+            Section("Debug") {
+                Button(action: { showLogs = true }) {
+                    Label("View Logs", systemImage: "doc.text.magnifyingglass")
+                }
+                
+                Button(action: { Logger.shared.clearLogs() }) {
+                    Label("Clear Logs", systemImage: "trash")
+                        .foregroundColor(.red)
+                }
+            }
+//            #endif
         }
         .navigationTitle("SETTINGS".localized)
         .navigationBarTitleDisplayMode(.inline)
@@ -61,6 +76,17 @@ struct SettingsView: View {
             }
         } message: {
             Text("DELETE_ACCOUNT_WARNING".localized)
+        }
+        .sheet(isPresented: $showLogs) {
+            NavigationView {
+                ScrollView {
+                    Text(Logger.shared.getLogContent())
+                        .font(.system(.body, design: .monospaced))
+                        .padding()
+                }
+                .navigationTitle("Debug Logs")
+                .navigationBarItems(trailing: Button("Done") { showLogs = false })
+            }
         }
     }
 }
