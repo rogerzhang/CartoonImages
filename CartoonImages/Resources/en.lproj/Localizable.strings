@@ -8,6 +8,8 @@
 "CONFIRM" = "Confirm";
 "PROCESSING" = "Processing...";
 
+"GO_TO_SET" = "OK";
+
 // Main View
 "FEATURES" = "Effects";
 "VIP" = "VIP";
@@ -91,3 +93,5 @@
 "NETWORK_PERMISSION_TITLE" = "Network Access Required";
 "NETWORK_PERMISSION_MESSAGE" = "This app requires network access to function properly. Please allow network access in your device settings.";
   
+"NEED_PHOTO_LIB_PERMISSION" = "Photo album access is required";
+"SET_PHOTO_LIB_PERMISSION" = "Please allow access to albums in your Settings";

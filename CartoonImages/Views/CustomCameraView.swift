@@ -361,13 +361,13 @@ class CameraController: NSObject, ObservableObject {
                     
                 case .denied, .restricted:
                     let alert = UIAlertController(
-                        title: "需要相册访问权限",
-                        message: "请在设置中允许访问相册",
+                        title: "NEED_PHOTO_LIB_PERMISSION".localized,
+                        message: "SET_PHOTO_LIB_PERMISSION".localized,
                         preferredStyle: .alert
                     )
                     
-                    alert.addAction(UIAlertAction(title: "取消", style: .cancel))
-                    alert.addAction(UIAlertAction(title: "去设置", style: .default) { _ in
+                    alert.addAction(UIAlertAction(title: "CANCEL".localized, style: .cancel))
+                    alert.addAction(UIAlertAction(title: "GO_TO_SET".localized, style: .default) { _ in
                         if let url = URL(string: UIApplication.openSettingsURLString) {
                             UIApplication.shared.open(url)
                         }

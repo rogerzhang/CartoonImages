@@ -8,6 +8,7 @@
 "CONFIRM" = "确认";
 "PROCESSING" = "处理中...";
 "VERSION" = "版本:";
+"GO_TO_SET" = "去设置";
 
 // Main View
 "FEATURES" = "特效";
@@ -82,8 +83,10 @@
 "CONFIRM_DELETE" = "确认注销";
 "DELETE_ACCOUNT_WARNING" = "注销账号后，所有数据将被清除且无法恢复";
 "COPY_WECHAT" = "复制客服微信";
-"CONTACT_INFO" = "客服微信号：FelixChen33\n工作时间：9:00-18:00"; 
+"CONTACT_INFO" = "客服微信号：FelixChen33\n工作时间：9:00-18:00";
 
 // Network
 "NETWORK_PERMISSION_TITLE" = "需要网络访问权限";
 "NETWORK_PERMISSION_MESSAGE" = "此应用需要网络访问权限才能正常运行。请在设备设置中允许网络访问。";
+"NEED_PHOTO_LIB_PERMISSION" = "需要相册访问权限";
+"SET_PHOTO_LIB_PERMISSION" = "请在设置中允许访问相册";
