@@ -162,11 +162,11 @@ class PreviewView: UIView {
         super.layoutSubviews()
         videoPreviewLayer.frame = bounds
         
-        if let connection = videoPreviewLayer.connection {
-            connection.automaticallyAdjustsVideoMirroring = false
-            let isFrontCamera = (videoPreviewLayer.session?.inputs.first as? AVCaptureDeviceInput)?.device.position == .front
-            connection.isVideoMirrored = isFrontCamera
-        }
+//        if let connection = videoPreviewLayer.connection {
+//            connection.automaticallyAdjustsVideoMirroring = false
+//            let isFrontCamera = (videoPreviewLayer.session?.inputs.first as? AVCaptureDeviceInput)?.device.position == .front
+//            connection.isVideoMirrored = isFrontCamera
+//        }
     }
 }
 
