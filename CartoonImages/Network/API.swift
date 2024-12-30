@@ -11,8 +11,13 @@ enum API {
 
 extension API: TargetType {
     var baseURL: URL {
-        return URL(string: "https://hk.holymason.cn")!
-//        return URL(string: "https://test.holymason.cn")!
+        // Check the user's region
+        let regionCode = Locale.current.region?.identifier ?? "US" // Default to US if region code is not available
+        if regionCode == "CN" {
+            return URL(string: "https://main.holymason.cn")! // China mainland
+        } else {
+            return URL(string: "https://hk.holymason.cn")! // Other regions
+        }
     }
     
     var path: String {
