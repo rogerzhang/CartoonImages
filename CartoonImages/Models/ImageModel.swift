@@ -12,4 +12,5 @@ struct ImageModelType: Identifiable {
     let name: String
     let imageName: String
     let modelId: String
+    let orignImage: String
 }

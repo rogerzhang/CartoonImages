@@ -21,12 +21,26 @@ struct ImageModelTypeSelectionView: View {
         VStack {
             TabView(selection: $currentIndex) {
                 ForEach(viewModel.modelTypes) { model in
-                    let imageName = UIImage(named: model.imageName) == nil ? "test" : model.imageName
-                    Image(imageName)
-                        .resizable()
-                        .scaledToFit()
-                        .tag(model.id)
-                        .cornerRadius(20)
+                    ZStack(alignment: .bottomLeading) {
+                        let imageName = UIImage(named: model.imageName) == nil ? "test" : model.imageName
+                        Image(imageName)
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(20)
+                        
+                        HStack {
+                            let imageName = UIImage(named: model.orignImage) == nil ? "test" : model.orignImage
+                            Image(imageName)
+                                .resizable()
+                                .scaledToFit()
+                                .cornerRadius(5)
+                                .shadow(color: .black, radius: 2)
+                                .frame(width: 60, height: 100)
+                        }
+                        .padding(.leading, 20)
+                        .padding(.bottom, 20)
+                    }
+                    .tag(model.id)
                 }
             }
             .onChange(of: currentIndex) {
