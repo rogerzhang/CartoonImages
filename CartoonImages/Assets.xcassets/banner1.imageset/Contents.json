@@ -1,7 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "矩形备份 284(10).png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -10,6 +9,7 @@
       "scale" : "2x"
     },
     {
+      "filename" : "banner3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

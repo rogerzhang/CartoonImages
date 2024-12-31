@@ -57,7 +57,7 @@ struct ProfileView: View {
                 // Section 2: 评分和分享
                 Section {
                     Button(action: {
-                        if let url = URL(string: "itms-apps://itunes.apple.com/app/idYOUR_APP_ID") {
+                        if let url = URL(string: "itms-apps://itunes.apple.com/app/id6739438626") {
                             UIApplication.shared.open(url)
                         }
                     }) {
@@ -96,10 +96,12 @@ struct ProfileView: View {
                         Label("USER_AGREEMENT".localized, systemImage: "doc.text")
                             .foregroundColor(themeManager.text)
                     }
+                    #if DEBUG
                     NavigationLink(destination: SettingsView()) {
                         Label("Settings".localized, systemImage: "gearshape")
                             .foregroundColor(themeManager.text)
                     }
+                    #endif
                 }
             }
 //            .navigationTitle("个人中心")
@@ -108,7 +110,7 @@ struct ProfileView: View {
                 VerificationLoginView()
             }
             .sheet(isPresented: $showShareSheet) {
-                ShareSheet(items: ["分享享文本内容", URL(string: "https://your-app-url.com")!])
+                ShareSheet(items: ["分享享文本内容", URL(string: "https://apps.apple.com/us/app/toonyou/id6739438626")!])
             }
             .sheet(isPresented: $showMailView) {
                 MailView(toRecipients: ["roger.zhangvi@gmail.com"],

@@ -20,12 +20,12 @@ struct ModelGridView: View {
                             .foregroundColor(themeManager.accent)
                             .frame(width: 120, height: 160)
                         
-                        HStack {
-                            Text(model.name)
-                                .font(.system(size: 14, weight: .medium))
-                                .foregroundColor(themeManager.text)
-                        }
-                        .background(Color.clear)
+//                        HStack {
+//                            Text(model.name)
+//                                .font(.system(size: 14, weight: .medium))
+//                                .foregroundColor(themeManager.text)
+//                        }
+//                        .background(Color.clear)
                     }
                     .frame(maxWidth: .infinity)
                     .padding()

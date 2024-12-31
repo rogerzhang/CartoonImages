@@ -45,7 +45,7 @@ struct AppState {
             .init(id: "4", name: "素描风格", imageName: "4", modelId: "1"),
             .init(id: "5", name: "铅笔画", imageName: "5", modelId: "4"),
             .init(id: "6", name: "复古风格", imageName: "6", modelId: "5"),
-            .init(id: "7", name: "图片复原", imageName: "6", modelId: "0"),
+//            .init(id: "7", name: "图片复原", imageName: "6", modelId: "0"),
         ]
         self.paymentState = PaymentState()
     }
