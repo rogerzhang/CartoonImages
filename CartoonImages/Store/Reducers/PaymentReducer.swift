@@ -51,9 +51,8 @@ func paymentReducer(action: Action, state: PaymentState?) -> PaymentState {
         
     case .updateProcessingStep(let step):
         state.processingStep = step
-    case .updateProducts(_):
-        //
-        break
+    case .updateProducts(let products):
+        state.products = products
     }
     
     return state

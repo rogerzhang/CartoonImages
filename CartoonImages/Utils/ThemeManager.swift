@@ -43,7 +43,7 @@ class ThemeManager: ObservableObject {
     
     // 更新颜色模式
     func updateColorScheme(_ scheme: ColorScheme) {
-        colorScheme = scheme
+//        colorScheme = scheme
     }
     
     // 监听系统颜色模式变化

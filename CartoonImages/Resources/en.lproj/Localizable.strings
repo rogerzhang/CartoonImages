@@ -34,6 +34,9 @@
 "NOT_SUBSCRIBED" = "Not Subscribed";
 "SUBSCRIBED" = "Subscribed";
 "EXPIRES_ON" = "Expires on: %@";
+"WEEKLY_PLAN_DES" = "This plan will auto-renew weekly for %@.";
+"MONTHLY_PLAN_DES" = "This plan will auto-renew monthly for %@.";
+"YEARLY_PLAN_DES" = "This plan will auto-renew yearly for %@.";
 "DAYS_LEFT" = "%d days left";
 "UPGRADE_TO_VIP" = "Upgrade to VIP";
 "TAKE_PHOTO" = "Take a photo";
@@ -95,3 +98,6 @@
   
 "NEED_PHOTO_LIB_PERMISSION" = "Photo album access is required";
 "SET_PHOTO_LIB_PERMISSION" = "Please allow access to albums in your Settings";
+"RESTORE_PURCHASES" = "Restore";
+"TERMS" = "Terms";
+"PRIVACY" = "Privacy Policy";

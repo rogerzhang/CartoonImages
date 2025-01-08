@@ -58,6 +58,8 @@ struct PaymentPlanView: View {
         .task {
             try? await PaymentService.shared.loadProducts()
             let products = PaymentService.shared.products
+            mainStore.dispatch(AppAction.payment(.updateProducts(products)))
+            
             plans = products.map {
                 let type = PaymentPlanType(rawValue: $0.productIdentifier)!
                 return PaymentPlan(id: $0.productIdentifier, type: type.type, price: PaymentService.shared.localizedPrice(for: $0) ?? "", pricePerDay: type.per)

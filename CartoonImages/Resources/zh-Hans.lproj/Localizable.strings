@@ -30,6 +30,9 @@
 "NOT_SUBSCRIBED" = "未开通";
 "SUBSCRIBED" = "已开通";
 "EXPIRES_ON" = "到期时间：%@";
+"WEEKLY_PLAN_DES" = "此套餐将以每周%@自动订阅";
+"MONTHLY_PLAN_DES" = "此套餐将以每月%@自动订阅";
+"YEARLY_PLAN_DES" = "此套餐将以每年%@自动订阅";
 "DAYS_LEFT" = "会员还有%d天到期";
 "UPGRADE_TO_VIP" = "请升级到VIP";
 
@@ -90,3 +93,6 @@
 "NETWORK_PERMISSION_MESSAGE" = "此应用需要网络访问权限才能正常运行。请在设备设置中允许网络访问。";
 "NEED_PHOTO_LIB_PERMISSION" = "需要相册访问权限";
 "SET_PHOTO_LIB_PERMISSION" = "请在设置中允许访问相册";
+"RESTORE_PURCHASES" = "恢复购买";
+"TERMS" = "条款和条件";
+"PRIVACY" = "隐私政策";

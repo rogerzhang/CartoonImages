@@ -1,4 +1,5 @@
 import SwiftUI
+import ReSwift
 
 struct PaymentView: View {
     @Binding var showPaymentAlert: Bool
@@ -15,6 +16,7 @@ struct PaymentView: View {
     @State private var showRestoreError = false
     @State private var restoreError: String?
     @State var isLoggedIn: Bool = false
+    @StateObject var viewModel: PaymentViewModel = .init()
 
     var body: some View {
         ZStack {
@@ -100,6 +102,38 @@ struct PaymentView: View {
                             .frame(height: 120)
                     }.padding(0)
                     
+                    VStack {
+                        switch viewModel.currentPaymentType {
+                        case .monthly:
+                            let product = mainStore.state.paymentState.products.first(where: { $0.productIdentifier == PaymentPlanType.monthly.rawValue})
+                            let price = PaymentService.shared.localizedPrice(for: product!)
+                            let text = "MONTHLY_PLAN_DES".localizedFormat(price!)
+                            Text(text)
+                                .foregroundColor(.secondary)
+                                .font(.subheadline)
+                        case .weekly:
+                            let product = mainStore.state.paymentState.products.first(where: { $0.productIdentifier == PaymentPlanType.weekly.rawValue})
+                            let price = PaymentService.shared.localizedPrice(for: product!)
+                            let text = "WEEKLY_PLAN_DES".localizedFormat(price!)
+                            Text(text)
+                                .foregroundColor(.secondary)
+                                .font(.subheadline)
+                        case .yearly:
+                            let product = mainStore.state.paymentState.products.first(where: { $0.productIdentifier == PaymentPlanType.yearly.rawValue})
+                            let price = PaymentService.shared.localizedPrice(for: product!)
+                            let text = "YEARLY_PLAN_DES".localizedFormat(price!)
+                            Text(text)
+                                .foregroundColor(.secondary)
+                                .font(.subheadline)
+                        case .none:
+                            let text = ""
+                            Text(text)
+                                .foregroundColor(.secondary)
+                                .font(.subheadline)
+                        }
+                    }
+                    .padding(.top, 0)
+                    .padding(.bottom, 10)
                     
                     VStack(spacing: 12) {
         //                Divider()
@@ -140,6 +174,7 @@ struct PaymentView: View {
                         )
                         
                         Spacer()
+                 
                         
                         VStack(spacing: 10) {
                             Button(action: {
@@ -162,6 +197,30 @@ struct PaymentView: View {
                         }
                         .padding(.horizontal)
                         .padding(.bottom, 40)
+                        
+                        HStack {
+                            Button(action: {
+                                Task {
+                                    paymentIsProcessing = true
+                                    do {
+                                        try await PaymentService.shared.restorePurchases()
+                                    } catch {
+                                    }
+                                    paymentIsProcessing = false
+                                }
+                            }, label: {
+                                Text("RESTORE_PURCHASES".localized)
+                                    .font(.caption)
+                                    .padding()
+                            })
+                            Spacer()
+                            HStack(spacing: 20) {
+                                Link("TERMS".localized, destination: URL(string: "https://hk.holymason.cn/TermsAndConditionsEn.html")!)
+                                    .font(.caption)
+                                Link("PRIVACY".localized, destination: URL(string: "https://hk.holymason.cn/PrivacyPolicyEN.html")!)
+                                    .font(.caption)
+                            }
+                        }
                     }
                     .padding(.horizontal)
                 }
@@ -231,7 +290,7 @@ struct PaymentView: View {
                 // 执行购买
                 if let transaction = try await PaymentService.shared.purchase(planType) {
                     // 更新购买状态
-                    await PaymentService.shared.updatePurchaseStatus(for: planType, transaction: transaction)
+                    PaymentService.shared.updatePurchaseStatus(for: planType, transaction: transaction)
                     
                     await MainActor.run {
                         paymentIsProcessing = false
@@ -247,4 +306,24 @@ struct PaymentView: View {
             }
         }
     }
-} 
+}
+
+class PaymentViewModel: ObservableObject {
+    @Published var currentPaymentType: PaymentPlanType?
+    
+    init() {
+        mainStore.subscribe(self) { subscription in
+            subscription.select { state in
+                (state.paymentState)
+            }
+        }
+    }
+}
+
+extension PaymentViewModel: StoreSubscriber {
+    func newState(state: (PaymentState)) {
+        DispatchQueue.main.async {
+            self.currentPaymentType = state.selectedPlan
+        }
+    }
+}
