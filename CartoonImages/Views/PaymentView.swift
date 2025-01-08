@@ -214,9 +214,12 @@ struct PaymentView: View {
                             })
                             Spacer()
                             HStack(spacing: 20) {
-                                Link("TERMS".localized, destination: URL(string: "https://hk.holymason.cn/TermsAndConditionsEn.html")!)
+                                let urlString = isZHansLanguage() ? "https://hk.holymason.cn/TermsAndConditionsZh.html" : "https://hk.holymason.cn/TermsAndConditionsEn.html"
+                                Link("TERMS".localized, destination: URL(string: urlString)!)
                                     .font(.caption)
-                                Link("PRIVACY".localized, destination: URL(string: "https://hk.holymason.cn/PrivacyPolicyEN.html")!)
+                                
+                                let urlString1 = isZHansLanguage() ? "https://hk.holymason.cn/PrivacyPolicyZH.html" : "https://hk.holymason.cn/PrivacyPolicyEN.html"
+                                Link("PRIVACY".localized, destination: URL(string: urlString1)!)
                                     .font(.caption)
                             }
                         }
@@ -256,6 +259,12 @@ struct PaymentView: View {
         } message: {
             Text(restoreError ?? "UNKNOWN_ERROR".localized)
         }
+    }
+    
+    private func isZHansLanguage() -> Bool {
+        let preferredLanguages = Bundle.main.preferredLocalizations
+        let language = preferredLanguages.first ?? "en"
+        return language.starts(with: "zh")
     }
     
     private func restorePurchases() {
