@@ -196,7 +196,6 @@ struct PaymentView: View {
                             .disabled(paymentIsProcessing)
                         }
                         .padding(.horizontal)
-                        .padding(.bottom, 40)
                         
                         HStack {
                             Button(action: {
