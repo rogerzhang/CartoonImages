@@ -283,17 +283,17 @@ class PaymentService: NSObject, ObservableObject {
         }
     }
     
-    // 恢复购买
-    func restorePurchases() async throws {
+    private var transactionRestorationContinuation: CheckedContinuation<Set<String>, Error>?
+    
+    func restorePurchases() async throws -> Set<String> {
         return try await withCheckedThrowingContinuation { continuation in
-            let restoreDelegate = RestoreTransactionDelegate { result in
-                continuation.resume(with: result)
-            }
+            paymentQueue.add(self)
             
-            // 保持 delegate 引用
-            objc_setAssociatedObject(paymentQueue, "restoreDelegate", restoreDelegate, .OBJC_ASSOCIATION_RETAIN)
-            paymentQueue.add(restoreDelegate)
+            // 开始恢复购买
             paymentQueue.restoreCompletedTransactions()
+            
+            // 设置回调
+            transactionRestorationContinuation = continuation
         }
     }
     
@@ -390,6 +390,7 @@ extension PaymentService: SKPaymentTransactionObserver {
                 case .restored:
                     await handleTransaction(transaction)
                     
+                    
                 case .failed:
                     queue.finishTransaction(transaction)
                     
@@ -420,6 +421,9 @@ extension PaymentService: SKPaymentTransactionObserver {
         Task {
             let isPremium = await isPremiumUser()
             onSubscriptionStatusChanged?(isPremium)
+            transactionRestorationContinuation?.resume(returning: [])
+            transactionRestorationContinuation = nil
+            paymentQueue.remove(self)
         }
     }
     
@@ -427,26 +431,8 @@ extension PaymentService: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
         // 处理恢复失败
         print("Restore failed: \(error.localizedDescription)")
-    }
-}
-
-// 恢复购买的代理
-private class RestoreTransactionDelegate: NSObject, SKPaymentTransactionObserver {
-    private let completion: (Result<Void, Error>) -> Void
-    
-    init(completion: @escaping (Result<Void, Error>) -> Void) {
-        self.completion = completion
-    }
-    
-    func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
-        completion(.success(()))
-    }
-    
-    func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
-        completion(.failure(error))
-    }
-    
-    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        // 处理恢复的交易
+        transactionRestorationContinuation?.resume(throwing: error)
+        transactionRestorationContinuation = nil
+        paymentQueue.remove(self)
     }
 }

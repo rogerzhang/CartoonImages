@@ -193,20 +193,13 @@ struct PaymentView: View {
                                 .foregroundColor(.white)
                                 .cornerRadius(10)
                             }
-                            .disabled(paymentIsProcessing)
+                            .disabled(paymentIsProcessing || isRestoringPurchases)
                         }
                         .padding(.horizontal)
                         
                         HStack {
                             Button(action: {
-                                Task {
-                                    paymentIsProcessing = true
-                                    do {
-                                        try await PaymentService.shared.restorePurchases()
-                                    } catch {
-                                    }
-                                    paymentIsProcessing = false
-                                }
+                                restorePurchases()
                             }, label: {
                                 Text("RESTORE_PURCHASES".localized)
                                     .font(.caption)
@@ -229,7 +222,7 @@ struct PaymentView: View {
             }
             
             
-            if paymentIsProcessing {
+            if paymentIsProcessing || isRestoringPurchases {
                 Color.black.opacity(0.4)
                     .ignoresSafeArea()
                 
@@ -275,7 +268,7 @@ struct PaymentView: View {
                 try await PaymentService.shared.restorePurchases()
                 await MainActor.run {
                     isRestoringPurchases = false
-                    dismiss()
+//                    dismiss()
                 }
             } catch {
                 await MainActor.run {
