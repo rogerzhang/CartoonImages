@@ -1,6 +1,24 @@
 import SwiftUI
 import ReSwift
 
+struct MainTextStyle: ViewModifier {
+    @EnvironmentObject private var themeManager: ThemeManager
+    
+    func body(content: Content) -> some View {
+        content
+            .foregroundStyle(themeManager.text)
+    }
+}
+
+struct SecondaryTextStyle: ViewModifier {
+    @EnvironmentObject private var themeManager: ThemeManager
+    
+    func body(content: Content) -> some View {
+        content
+            .foregroundStyle(themeManager.secondaryText)
+    }
+}
+
 struct PaymentView: View {
     @Binding var showPaymentAlert: Bool
     @Binding var paymentIsProcessing: Bool
@@ -20,6 +38,8 @@ struct PaymentView: View {
 
     var body: some View {
         ZStack {
+            themeManager.background
+                .ignoresSafeArea()
             ScrollView {
                 VStack {
                     HStack {
@@ -30,16 +50,16 @@ struct PaymentView: View {
                             VStack {
                                 Text(self.isSubscribed ? "SUBSCRIBED".localized : "NOT_SUBSCRIBED".localized)
                                     .font(.headline)
-                                    .foregroundStyle(.primary)
+                                    .foregroundStyle(themeManager.text)
                                 if self.isSubscribed {
                                     let dataString = PaymentService.shared.formartedExpirationDate()
                                     Text("EXPIRES_ON".localizedFormat(dataString))
                                         .font(.system(size: 14))
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(themeManager.text)
                                 } else {
                                     Text("UPGRADE_TO_VIP".localized)
                                         .font(.system(size: 14))
-                                        .foregroundStyle(.secondary)
+                                        .foregroundStyle(themeManager.text)
                                 }
                             }
                         }
@@ -81,10 +101,11 @@ struct PaymentView: View {
                                     
                                     Text(self.isSubscribed ? "SUBSCRIBED".localized : "NOT_SUBSCRIBED".localized)
                                         .font(.headline)
+                                        .foregroundStyle(themeManager.text)
                                     let leftDays = PaymentService.shared.expirationDaysFromToday()
                                     Text(self.isSubscribed ? "DAYS_LEFT".localizedFormat(leftDays) : "UPGRADE_TO_VIP".localized)
                                         .font(.subheadline)
-                                        .foregroundColor(.secondary)
+                                        .foregroundStyle(themeManager.secondaryText)
                                 }
                                 .padding(.leading, 5)
                             }
@@ -109,26 +130,26 @@ struct PaymentView: View {
                             let price = PaymentService.shared.localizedPrice(for: product!)
                             let text = "MONTHLY_PLAN_DES".localizedFormat(price!)
                             Text(text)
-                                .foregroundColor(.secondary)
                                 .font(.subheadline)
+                                .modifier(SecondaryTextStyle())
                         case .weekly:
                             let product = mainStore.state.paymentState.products.first(where: { $0.productIdentifier == PaymentPlanType.weekly.rawValue})
                             let price = PaymentService.shared.localizedPrice(for: product!)
                             let text = "WEEKLY_PLAN_DES".localizedFormat(price!)
                             Text(text)
-                                .foregroundColor(.secondary)
+                                .modifier(SecondaryTextStyle())
                                 .font(.subheadline)
                         case .yearly:
                             let product = mainStore.state.paymentState.products.first(where: { $0.productIdentifier == PaymentPlanType.yearly.rawValue})
                             let price = PaymentService.shared.localizedPrice(for: product!)
                             let text = "YEARLY_PLAN_DES".localizedFormat(price!)
                             Text(text)
-                                .foregroundColor(.secondary)
+                                .modifier(SecondaryTextStyle())
                                 .font(.subheadline)
                         case .none:
                             let text = ""
                             Text(text)
-                                .foregroundColor(.secondary)
+                                .modifier(SecondaryTextStyle())
                                 .font(.subheadline)
                         }
                     }
@@ -143,23 +164,27 @@ struct PaymentView: View {
                         VStack(alignment: .leading, spacing: 8) {
                             Text("MEMBER_BENEFITS".localized)
                                 .font(.headline)
+                                .foregroundStyle(themeManager.text)
                             
                             HStack {
                                 Image(systemName: "checkmark.circle.fill")
                                     .foregroundColor(.green)
                                 Text("BENEFIT_1".localized)
+                                    .foregroundStyle(themeManager.text)
                             }
                             
                             HStack {
                                 Image(systemName: "checkmark.circle.fill")
                                     .foregroundColor(.green)
                                 Text("BENEFIT_2".localized)
+                                    .foregroundStyle(themeManager.text)
                             }
                             
                             HStack {
                                 Image(systemName: "checkmark.circle.fill")
                                     .foregroundColor(.green)
                                 Text("BENEFIT_3".localized)
+                                    .foregroundStyle(themeManager.text)
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)

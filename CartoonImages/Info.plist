@@ -12,5 +12,7 @@
 	<array>
 		<integer>1</integer>
 	</array>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 </dict>
 </plist>
