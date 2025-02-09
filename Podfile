@@ -9,6 +9,7 @@ target 'CartoonImages' do
 
   pod 'ReSwift'
   pod 'KeychainSwift'
+  pod 'AlertToast'
   pod 'SDWebImage'
   pod 'Moya/Combine', '~> 15.0'
 

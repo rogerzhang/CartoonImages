@@ -1,5 +1,6 @@
 import Foundation
 import Network
+import Combine
 
 class NetworkPermissionManager: ObservableObject {
     static let shared = NetworkPermissionManager()
@@ -9,6 +10,7 @@ class NetworkPermissionManager: ObservableObject {
     
     private let monitor = NWPathMonitor()
     private let queue = DispatchQueue(label: "NetworkMonitor")
+    private var cancellables = Set<AnyCancellable>()
     
     private init() {
         monitor.pathUpdateHandler = { [weak self] path in
@@ -23,6 +25,18 @@ class NetworkPermissionManager: ObservableObject {
             }
         }
         monitor.start(queue: queue)
+        
+        setupNetworkAuthorizationObserver()
+    }
+    
+    private func setupNetworkAuthorizationObserver() {
+        $isNetworkAuthorized
+            .removeDuplicates() // 只在状态变化时触发
+            .filter { $0 } // 仅当 `isNetworkAuthorized == true` 触发
+            .sink { _ in
+                mainStore.dispatch(AppAction.auth(.fetchHomeConfig))
+            }
+            .store(in: &cancellables)
     }
     
     deinit {

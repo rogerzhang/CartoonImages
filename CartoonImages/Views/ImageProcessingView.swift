@@ -1,6 +1,7 @@
 import SwiftUI
 import AVFoundation
 import Photos
+import AlertToast
 
 struct ImageProcessingView: View {
     @EnvironmentObject private var themeManager: ThemeManager
@@ -99,8 +100,8 @@ struct ImageProcessingView: View {
             )
         }
         .navigationBarBackButtonHidden(true)
-        .alert(isPresented: $showAlert) {
-            Alert(title: Text("HINT_TITLE".localized), message: Text(alertMessage), dismissButton: .default(Text("OK".localized)))
+        .toast(isPresenting: $showAlert, tapToDismiss: false) {
+            AlertToast(type: .regular, title: alertMessage)
         }
         .alert(isPresented: $viewModel.showProcessError) {
             Alert(title: Text("ERROR_OCCURRED".localized), message: Text(viewModel.processErrorMsg ?? "TRY_IT_LATER".localized), dismissButton: .default(Text("OK".localized)))

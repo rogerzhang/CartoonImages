@@ -22,22 +22,40 @@ struct ImageModelTypeSelectionView: View {
         VStack {
             TabView(selection: $currentIndex) {
                 ForEach(viewModel.modelTypes) { model in
-                    ZStack(alignment: .bottomLeading) {
-                        KFImage(URL(string: model.imageUrl))
-                            .resizable()
-                            .scaledToFit()
-                            .cornerRadius(20)
-                        
-                        HStack {
-                            KFImage(URL(string: model.origImgUrl))
+                    VStack(spacing: 20) {
+                        ZStack(alignment: .bottomLeading) {
+                            KFImage(URL(string: model.imageUrl))
                                 .resizable()
                                 .scaledToFit()
-                                .cornerRadius(5)
-                                .shadow(color: .black, radius: 2)
-                                .frame(width: 60, height: 100)
+                                .cornerRadius(20)
+                            
+                            HStack {
+                                KFImage(URL(string: model.origImgUrl))
+                                    .resizable()
+                                    .scaledToFit()
+                                    .cornerRadius(5)
+                                    .shadow(color: .black, radius: 2)
+                                    .frame(width: 90, height: 120)
+                            }
+                            .padding(.leading, 20)
+                            .padding(.bottom, 20)
                         }
-                        .padding(.leading, 20)
-                        .padding(.bottom, 20)
+                        
+                        VStack(alignment: .leading, spacing: 15) {
+                            HStack {
+                                let text = LocalizationManager.shared.currentLanguage == .chinese ? model.titleZh : model.title
+                                Text(text)
+                                    .font(.headline)
+                                    .foregroundStyle(themeManager.text)
+                                Spacer()
+                            }
+                            
+                            let detailText = LocalizationManager.shared.currentLanguage == .chinese ? model.remarkZh : model.remark
+                            Text(detailText)
+                                .font(.callout)
+                                .foregroundStyle(themeManager.secondaryText)
+                        }
+                        .padding(.leading, 0)
                     }
                     .tag(model.id)
                 }
@@ -50,7 +68,7 @@ struct ImageModelTypeSelectionView: View {
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             
             Button(action: {
-                if viewModel.isSubscribed || currentIndex == 0 || currentIndex == 1 {
+                if viewModel.isSubscribed || (1...3).contains(currentIndex) {
                     showCameraView = true
                     showPayment = false
                 } else {
