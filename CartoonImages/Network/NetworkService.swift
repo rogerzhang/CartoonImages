@@ -95,6 +95,7 @@ class NetworkService {
         
         return provider.requestPublisher(target)
             .tryMap { response -> UIImage in
+                Logger.shared.log("statusCode is: \(response.statusCode)")
                 let imageResponse = try JSONDecoder().decode(ImageResponse.self, from: response.data)
                 
                 guard imageResponse.status == "success",
