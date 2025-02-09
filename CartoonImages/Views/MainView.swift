@@ -143,9 +143,11 @@ extension MainViewModel: StoreSubscriber {
         DispatchQueue.main.async {
             self.isSubscribed = state.paymentState.isSubscribed
             self.paymentIsProcessing = state.paymentState.isProcessing
-            self.config = state.authState.config
-            self.headerImages = self.config?.filter {
+            self.config = state.authState.config?.filter {
                 $0.region == 1
+            }
+            self.headerImages = state.authState.config?.filter {
+                $0.region == 0
             }.map {
                 $0.imageUrl
             }
