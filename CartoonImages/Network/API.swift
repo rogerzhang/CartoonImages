@@ -3,6 +3,7 @@ import Moya
 import UIKit
 
 enum API {
+    case getHomeConfig
     case processImage(imageData: Data, modelType: String)
     case clearerImage(imageData: Data, modelType: String)
     case fetchProducts
@@ -22,6 +23,8 @@ extension API: TargetType {
     
     var path: String {
         switch self {
+        case .getHomeConfig:
+            return "/pageConfig/api/home"
         case .processImage:
             return "/image/process/"
         case .clearerImage:
@@ -37,7 +40,7 @@ extension API: TargetType {
         switch self {
         case .processImage, .clearerImage:
             return .post
-        case .fetchProducts, .purchase:
+        case .fetchProducts, .purchase, .getHomeConfig:
             return .get
         }
     }
@@ -55,7 +58,7 @@ extension API: TargetType {
             ]
             
             return .uploadMultipart(formData)
-        case .fetchProducts:
+        case .fetchProducts, .getHomeConfig:
             return .requestPlain
         case let .purchase(productId):
             return .requestParameters(

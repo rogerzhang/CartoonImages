@@ -21,6 +21,17 @@ let networkMiddleware: Middleware<AppState> = { dispatch, getState in
                     // 处理登出请求
                     print("Processing logout")
                     // 这里添加实际的登出逻辑
+                case .fetchHomeConfig:
+                    NetworkService.shared.getHomeConfig()
+                        .receive(on: DispatchQueue.main)
+                        .sink(receiveCompletion: { completion in
+                            if case let .failure(error) = completion {
+                                dispatch(AppAction.auth(.fetchHomeConfigFailed(error: error)))
+                            }
+                        }, receiveValue: { effects in
+                            dispatch(AppAction.auth(.fetchHomeConfigSuccess(config: effects)))
+                        })
+                        .store(in: &NetworkService.shared.cancellables)
                     
                 default:
                     break
@@ -54,28 +65,6 @@ let networkMiddleware: Middleware<AppState> = { dispatch, getState in
                 switch paymentAction {
                 case let .startPayment(amount):
                     break
-//                    guard PaymentService.shared.canMakePayments else {
-//                        dispatch(AppAction.payment(.paymentFailure(PaymentError.cannotMakePayments)))
-//                        return
-//                    }
-//                    
-//                    dispatch(AppAction.payment(.updateSubscriptionStatus(true)))
-//                    
-//                    PaymentService.shared.processPayment(amount: amount)
-//                        .receive(on: DispatchQueue.main)
-//                        .sink(
-//                            receiveCompletion: { completion in
-//                                dispatch(AppAction.payment(.updateSubscriptionStatus(false)))
-//                                if case let .failure(error) = completion {
-//                                    dispatch(AppAction.payment(.paymentFailure(error)))
-//                                }
-//                            },
-//                            receiveValue: { _ in
-//                                dispatch(AppAction.payment(.paymentSuccess))
-//                            }
-//                        )
-//                        .store(in: &NetworkService.shared.cancellables)
-//                    
                 default:
                     break
                 }

@@ -6,6 +6,8 @@ struct AuthState {
     var isLoggedIn: Bool = false
     var token: String? = nil
     var error: String? = nil
+    var config: [ImageProcessingEffect]?
+    var isLoadingConfig: Bool = false
 }
 
 // Image State

@@ -4,6 +4,21 @@ func authReducer(action: AuthAction, state: AuthState) -> AuthState {
     var newState = state
     
     switch action {
+    case .fetchHomeConfig:
+        newState.error = nil
+        newState.config = nil
+        newState.isLoadingConfig = true
+        
+    case .fetchHomeConfigSuccess(let config):
+        newState.config = config
+        newState.error = nil
+        newState.isLoadingConfig = false
+        
+    case .fetchHomeConfigFailed(let error):
+        newState.error = error.errorDescription
+        newState.config = nil
+        newState.isLoadingConfig = false
+        
     case .login:
         newState.error = nil
         

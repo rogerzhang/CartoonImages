@@ -3,6 +3,23 @@ import Moya
 import Combine
 import UIKit
 
+enum NetworkError: LocalizedError {
+    case invalidResponse
+    case serverError(String)
+    case unknown(Error)
+    
+    var errorDescription: String? {
+        switch self {
+        case .invalidResponse:
+            return "Unable to process the server response."
+        case .serverError(let message):
+            return message
+        case .unknown(let error):
+            return "An unexpected error occurred: \(error.localizedDescription)"
+        }
+    }
+}
+
 // 错误类型定义
 enum ProcessImageError: LocalizedError {
     case noFaceDetected
@@ -35,6 +52,41 @@ class NetworkService {
     var cancellables = Set<AnyCancellable>()
     
     private init() {}
+    
+    func getHomeConfig() -> AnyPublisher<[ImageProcessingEffect], NetworkError> {
+        let target = API.getHomeConfig
+        
+        return provider.requestPublisher(target)
+            .tryMap { response in
+                let imageResponse = try JSONDecoder().decode(Response.self, from: response.data)
+                
+                guard imageResponse.status == "success" else {
+                    throw NetworkError.invalidResponse
+                }
+                return imageResponse.data
+            }
+            .mapError { error in
+                if let processError = error as? NetworkError {
+                    return processError
+                }
+                
+                if let moyaError = error as? MoyaError {
+                    switch moyaError {
+                    case .statusCode(let response):
+                        if response.statusCode == 400 {
+                            if let json = try? JSONSerialization.jsonObject(with: response.data) as? [String: String],
+                               let errorMessage = json["error"] {
+                                return .serverError(errorMessage)
+                            }
+                        }
+                    default:
+                        break
+                    }
+                }
+                return .unknown(error)
+            }
+            .eraseToAnyPublisher()
+    }
     
     func processImage(_ imageData: Data, model: ImageModelType) -> AnyPublisher<UIImage, ProcessImageError> {
         let size = imageData.count
@@ -131,4 +183,23 @@ class NetworkService {
 struct ImageResponse: Decodable {
     let status: String
     let images: String
-} 
+}
+
+struct Response: Decodable {
+    let status: String
+    let data: [ImageProcessingEffect]
+}
+
+struct ImageProcessingEffect: Codable {
+    let region: Int
+    let image_url: String
+    let title: String
+    let api_url: String
+    let model_type: String
+    let sort_order: Int
+    let orign_img: String
+    let remark: String
+    let titleZh: String
+    let remarkZh: String
+    let id: Int
+}
