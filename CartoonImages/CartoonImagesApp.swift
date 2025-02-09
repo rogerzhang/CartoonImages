@@ -18,6 +18,8 @@ struct CartoonImagesApp: App {
         PaymentService.shared.onSubscriptionStatusChanged = { isPremium in
             mainStore.dispatch(AppAction.payment(.updateSubscriptionStatus(isPremium)))
         }
+        
+        mainStore.dispatch(AppAction.auth(.fetchHomeConfig))
     }
 
     var body: some Scene {

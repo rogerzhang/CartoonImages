@@ -14,25 +14,22 @@ class ImageProcessingViewModel: ObservableObject {
     @Published var paymentIsProcessing: Bool = false
     @Published var paymentError: String? = nil
     @Published var showPaymentError: Bool = false
-    @Published var modelTypes: [ImageModelType] = []
-    @Published var currentModelType: ImageModelType?
+    @Published var modelTypes: [ImageProcessingEffect] = []
+    @Published var currentModelType: ImageProcessingEffect?
     @Published var isSubscribed: Bool = false
     
     private var cancellables = Set<AnyCancellable>()
-    private var initialModelId: String?
     private var timer: Timer?
        
-    init(initialModelId: String? = nil) {
-        self.initialModelId = initialModelId
-        
+    init() {
         mainStore.subscribe(self) { subscription in
             subscription.select { state in
-                (state.imageState, state.paymentState)
+                (state.imageState, state.paymentState, state.authState)
             }
         }
     }
     
-    func processImage(with model: ImageModelType) {
+    func processImage(with model: ImageProcessingEffect) {
         guard !isProcessing else { return }
         isProcessing = true
         processProgress = 0
@@ -85,23 +82,6 @@ class ImageProcessingViewModel: ObservableObject {
         self.processProgress = 0
     }
     
-    //func handlePayment(amount: Decimal) {
-    func handlePayment() {
-        guard let currentPlan = self.currentModelType else {
-            return
-        }
-        
-        var type: PaymentPlanType = .monthly
-        
-        if currentPlan.id == "1" {
-            type = .weekly
-        } else if currentPlan.id == "3" {
-            type = .yearly
-        }
-        
-        mainStore.dispatch(AppAction.payment(.startPayment(type)))
-    }
-    
     func dismissPaymentError() {
 //        mainStore.dispatch(AppAction.payment(.dismissError))
     }
@@ -135,7 +115,7 @@ class ImageProcessingViewModel: ObservableObject {
 }
 
 extension ImageProcessingViewModel: StoreSubscriber {
-    func newState(state: (imageState: ImageState, paymentState: PaymentState)) {
+    func newState(state: (imageState: ImageState, paymentState: PaymentState, authState :AuthState)) {
         DispatchQueue.main.async {
             self.selectedImage = state.imageState.selectedImage
             self.processedImage = state.imageState.processedImage
@@ -144,8 +124,7 @@ extension ImageProcessingViewModel: StoreSubscriber {
             self.paymentError = state.paymentState.error
             self.showProcessError = state.imageState.showError
             self.processErrorMsg = state.imageState.error
-//            self.showPaymentError = state.paymentState.showError
-            self.modelTypes = state.imageState.modelTypes ?? []
+            self.modelTypes = state.authState.config ?? []
             self.currentModelType = state.imageState.currentModelType
             self.isSubscribed = state.paymentState.isSubscribed
             

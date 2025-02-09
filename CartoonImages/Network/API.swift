@@ -6,25 +6,37 @@ enum API {
     case getHomeConfig
     case processImage(imageData: Data, modelType: String)
     case clearerImage(imageData: Data, modelType: String)
+    case smartProcessImage(imageData: Data, model: ImageProcessingEffect)
     case fetchProducts
     case purchase(productId: String)
 }
 
+extension API {
+    static var hostAddress: String {
+        let regionCode = Locale.current.region?.identifier ?? "US" // Default to US if region code is not available
+#if DEBUG
+        return "https://test.holymason.cn"
+#else
+        if regionCode == "CN" {
+            return "https://main.holymason.cn" // China mainland
+        } else {
+            return "https://hk.holymason.cn" // Other regions
+        }
+#endif
+    }
+}
+
 extension API: TargetType {
     var baseURL: URL {
-        // Check the user's region
-        let regionCode = Locale.current.region?.identifier ?? "US" // Default to US if region code is not available
-        if regionCode == "CN" {
-            return URL(string: "https://main.holymason.cn")! // China mainland
-        } else {
-            return URL(string: "https://hk.holymason.cn")! // Other regions
-        }
+        return URL(string: API.hostAddress)!
     }
     
     var path: String {
         switch self {
         case .getHomeConfig:
             return "/pageConfig/api/home"
+        case .smartProcessImage(_, let model):
+            return model.api_url
         case .processImage:
             return "/image/process/"
         case .clearerImage:
@@ -38,7 +50,7 @@ extension API: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .processImage, .clearerImage:
+        case .processImage, .clearerImage, .smartProcessImage:
             return .post
         case .fetchProducts, .purchase, .getHomeConfig:
             return .get
@@ -54,6 +66,17 @@ extension API: TargetType {
                                 fileName: "image.jpg",
                                 mimeType: "image/jpeg"),
                 MultipartFormData(provider: .data(modelType.data(using: .utf8)!),
+                                name: "modelType")
+            ]
+            
+            return .uploadMultipart(formData)
+        case let .smartProcessImage(imageData, model):
+            let formData = [
+                MultipartFormData(provider: .data(imageData),
+                                name: "file",
+                                fileName: "image.jpg",
+                                mimeType: "image/jpeg"),
+                MultipartFormData(provider: .data(model.model_type.data(using: .utf8)!),
                                 name: "modelType")
             ]
             

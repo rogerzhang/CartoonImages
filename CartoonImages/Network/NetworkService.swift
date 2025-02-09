@@ -88,14 +88,10 @@ class NetworkService {
             .eraseToAnyPublisher()
     }
     
-    func processImage(_ imageData: Data, model: ImageModelType) -> AnyPublisher<UIImage, ProcessImageError> {
+    func processImage(_ imageData: Data, model: ImageProcessingEffect) -> AnyPublisher<UIImage, ProcessImageError> {
         let size = imageData.count
         print("size === \(size / 1000)KB")
-        
-        var target = API.processImage(imageData: imageData, modelType: model.modelId)
-        if model.id == "7" {
-            target = API.clearerImage(imageData: imageData, modelType: model.modelId)
-        }
+        let target = API.smartProcessImage(imageData: imageData, model: model)
         
         return provider.requestPublisher(target)
             .tryMap { response -> UIImage in
@@ -190,7 +186,7 @@ struct Response: Decodable {
     let data: [ImageProcessingEffect]
 }
 
-struct ImageProcessingEffect: Codable {
+struct ImageProcessingEffect: Codable, Identifiable {
     let region: Int
     let image_url: String
     let title: String
@@ -202,4 +198,12 @@ struct ImageProcessingEffect: Codable {
     let titleZh: String
     let remarkZh: String
     let id: Int
+    
+    var imageUrl: String {
+        API.hostAddress + image_url
+    }
+    
+    var origImgUrl: String {
+        API.hostAddress + orign_img
+    }
 }

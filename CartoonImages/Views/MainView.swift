@@ -5,7 +5,7 @@ struct MainView: View {
     @EnvironmentObject private var themeManager: ThemeManager
     @State private var showProfile = false
     @State private var showPayment = false
-    @State private var selectedModelId: String?
+    @State private var selectedModelId: Int?
     @State private var selectedImage: UIImage?
     
     @StateObject var viewModel: MainViewModel = .init()
@@ -33,11 +33,13 @@ struct MainView: View {
                 // 滚动内容
                 ScrollView {
                     VStack(spacing: 20) {
-                        CarouselView(images: carouselImages)
-                            .frame(height: 200)
-                            .cornerRadius(12)
-                            .padding()
-                        
+                        if let images = viewModel.headerImages, images.count > 0 {
+                            CarouselView(images: images)
+                                .frame(height: 200)
+                                .cornerRadius(12)
+                                .padding()
+                        }
+                
                         VStack(spacing: 0) {
                             HStack {
                                 Text("FEATURES".localized)
@@ -47,7 +49,7 @@ struct MainView: View {
                                     .padding(.horizontal, 20)
                                 Spacer()
                             }
-                            if let modelTypes = viewModel.modelTypes {
+                            if let modelTypes = viewModel.config {
                                 ModelGridView(models: modelTypes) { model in
                                     selectedModelId = model.id
                                     mainStore.dispatch(AppAction.image(.selectImageModelType(model)))
@@ -55,12 +57,8 @@ struct MainView: View {
                                 .background(
                                     NavigationLink(
                                         destination: Group {
-                                            if let modelId = selectedModelId {
-                                                let viewModel = ImageProcessingViewModel(initialModelId: modelId)
-                                                ImageProcessingView(viewModel: viewModel)
-                                            } else {
-                                                EmptyView()
-                                            }
+                                            let viewModel = ImageProcessingViewModel()
+                                            ImageProcessingView(viewModel: viewModel)
                                         },
                                         isActive: Binding(
                                             get: { selectedModelId != nil },
@@ -128,22 +126,29 @@ class MainViewModel: ObservableObject {
     @Published var modelTypes: [ImageModelType]?
     @Published var isSubscribed: Bool = false
     @Published var paymentIsProcessing: Bool = false
+    @Published var config: [ImageProcessingEffect]?
+    @Published var headerImages: [String]?
     
     init() {
         mainStore.subscribe(self) { subscription in
             subscription.select { state in
-                (state.imageState, state.paymentState)
+                (state.imageState, state.paymentState, state.authState)
             }
         }
     }
 }
 
 extension MainViewModel: StoreSubscriber {
-    func newState(state: (imageState: ImageState, paymentState: PaymentState)) {
+    func newState(state: (imageState: ImageState, paymentState: PaymentState, authState: AuthState)) {
         DispatchQueue.main.async {
-            self.modelTypes = state.imageState.modelTypes
             self.isSubscribed = state.paymentState.isSubscribed
             self.paymentIsProcessing = state.paymentState.isProcessing
+            self.config = state.authState.config
+            self.headerImages = self.config?.filter {
+                $0.region == 1
+            }.map {
+                $0.imageUrl
+            }
         }
     }
 }

@@ -1,9 +1,11 @@
 import SwiftUI
+import Kingfisher
 
 struct ModelGridView: View {
     @EnvironmentObject private var themeManager: ThemeManager
-    let models: [ImageModelType]
-    let onModelSelected: (ImageModelType) -> Void
+    let models: [ImageProcessingEffect]
+    let onModelSelected: (ImageProcessingEffect) -> Void
+    let size: CGSize = CGSize(width: 120, height: 160)
     
     private let columns = [
         GridItem(.flexible()),
@@ -13,19 +15,21 @@ struct ModelGridView: View {
     var body: some View {
         LazyVGrid(columns: columns, spacing: 16) {
             ForEach(models, id: \.id) { model in
-                let imageName = UIImage(named: model.id) == nil ? "test" : model.id
-                Button(action: { onModelSelected(model) }) {
+                Button(action: {
+                    onModelSelected(model)
+                }) {
                     ZStack {
-                        Image(imageName)
-                            .foregroundColor(themeManager.accent)
-                            .frame(width: 120, height: 160)
-                        
-//                        HStack {
-//                            Text(model.name)
-//                                .font(.system(size: 14, weight: .medium))
-//                                .foregroundColor(themeManager.text)
-//                        }
-//                        .background(Color.clear)
+                        KFImage(URL(string: model.imageUrl))
+                                    .placeholder {
+                                        Image("test")
+                                            .foregroundColor(themeManager.accent)
+                                            .frame(width: size.width, height: size.height)
+                                        ProgressView() // 占位图
+                                    }
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: size.width, height: size.height)
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
                     }
                     .frame(maxWidth: .infinity)
                     .padding()

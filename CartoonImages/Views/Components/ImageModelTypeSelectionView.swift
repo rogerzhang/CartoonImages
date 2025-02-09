@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ImageModelTypeSelectionView: View {
-    @State private var currentIndex = mainStore.state.imageState.currentModelType?.id ?? "0"
+    @State private var currentIndex = mainStore.state.imageState.currentModelType?.id ?? 1
     @State private var beautyEnabled = false
     @State private var showImagePicker = false
     @State private var showPayment = false
@@ -22,15 +23,13 @@ struct ImageModelTypeSelectionView: View {
             TabView(selection: $currentIndex) {
                 ForEach(viewModel.modelTypes) { model in
                     ZStack(alignment: .bottomLeading) {
-                        let imageName = UIImage(named: model.imageName) == nil ? "test" : model.imageName
-                        Image(imageName)
+                        KFImage(URL(string: model.imageUrl))
                             .resizable()
                             .scaledToFit()
                             .cornerRadius(20)
                         
                         HStack {
-                            let imageName = UIImage(named: model.orignImage) == nil ? "test" : model.orignImage
-                            Image(imageName)
+                            KFImage(URL(string: model.origImgUrl))
                                 .resizable()
                                 .scaledToFit()
                                 .cornerRadius(5)
@@ -51,7 +50,7 @@ struct ImageModelTypeSelectionView: View {
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             
             Button(action: {
-                if viewModel.isSubscribed || currentIndex == "0" || currentIndex == "1" {
+                if viewModel.isSubscribed || currentIndex == 0 || currentIndex == 1 {
                     showCameraView = true
                     showPayment = false
                 } else {

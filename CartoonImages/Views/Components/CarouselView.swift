@@ -1,4 +1,5 @@
 import SwiftUI
+import Kingfisher
 
 struct CarouselView: View {
     @EnvironmentObject private var themeManager: ThemeManager
@@ -13,7 +14,7 @@ struct CarouselView: View {
             // 图片轮播
             TabView(selection: $currentIndex) {
                 ForEach(0..<images.count, id: \.self) { index in
-                    Image(images[index])
+                    KFImage(URL(string: images[index]))
                         .resizable()
                         .scaledToFill()
                         .tag(index)
