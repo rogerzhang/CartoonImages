@@ -33,7 +33,7 @@ struct ImageProcessingView: View {
                             showPayment.toggle()
                         }, label: {
                             Image(systemName: "crown.fill")
-                                .font(.headline)
+                                .font(.callout)
                                 .foregroundColor(.yellow)
                                 .frame(width: buttonSize, height: buttonSize)
                         })

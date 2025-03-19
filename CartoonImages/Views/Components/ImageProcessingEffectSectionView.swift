@@ -31,10 +31,16 @@ struct ImageProcessingEffectSectionView: View {
                     Button(action: {
                         onMoreBtnSelected(item.effects)
                     }) {
-                        Text("MORE".localized)
-                            .font(.headline)
-                            .foregroundColor(themeManager.text)
-                            .padding(.vertical, 0)
+                        HStack(spacing: 2) {
+                            Text("MORE".localized)
+                                .font(.system(size: 13))
+                                .foregroundColor(themeManager.text)
+                                .padding(.vertical, 0)
+                            Image(systemName: "chevron.right")
+                                .resizable()
+                                .frame(width: 4, height: 8)
+                                .foregroundColor(themeManager.text)
+                        }
                     }
                 }
             }
