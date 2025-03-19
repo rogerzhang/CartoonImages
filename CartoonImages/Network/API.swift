@@ -71,13 +71,17 @@ extension API: TargetType {
             
             return .uploadMultipart(formData)
         case let .smartProcessImage(imageData, model):
+            let data = withUnsafeBytes(of: model.region) { Data($0) }
+            
             let formData = [
                 MultipartFormData(provider: .data(imageData),
                                 name: "file",
                                 fileName: "image.jpg",
                                 mimeType: "image/jpeg"),
                 MultipartFormData(provider: .data(model.model_type.data(using: .utf8)!),
-                                name: "modelType")
+                                name: "modelType"),
+                MultipartFormData(provider: .data("\(model.region)".data(using: .utf8)!),
+                                name: "region")
             ]
             
             return .uploadMultipart(formData)

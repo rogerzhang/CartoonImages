@@ -189,6 +189,8 @@ struct Response: Decodable {
 
 struct ImageProcessingEffect: Codable, Identifiable {
     let region: Int
+    let region_title: String
+    let region_title_zh: String
     let image_url: String
     let title: String
     let api_url: String
@@ -206,5 +208,17 @@ struct ImageProcessingEffect: Codable, Identifiable {
     
     var origImgUrl: String {
         API.hostAddress + orign_img
+    }
+}
+
+extension Array where Element == ImageProcessingEffect {
+    func groupedBySortedRegion() -> [(region: Int, region_title: String, region_title_zh: String, effects: [ImageProcessingEffect])] {
+        let grouped = Dictionary(grouping: self, by: { $0.region })
+            .sorted { $0.key < $1.key } // 按 region 递增排序
+
+        return grouped.map { (region, effects) in
+            let first = effects.first!
+            return (region: region, region_title: first.region_title, region_title_zh: first.region_title_zh, effects: effects)
+        }
     }
 }

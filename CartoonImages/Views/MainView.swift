@@ -6,7 +6,10 @@ struct MainView: View {
     @State private var showProfile = false
     @State private var showPayment = false
     @State private var selectedModelId: Int?
+    @State private var selectedSectionTitle: String?
     @State private var selectedImage: UIImage?
+    @State private var showModelGridView = false
+    @State private var modelGridEffects: [ImageProcessingEffect] = []
     
     @StateObject var viewModel: MainViewModel = .init()
     
@@ -41,33 +44,22 @@ struct MainView: View {
                         }
                 
                         VStack(spacing: 0) {
-                            HStack {
-                                Text("FEATURES".localized)
-                                    .font(.headline)
-                                    .foregroundColor(themeManager.text)
-                                    .padding(.vertical, 0)
-                                    .padding(.horizontal, 20)
-                                Spacer()
-                            }
-                            if let modelTypes = viewModel.config {
-                                ModelGridView(models: modelTypes) { model in
-                                    selectedModelId = model.id
-                                    mainStore.dispatch(AppAction.image(.selectImageModelType(model)))
-                                }
-                                .background(
-                                    NavigationLink(
-                                        destination: Group {
-                                            let viewModel = ImageProcessingViewModel()
-                                            ImageProcessingView(viewModel: viewModel)
-                                        },
-                                        isActive: Binding(
-                                            get: { selectedModelId != nil },
-                                            set: { if !$0 { selectedModelId = nil } }
-                                        )
-                                    ) {
-                                        EmptyView()
+                            if let modelTypes = viewModel.config?.groupedBySortedRegion() {
+                                VStack {
+                                    ForEach(modelTypes, id: \.region) { section in
+                                        ImageProcessingEffectSectionView(item: section, onModelSelected: { model in
+                                            selectedModelId = model.id
+                                            mainStore.dispatch(AppAction.image(.selectImageModelType(model)))
+                                        }, onMoreBtnSelected: { effects in
+                                            selectedSectionTitle = LocalizationManager.shared.currentLanguage == .chinese ? section.region_title_zh : section.region_title
+                                            
+                                            selectedModelId = nil
+                                            showModelGridView = true
+                                            modelGridEffects = effects
+                                        })
                                     }
-                                )
+                                }
+                                .background(navigationLinkToImageProcessingView())
                             }
                         }
                     }
@@ -87,6 +79,34 @@ struct MainView: View {
         }
         .sheet(isPresented: $showProfile) {
             ProfileView()
+        }
+        .background(navigationLinkToModelGridView())
+    }
+    
+    private func navigationLinkToImageProcessingView() -> some View {
+        NavigationLink(
+            destination: Group {
+                let viewModel = ImageProcessingViewModel()
+                ImageProcessingView(viewModel: viewModel)
+            },
+            isActive: Binding(
+                get: { selectedModelId != nil },
+                set: { if !$0 { selectedModelId = nil } }
+            )
+        ) {
+            EmptyView()
+        }
+    }
+    
+    private func navigationLinkToModelGridView() -> some View {
+        NavigationLink(
+            destination: ModelGridView(models: modelGridEffects, title: selectedSectionTitle ?? "", onModelSelected: { model in
+                selectedModelId = model.id
+                mainStore.dispatch(AppAction.image(.selectImageModelType(model)))
+            }),
+            isActive: $showModelGridView
+        ) {
+            EmptyView()
         }
     }
     
@@ -144,7 +164,7 @@ extension MainViewModel: StoreSubscriber {
             self.isSubscribed = state.paymentState.isSubscribed
             self.paymentIsProcessing = state.paymentState.isProcessing
             self.config = state.authState.config?.filter {
-                $0.region == 1
+                $0.region != 0
             }
             self.headerImages = state.authState.config?.filter {
                 $0.region == 0
@@ -154,7 +174,3 @@ extension MainViewModel: StoreSubscriber {
         }
     }
 }
-
-#Preview(body: {
-    MainView()
-})

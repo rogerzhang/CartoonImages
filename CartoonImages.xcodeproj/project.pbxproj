@@ -10,6 +10,7 @@
 		392B79EEB384D4AA603A1FBF /* Pods_CartoonImagesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3343FEB1234EE9272DA26412 /* Pods_CartoonImagesTests.framework */; };
 		A3E579A77711374CA7E9B8D6 /* Pods_CartoonImages.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96D342CDF58A28354F783AFE /* Pods_CartoonImages.framework */; };
 		B6F13A374466FE21626F7205 /* Pods_CartoonImages_CartoonImagesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27B7592F3C5C08AEAABCB37B /* Pods_CartoonImages_CartoonImagesUITests.framework */; };
+		DB05A7812D89AAAD00E0E38A /* ImageProcessingEffectSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB05A7802D89AAAD00E0E38A /* ImageProcessingEffectSectionView.swift */; };
 		DB080D7F2D07363900A602D9 /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB080D7E2D07363900A602D9 /* ImageModel.swift */; };
 		DB2CEB112CF077B7006D7C52 /* CustomCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2CEB102CF077B7006D7C52 /* CustomCameraView.swift */; };
 		DB2F11DC2CD7993D005EF0E5 /* ImageProcessingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11D22CD7993D005EF0E5 /* ImageProcessingView.swift */; };
@@ -98,6 +99,7 @@
 		96D342CDF58A28354F783AFE /* Pods_CartoonImages.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CartoonImages.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B835B7F1DB0DF1C6F2A073E2 /* Pods-CartoonImagesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CartoonImagesTests.debug.xcconfig"; path = "Target Support Files/Pods-CartoonImagesTests/Pods-CartoonImagesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D347D9BE7FEA0A172EC8A770 /* Pods-CartoonImages-CartoonImagesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CartoonImages-CartoonImagesUITests.release.xcconfig"; path = "Target Support Files/Pods-CartoonImages-CartoonImagesUITests/Pods-CartoonImages-CartoonImagesUITests.release.xcconfig"; sourceTree = "<group>"; };
+		DB05A7802D89AAAD00E0E38A /* ImageProcessingEffectSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessingEffectSectionView.swift; sourceTree = "<group>"; };
 		DB080D7E2D07363900A602D9 /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
 		DB2CEB102CF077B7006D7C52 /* CustomCameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCameraView.swift; sourceTree = "<group>"; };
 		DB2F11D22CD7993D005EF0E5 /* ImageProcessingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessingView.swift; sourceTree = "<group>"; };
@@ -451,6 +453,7 @@
 				DB37E12D2D087F0100319037 /* ImageModelTypeSelectionView.swift */,
 				DB37E12F2D09DA1000319037 /* PaymentPlanView.swift */,
 				DBE1F82A2D1301B200084871 /* UINavigationController+BackButton.swift */,
+				DB05A7802D89AAAD00E0E38A /* ImageProcessingEffectSectionView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -740,6 +743,7 @@
 				DB2F11FD2CDBA12A005EF0E5 /* LoginView.swift in Sources */,
 				DBABC6382CDC6A3B001FD8C0 /* AppState.swift in Sources */,
 				DBABC65D2CDE567F001FD8C0 /* ImageProcessingViewModel.swift in Sources */,
+				DB05A7812D89AAAD00E0E38A /* ImageProcessingEffectSectionView.swift in Sources */,
 				DBABC63B2CDC6A3B001FD8C0 /* ImageAction.swift in Sources */,
 				DBABC65A2CDE513D001FD8C0 /* PaymentReducer.swift in Sources */,
 				DBABC63E2CDC6A3B001FD8C0 /* AppReducer.swift in Sources */,
