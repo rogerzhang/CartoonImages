@@ -98,6 +98,10 @@ struct CustomCameraView: View {
                         },
                         onConfirm: {
                             selectedImage = camera.tempImage
+                            if let image = selectedImage {
+                                viewModel.saveToRecentImages(image)
+                            }
+                            
                             dismiss()
                             guard let model = viewModel.currentModelType else {
                                 return
@@ -650,6 +654,8 @@ struct ImagePickerView: UIViewControllerRepresentable {
     @Binding var isPresented: Bool
     @Binding var beautyEnabled: Bool
     
+    @EnvironmentObject var viewModel: ImageProcessingViewModel
+    
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
@@ -682,10 +688,12 @@ struct ImagePickerView: UIViewControllerRepresentable {
                     applyBeautyFilter(to: image) { processedImage in
                         self.parent.selectedImage = processedImage
                         self.parent.isPresented = false
+                        self.parent.viewModel.saveToRecentImages(processedImage)
                     }
                 } else {
                     parent.selectedImage = image
                     parent.isPresented = false
+                    parent.viewModel.saveToRecentImages(image)
                 }
             }
         }

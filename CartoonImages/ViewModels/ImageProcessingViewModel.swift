@@ -17,6 +17,8 @@ class ImageProcessingViewModel: ObservableObject {
     @Published var modelTypes: [ImageProcessingEffect] = []
     @Published var currentModelType: ImageProcessingEffect?
     @Published var isSubscribed: Bool = false
+    @Published var recentImages: [UIImage] = []
+    var tempSelectedImage: UIImage?
     
     private var cancellables = Set<AnyCancellable>()
     private var timer: Timer?
@@ -26,6 +28,20 @@ class ImageProcessingViewModel: ObservableObject {
             subscription.select { state in
                 (state.imageState, state.paymentState, state.authState)
             }
+        }
+    }
+    
+    func onSelectedImageChange() {
+        $selectedImage
+            .compactMap { $0 } // 避免 `nil`
+            .sink { image in
+                self.saveToRecentImages(image)
+            }
+            .store(in: &cancellables)
+        
+        // 如果 `selectedImage` 不是 nil，则立即调用
+        if let initialImage = selectedImage {
+            saveToRecentImages(initialImage)
         }
     }
     
@@ -111,6 +127,32 @@ class ImageProcessingViewModel: ObservableObject {
     
     deinit {
         mainStore.unsubscribe(self)
+    }
+}
+
+extension ImageProcessingViewModel {
+    // Save image to recent images
+    func saveToRecentImages(_ image: UIImage) {
+        recentImages.insert(image, at: 0)
+        if recentImages.count > 5 {
+            recentImages.removeLast()
+        }
+        saveRecentImages()
+    }
+    
+    // Load recent images from UserDefaults
+    func loadRecentImages() {
+        if let data = UserDefaults.standard.data(forKey: "recentImages"),
+           let images = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [UIImage] {
+            recentImages = images
+        }
+    }
+    
+    // Save recent images to UserDefaults
+    func saveRecentImages() {
+        if let data = try? NSKeyedArchiver.archivedData(withRootObject: recentImages, requiringSecureCoding: false) {
+            UserDefaults.standard.set(data, forKey: "recentImages")
+        }
     }
 }
 

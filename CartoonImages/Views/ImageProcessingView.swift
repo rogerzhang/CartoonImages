@@ -113,6 +113,11 @@ struct ImageProcessingView: View {
             viewModel.processedImage = nil
             mainStore.dispatch(AppAction.image(.selectImage(nil)))
         }
+        .onAppear {
+            DispatchQueue.main.async {
+                viewModel.loadRecentImages()
+            }
+        }
     }
     
     // MARK: - 图片预览区域
@@ -152,40 +157,46 @@ struct ImageProcessingView: View {
                         }
                     })
                 }
-            } else if  let image = viewModel.selectedImage {
-                Image(uiImage: image)
+            }
+            else if  viewModel.isProcessing {
+                let image = viewModel.selectedImage ?? viewModel.tempSelectedImage
+                Image(uiImage: image!)
                     .resizable()
                     .scaledToFit()
                     .frame(maxHeight: UIScreen.main.bounds.height * 0.6)
                     .cornerRadius(10)
                     .shadow(radius: 5)
                 
-                Button(action: {
-                    guard let model = viewModel.currentModelType else {
-                        return
-                    }
-                    viewModel.processImage(with: model)
-                }, label: {
-                    Text("PROCESS".localized)
-                        .foregroundColor(.white)
-                        .font(.headline)
-                        .frame(width: 200, height: 60)
-                        .background(
-                            LinearGradient(
-                                gradient: Gradient(colors: [Color(hex: 0x9D40F5), Color(hex: 0xFFB979)]),
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                        )
-                        .overlay( // 为按钮添加边框
-                            RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
-                        )
-                })
+//                Button(action: {
+//                    guard let model = viewModel.currentModelType else {
+//                        return
+//                    }
+//                    viewModel.processImage(with: model)
+//                }, label: {
+//                    Text("PROCESS".localized)
+//                        .foregroundColor(.white)
+//                        .font(.headline)
+//                        .frame(width: 200, height: 60)
+//                        .background(
+//                            LinearGradient(
+//                                gradient: Gradient(colors: [Color(hex: 0x9D40F5), Color(hex: 0xFFB979)]),
+//                                startPoint: .leading,
+//                                endPoint: .trailing
+//                            )
+//                            .clipShape(RoundedRectangle(cornerRadius: 20))
+//                        )
+//                        .overlay( // 为按钮添加边框
+//                            RoundedRectangle(cornerRadius: 20)
+//                                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+//                        )
+//                })
                 
-            } else {
-                ImageModelTypeSelectionView()
+            }
+            else {
+                VStack {
+                    ImageModelTypeSelectionView()
+                }
+            
             }
         }
         .padding(.horizontal)
@@ -198,30 +209,31 @@ struct ImageProcessingView: View {
         }
     }
     
-    // 保存图片到相册
-       private func saveImageToPhotoLibrary() {
-           guard let image = viewModel.processedImage else {
-               alertMessage = "UNKNOWN_ERROR".localized
-               showAlert = true
-               return
-           }
-           
-           PHPhotoLibrary.requestAuthorization { status in
-               switch status {
-               case .authorized, .limited:
-                   UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-                   alertMessage = "SAVE_SUCCESS".localized
-                   showAlert = true
-               case .denied, .restricted:
-                   alertMessage = "NO_PERMISSION".localized
-                   showAlert = true
-               case .notDetermined:
-                   alertMessage = "UNKNOWN_ERROR".localized
-                   showAlert = true
-               @unknown default:
-                   alertMessage = "UNKNOWN_ERROR".localized
-                   showAlert = true
-               }
-           }
-       }
+    // Save the processed image and update recent images
+    private func saveImageToPhotoLibrary() {
+        guard let image = viewModel.processedImage else {
+            alertMessage = "UNKNOWN_ERROR".localized
+            showAlert = true
+            return
+        }
+        
+        // Save to photo library
+        PHPhotoLibrary.requestAuthorization { status in
+            switch status {
+            case .authorized, .limited:
+                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+                alertMessage = "SAVE_SUCCESS".localized
+                showAlert = true
+            case .denied, .restricted:
+                alertMessage = "NO_PERMISSION".localized
+                showAlert = true
+            case .notDetermined:
+                alertMessage = "UNKNOWN_ERROR".localized
+                showAlert = true
+            @unknown default:
+                alertMessage = "UNKNOWN_ERROR".localized
+                showAlert = true
+            }
+        }
+    }
 } 
