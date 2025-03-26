@@ -16,6 +16,9 @@ func appReducer(_ action: Action, _ state: AppState?) -> AppState {
         
     case let .payment(paymentAction):
         state.paymentState = paymentReducer(action: paymentAction, state: state.paymentState)
+        
+    case let .profile(profileAction):
+        state.profileState = profileReducer(action: profileAction, state: state.profileState)
     }
     
     return state

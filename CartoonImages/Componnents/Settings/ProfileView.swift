@@ -20,6 +20,7 @@ struct CustomLabelStyle: LabelStyle {
 
 struct ProfileView: View {
     @EnvironmentObject private var themeManager: ThemeManager
+    @EnvironmentObject var announcementViewModel: AnnouncementViewModel
     @Environment(\.presentationMode) var presentationMode
     
     @State private var showLoginSheet = false
@@ -52,6 +53,22 @@ struct ProfileView: View {
                         }
                     }
                     .padding(.vertical, 8)
+                }
+                
+                // 公告
+                Section {
+                    NavigationLink(destination: AnnouncementView()) {
+                        HStack {
+                            Label("SETTINGS_ANNOUNCEMENT".localized, systemImage: "tray.full")
+                                .foregroundColor(themeManager.text)
+                            Spacer()
+                            if announcementViewModel.hasUnread() {
+                                Circle()
+                                    .fill(Color.red)
+                                    .frame(width: 8, height: 8)
+                            }
+                        }
+                    }
                 }
                 
                 // Section 2: 评分和分享
@@ -152,4 +169,4 @@ struct ProfileView: View {
 //            }
 //        }
     }
-} 
+}

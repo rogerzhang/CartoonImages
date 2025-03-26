@@ -12,6 +12,9 @@
 		B6F13A374466FE21626F7205 /* Pods_CartoonImages_CartoonImagesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27B7592F3C5C08AEAABCB37B /* Pods_CartoonImages_CartoonImagesUITests.framework */; };
 		DB05A7812D89AAAD00E0E38A /* ImageProcessingEffectSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB05A7802D89AAAD00E0E38A /* ImageProcessingEffectSectionView.swift */; };
 		DB080D7F2D07363900A602D9 /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB080D7E2D07363900A602D9 /* ImageModel.swift */; };
+		DB26CE212D9284270011DEEB /* AnnouncementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB26CE202D9284270011DEEB /* AnnouncementView.swift */; };
+		DB26CE232D9285E90011DEEB /* ProfileAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB26CE222D9285E90011DEEB /* ProfileAction.swift */; };
+		DB26CE252D9287680011DEEB /* ProfileReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB26CE242D9287680011DEEB /* ProfileReducer.swift */; };
 		DB2CEB112CF077B7006D7C52 /* CustomCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2CEB102CF077B7006D7C52 /* CustomCameraView.swift */; };
 		DB2F11DC2CD7993D005EF0E5 /* ImageProcessingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11D22CD7993D005EF0E5 /* ImageProcessingView.swift */; };
 		DB2F11DD2CD7993D005EF0E5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11D32CD7993D005EF0E5 /* ContentView.swift */; };
@@ -101,6 +104,9 @@
 		D347D9BE7FEA0A172EC8A770 /* Pods-CartoonImages-CartoonImagesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CartoonImages-CartoonImagesUITests.release.xcconfig"; path = "Target Support Files/Pods-CartoonImages-CartoonImagesUITests/Pods-CartoonImages-CartoonImagesUITests.release.xcconfig"; sourceTree = "<group>"; };
 		DB05A7802D89AAAD00E0E38A /* ImageProcessingEffectSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProcessingEffectSectionView.swift; sourceTree = "<group>"; };
 		DB080D7E2D07363900A602D9 /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
+		DB26CE202D9284270011DEEB /* AnnouncementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementView.swift; sourceTree = "<group>"; };
+		DB26CE222D9285E90011DEEB /* ProfileAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAction.swift; sourceTree = "<group>"; };
+		DB26CE242D9287680011DEEB /* ProfileReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileReducer.swift; sourceTree = "<group>"; };
 		DB2CEB102CF077B7006D7C52 /* CustomCameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCameraView.swift; sourceTree = "<group>"; };
 		DB2F11D22CD7993D005EF0E5 /* ImageProcessingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessingView.swift; sourceTree = "<group>"; };
 		DB2F11D32CD7993D005EF0E5 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -157,7 +163,7 @@
 		DBF1EF612D16AA86000FA4FE /* UserAgreement_en.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = UserAgreement_en.txt; sourceTree = "<group>"; };
 		DBF1EF662D182EAA000FA4FE /* NetworkPermissionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkPermissionManager.swift; sourceTree = "<group>"; };
 		DBF1EF682D183929000FA4FE /* WatermarkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatermarkManager.swift; sourceTree = "<group>"; };
-		DBF1EF6A2D184968000FA4FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		DBF1EF6A2D184968000FA4FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBF1EF6C2D1A4878000FA4FE /* Toon.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Toon.storekit; sourceTree = "<group>"; };
 		DBF1EF6D2D1A5E65000FA4FE /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		DBF1EF6F2D1BD466000FA4FE /* MailHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailHelper.swift; sourceTree = "<group>"; };
@@ -225,21 +231,62 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DB2F11D12CD7993D005EF0E5 /* Views */ = {
+		DB26CE1B2D9282310011DEEB /* Componnents */ = {
 			isa = PBXGroup;
 			children = (
-				DBFCDD822CF5B6690067D73C /* Components */,
+				DB26CE1F2D9282BF0011DEEB /* Payment */,
+				DB26CE1E2D92825A0011DEEB /* ImageProcessing */,
+				DB26CE1D2D92824F0011DEEB /* Home */,
+				DB26CE1C2D9282410011DEEB /* Settings */,
+			);
+			path = Componnents;
+			sourceTree = "<group>";
+		};
+		DB26CE1C2D9282410011DEEB /* Settings */ = {
+			isa = PBXGroup;
+			children = (
 				DBFCDD802CF408410067D73C /* ShareSheet.swift */,
 				DBFCDD7C2CF407870067D73C /* ProfileView.swift */,
 				DBDE9CBF2D0B3354005EBAFC /* UserProfileView.swift */,
 				DBFCDD7D2CF407870067D73C /* SettingsView.swift */,
-				DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */,
-				DBEE755B2CF17B6A00A833AD /* PhotoConfirmationView.swift */,
-				DB2CEB102CF077B7006D7C52 /* CustomCameraView.swift */,
-				DB2F11FB2CDBA129005EF0E5 /* LoginView.swift */,
+				DB26CE202D9284270011DEEB /* AnnouncementView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		DB26CE1D2D92824F0011DEEB /* Home */ = {
+			isa = PBXGroup;
+			children = (
 				DB2F11FC2CDBA12A005EF0E5 /* MainView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		DB26CE1E2D92825A0011DEEB /* ImageProcessing */ = {
+			isa = PBXGroup;
+			children = (
+				DBABC65C2CDE567F001FD8C0 /* ImageProcessingViewModel.swift */,
+				DBEE755B2CF17B6A00A833AD /* PhotoConfirmationView.swift */,
 				DB2F11E22CD7A0D5005EF0E5 /* ImagePicker.swift */,
 				DB2F11D22CD7993D005EF0E5 /* ImageProcessingView.swift */,
+				DB2CEB102CF077B7006D7C52 /* CustomCameraView.swift */,
+			);
+			path = ImageProcessing;
+			sourceTree = "<group>";
+		};
+		DB26CE1F2D9282BF0011DEEB /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */,
+			);
+			path = Payment;
+			sourceTree = "<group>";
+		};
+		DB2F11D12CD7993D005EF0E5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DBFCDD822CF5B6690067D73C /* Components */,
+				DB2F11FB2CDBA129005EF0E5 /* LoginView.swift */,
 				DB2F11D32CD7993D005EF0E5 /* ContentView.swift */,
 			);
 			path = Views;
@@ -292,10 +339,10 @@
 			isa = PBXGroup;
 			children = (
 				DBF1EF6A2D184968000FA4FE /* Info.plist */,
+				DB26CE1B2D9282310011DEEB /* Componnents */,
 				DBF1EF522D16A03E000FA4FE /* Extensions */,
 				DBF1EF472D1694FE000FA4FE /* Resources */,
 				DBE1F8272D12F7CC00084871 /* Resource */,
-				DBABC65B2CDE567F001FD8C0 /* ViewModels */,
 				DBABC6522CDE5100001FD8C0 /* Services */,
 				DBABC6272CDC6A3B001FD8C0 /* Store */,
 				DBABC6242CDC5281001FD8C0 /* Utils */,
@@ -384,6 +431,7 @@
 				DBABC6552CDE5119001FD8C0 /* PaymentAction.swift */,
 				DBABC62F2CDC6A3B001FD8C0 /* AppAction.swift */,
 				DBABC6302CDC6A3B001FD8C0 /* ImageAction.swift */,
+				DB26CE222D9285E90011DEEB /* ProfileAction.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -395,6 +443,7 @@
 				DBABC6502CDC717C001FD8C0 /* AuthReducer.swift */,
 				DBABC6332CDC6A3B001FD8C0 /* ImageReducer.swift */,
 				DBABC6342CDC6A3B001FD8C0 /* AppReducer.swift */,
+				DB26CE242D9287680011DEEB /* ProfileReducer.swift */,
 			);
 			path = Reducers;
 			sourceTree = "<group>";
@@ -405,14 +454,6 @@
 				DBABC6532CDE5100001FD8C0 /* PaymentService.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		DBABC65B2CDE567F001FD8C0 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				DBABC65C2CDE567F001FD8C0 /* ImageProcessingViewModel.swift */,
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		DBE1F8272D12F7CC00084871 /* Resource */ = {
@@ -734,6 +775,7 @@
 				DB2F11E62CD7A0D5005EF0E5 /* ImagePicker.swift in Sources */,
 				DBF1EF4D2D16951A000FA4FE /* LocalizationManager.swift in Sources */,
 				DBABC6512CDC717C001FD8C0 /* AuthReducer.swift in Sources */,
+				DB26CE212D9284270011DEEB /* AnnouncementView.swift in Sources */,
 				DBF1EF6E2D1A5E65000FA4FE /* Logger.swift in Sources */,
 				DBFCDD7F2CF407870067D73C /* SettingsView.swift in Sources */,
 				DB2CEB112CF077B7006D7C52 /* CustomCameraView.swift in Sources */,
@@ -747,12 +789,14 @@
 				DBABC63B2CDC6A3B001FD8C0 /* ImageAction.swift in Sources */,
 				DBABC65A2CDE513D001FD8C0 /* PaymentReducer.swift in Sources */,
 				DBABC63E2CDC6A3B001FD8C0 /* AppReducer.swift in Sources */,
+				DB26CE252D9287680011DEEB /* ProfileReducer.swift in Sources */,
 				DBFCDD852CF5B6690067D73C /* ModelGridView.swift in Sources */,
 				DB37E12E2D087F0100319037 /* ImageModelTypeSelectionView.swift in Sources */,
 				DB2F12032CDBA404005EF0E5 /* API.swift in Sources */,
 				DBF1EF702D1BD466000FA4FE /* MailHelper.swift in Sources */,
 				DBFCDD7B2CF374EB0067D73C /* ThemeManager.swift in Sources */,
 				DBF1EF672D182EAA000FA4FE /* NetworkPermissionManager.swift in Sources */,
+				DB26CE232D9285E90011DEEB /* ProfileAction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

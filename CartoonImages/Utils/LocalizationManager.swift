@@ -27,7 +27,7 @@ class LocalizationManager {
                 return language
             }
             // 使用系统语言
-            let preferredLanguage = Locale.current.languageCode ?? "en"
+            let preferredLanguage = Locale.current.language.languageCode?.identifier ?? "en"
             if preferredLanguage.starts(with: "zh") {
                 return .chinese
             }

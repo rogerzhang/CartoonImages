@@ -9,6 +9,7 @@ enum API {
     case smartProcessImage(imageData: Data, model: ImageProcessingEffect)
     case fetchProducts
     case purchase(productId: String)
+    case fetchAnnoucement(version: Int)
 }
 
 extension API {
@@ -45,12 +46,14 @@ extension API: TargetType {
             return "/products"
         case .purchase:
             return "/purchase"
+        case .fetchAnnoucement:
+            return "/pushAnnouncement/getAnnouncements"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .processImage, .clearerImage, .smartProcessImage:
+        case .processImage, .clearerImage, .smartProcessImage, .fetchAnnoucement:
             return .post
         case .fetchProducts, .purchase, .getHomeConfig:
             return .get
@@ -89,6 +92,11 @@ extension API: TargetType {
             return .requestParameters(
                 parameters: ["productId": productId],
                 encoding: JSONEncoding.default
+            )
+        case let .fetchAnnoucement(version):
+            return .requestParameters(
+                parameters: ["version": version],
+                encoding: URLEncoding.default
             )
         }
     }

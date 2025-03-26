@@ -68,6 +68,26 @@ let networkMiddleware: Middleware<AppState> = { dispatch, getState in
                 default:
                     break
                 }
+                
+            case let .profile(profileAction):
+                switch profileAction {
+                case .startFetchAnnounce(let version):
+                    NetworkService.shared.fetchAnnouncements(version)
+                        .receive(on: DispatchQueue.main)
+                        .sink(
+                            receiveCompletion: { completion in
+                                if case let .failure(error) = completion {
+                                    dispatch(AppAction.profile(.fetchAnnounceFailed(error)))
+                                }
+                            },
+                            receiveValue: { annoucements in
+                                dispatch(AppAction.profile(.fetchAnnounceSuccess(annoucements)))
+                            }
+                        )
+                        .store(in: &NetworkService.shared.cancellables)
+                default:
+                    break
+                }
             }
         }
     }

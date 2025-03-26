@@ -31,11 +31,18 @@ struct PaymentState {
     var products: [SKProduct] = []
 }
 
+struct ProfileState {
+    var isLoading: Bool = false
+    var hasNew: Bool = false
+    var announceList: [Announcement] = []
+}
+
 // App State
 struct AppState {
     var authState: AuthState
     var imageState: ImageState
     var paymentState: PaymentState
+    var profileState: ProfileState
     
     init() {
         self.authState = AuthState()
@@ -43,5 +50,6 @@ struct AppState {
         self.imageState.modelTypes = [
         ]
         self.paymentState = PaymentState()
+        self.profileState = ProfileState()
     }
 } 

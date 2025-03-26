@@ -174,6 +174,45 @@ class NetworkService {
             }
             .eraseToAnyPublisher()
     }
+    
+    func fetchAnnouncements(_ version: Int) -> AnyPublisher<[Announcement], NetworkError> {
+        let target = API.fetchAnnoucement(version: version)
+        return provider.requestPublisher(target)
+            .tryMap { response -> [Announcement] in
+                let announcementResponse = try JSONDecoder().decode(AnnouncementResponse.self, from: response.data)
+                
+                guard announcementResponse.status == "200" else {
+                    throw NetworkError.invalidResponse
+                }
+                return announcementResponse.data
+            }
+            .mapError { error in
+                if let processError = error as? NetworkError {
+                    return processError
+                }
+                
+                if let moyaError = error as? MoyaError {
+                    switch moyaError {
+                    case .statusCode(let response):
+                        if response.statusCode == 400 {
+                            if let json = try? JSONSerialization.jsonObject(with: response.data) as? [String: String],
+                               let errorMessage = json["error"] {
+                                return .serverError(errorMessage)
+                            }
+                        }
+                    default:
+                        break
+                    }
+                }
+                return .unknown(error)
+            }
+            .eraseToAnyPublisher()
+    }
+}
+
+struct AnnouncementResponse: Decodable {
+    let status: String
+    let data: [Announcement]
 }
 
 // 响应模型

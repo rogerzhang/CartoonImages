@@ -189,7 +189,7 @@ struct ImageModelTypeSelectionView: View {
                 .frame(width: 200, height: 60)
                 .background(
                     LinearGradient(
-                        gradient: Gradient(colors: [Color(hex: 0x9D40F5), Color(hex: 0xFFB979)]),
+                        gradient: Gradient(colors: [selectedImage == nil ? Color.gray : Color(hex: 0x9D40F5), selectedImage == nil ? Color.gray : Color(hex: 0xFFB979)]),
                         startPoint: .leading,
                         endPoint: .trailing
                     )

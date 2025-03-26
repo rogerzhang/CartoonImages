@@ -21,6 +21,8 @@ class NetworkPermissionManager: ObservableObject {
                 if !UserDefaults.standard.bool(forKey: "hasShownNetworkPermission") {
                     self?.showNetworkAlert = true
                     UserDefaults.standard.set(true, forKey: "hasShownNetworkPermission")
+                } else {
+                    self?.showNetworkAlert = false
                 }
             }
         }

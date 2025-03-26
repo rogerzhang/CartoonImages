@@ -17,7 +17,7 @@ struct ModelGridView: View {
     
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: columns, spacing: 16) {
+            LazyVGrid(columns: columns, spacing: 2) {
                 ForEach(models, id: \.id) { model in
                     Button(action: {
                         onModelSelected(model)
@@ -39,7 +39,8 @@ struct ModelGridView: View {
                                 Spacer() // 占据上方空间，Text 会贴到底部
                                 HStack {
                                     Text(LocalizationManager.shared.currentLanguage == .chinese ? model.titleZh : model.title)
-                                        .font(.caption)
+                                        .font(.subheadline)
+                                        .fontWeight(.bold)
                                         .foregroundColor(.white)
                                         .padding(6)  // 内边距
                                         .background(Color.black.opacity(0.1)) // 半透明背景
@@ -53,7 +54,7 @@ struct ModelGridView: View {
                             .frame(width: size.width, height: size.height) // 让 VStack 充满整个 ZStack
                         }
                         .frame(maxWidth: .infinity)
-                        .padding()
+                        .padding(10)
                         .background(themeManager.background)
                         .cornerRadius(12)
                         .shadow(color: themeManager.secondaryBackground, radius: 5)

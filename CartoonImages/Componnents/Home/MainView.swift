@@ -3,8 +3,11 @@ import ReSwift
 
 struct MainView: View {
     @EnvironmentObject private var themeManager: ThemeManager
+    @Environment(\.scenePhase) private var scenePhase
+    
     @State private var showProfile = false
     @State private var showPayment = false
+    @StateObject private var announcementViewModel = AnnouncementViewModel()
     @State private var selectedModelId: Int?
     @State private var selectedSectionTitle: String?
     @State private var selectedImage: UIImage?
@@ -25,22 +28,20 @@ struct MainView: View {
             themeManager.background
                 .ignoresSafeArea()
             
-            VStack(spacing: 0) {
+            ZStack(alignment: .top) {
                 // 固定在顶部的导航栏
                 topNavigationBar
                     .padding(.horizontal)
-                    .padding(.top, UIApplication.shared.windows.first?.safeAreaInsets.top ?? 0)
-                    .background(themeManager.background.opacity(0.98))
-                    .zIndex(1)  // 确保导航栏在最上层
+                    .zIndex(1)
                 
                 // 滚动内容
                 ScrollView {
                     VStack(spacing: 20) {
                         if let images = viewModel.headerImages, images.count > 0 {
                             CarouselView(images: images)
-                                .frame(height: 200)
+                                .frame(height: 240)
                                 .cornerRadius(12)
-                                .padding()
+                                .padding(.horizontal, 0)
                         }
                 
                         VStack(spacing: 0) {
@@ -64,8 +65,11 @@ struct MainView: View {
                         }
                     }
                 }
+                .edgesIgnoringSafeArea(.top)
+//                .safeAreaInset(edge: .top, content: {
+//                    Color.clear.frame(height: 0) // 让内容填充安全区
+//                })
             }
-            .edgesIgnoringSafeArea(.top)
         }
         .sheet(isPresented: $showPayment) {
             PaymentView(
@@ -79,8 +83,24 @@ struct MainView: View {
         }
         .sheet(isPresented: $showProfile) {
             ProfileView()
+                .environmentObject(announcementViewModel)
         }
         .background(navigationLinkToModelGridView())
+        .onAppear {
+            if NetworkPermissionManager.shared.isNetworkAuthorized {
+                announcementViewModel.fetchLatestAnnouncement()
+            }
+        }
+        .onReceive(NetworkPermissionManager.shared.$isNetworkAuthorized) { isAuthorized in
+            if isAuthorized {
+                announcementViewModel.fetchLatestAnnouncement()
+            }
+        }
+//        .onChange(of: scenePhase) { newPhase in
+//            if newPhase == .active, NetworkPermissionManager.shared.isNetworkAuthorized {
+//                announcementViewModel.fetchLatestAnnouncement()
+//            }
+//        }
     }
     
     private func navigationLinkToImageProcessingView() -> some View {
@@ -118,6 +138,7 @@ struct MainView: View {
             } label: {
                 ZStack {
                     Image("vip")
+                        .opacity(0.8)
                     Text("VIP".localized)
                         .font(.system(size: 14, weight: .medium))
                         .foregroundColor(themeManager.text)
@@ -131,9 +152,16 @@ struct MainView: View {
             Button {
                 showProfile = true
             } label: {
-                Image("profiles")
-                    .font(.system(size: 44))
-                    .foregroundColor(themeManager.accent)
+                ZStack(alignment: .topTrailing) {
+                    Image("profiles")
+                        .font(.system(size: 44))
+                        .foregroundColor(themeManager.accent)
+                    if announcementViewModel.hasUnread() {
+                        Circle()
+                            .fill(Color.red)
+                            .frame(width: 8, height: 8)
+                    }
+                }
             }
             .buttonStyle(PlainButtonStyle())
             .contentShape(Rectangle())
