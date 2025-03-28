@@ -10,6 +10,7 @@ enum API {
     case fetchProducts
     case purchase(productId: String)
     case fetchAnnoucement(version: Int)
+    case registerDeviceToken(deviceToken: String)
 }
 
 extension API {
@@ -48,12 +49,14 @@ extension API: TargetType {
             return "/purchase"
         case .fetchAnnoucement:
             return "/pushAnnouncement/getAnnouncements"
+        case .registerDeviceToken:
+            return "/pushAnnouncement/registerToken"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .processImage, .clearerImage, .smartProcessImage, .fetchAnnoucement:
+        case .processImage, .clearerImage, .smartProcessImage, .fetchAnnoucement, .registerDeviceToken:
             return .post
         case .fetchProducts, .purchase, .getHomeConfig:
             return .get
@@ -96,6 +99,11 @@ extension API: TargetType {
         case let .fetchAnnoucement(version):
             return .requestParameters(
                 parameters: ["version": version],
+                encoding: URLEncoding.default
+            )
+        case let .registerDeviceToken(deviceToken):
+            return .requestParameters(
+                parameters: ["token": deviceToken],
                 encoding: URLEncoding.default
             )
         }

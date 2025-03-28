@@ -15,6 +15,9 @@
 		DB26CE212D9284270011DEEB /* AnnouncementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB26CE202D9284270011DEEB /* AnnouncementView.swift */; };
 		DB26CE232D9285E90011DEEB /* ProfileAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB26CE222D9285E90011DEEB /* ProfileAction.swift */; };
 		DB26CE252D9287680011DEEB /* ProfileReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB26CE242D9287680011DEEB /* ProfileReducer.swift */; };
+		DB26CE2B2D94EA480011DEEB /* NotificationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB26CE2A2D94EA480011DEEB /* NotificationDelegate.swift */; };
+		DB26CE2D2D94EA770011DEEB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB26CE2C2D94EA770011DEEB /* AppDelegate.swift */; };
+		DB26CE2F2D94EB150011DEEB /* PushService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB26CE2E2D94EB150011DEEB /* PushService.swift */; };
 		DB2CEB112CF077B7006D7C52 /* CustomCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2CEB102CF077B7006D7C52 /* CustomCameraView.swift */; };
 		DB2F11DC2CD7993D005EF0E5 /* ImageProcessingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11D22CD7993D005EF0E5 /* ImageProcessingView.swift */; };
 		DB2F11DD2CD7993D005EF0E5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11D32CD7993D005EF0E5 /* ContentView.swift */; };
@@ -107,6 +110,10 @@
 		DB26CE202D9284270011DEEB /* AnnouncementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementView.swift; sourceTree = "<group>"; };
 		DB26CE222D9285E90011DEEB /* ProfileAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAction.swift; sourceTree = "<group>"; };
 		DB26CE242D9287680011DEEB /* ProfileReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileReducer.swift; sourceTree = "<group>"; };
+		DB26CE282D94E6260011DEEB /* CartoonImages.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CartoonImages.entitlements; sourceTree = "<group>"; };
+		DB26CE2A2D94EA480011DEEB /* NotificationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDelegate.swift; sourceTree = "<group>"; };
+		DB26CE2C2D94EA770011DEEB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DB26CE2E2D94EB150011DEEB /* PushService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushService.swift; sourceTree = "<group>"; };
 		DB2CEB102CF077B7006D7C52 /* CustomCameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCameraView.swift; sourceTree = "<group>"; };
 		DB2F11D22CD7993D005EF0E5 /* ImageProcessingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessingView.swift; sourceTree = "<group>"; };
 		DB2F11D32CD7993D005EF0E5 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -234,6 +241,7 @@
 		DB26CE1B2D9282310011DEEB /* Componnents */ = {
 			isa = PBXGroup;
 			children = (
+				DB26CE292D94EA3B0011DEEB /* Push */,
 				DB26CE1F2D9282BF0011DEEB /* Payment */,
 				DB26CE1E2D92825A0011DEEB /* ImageProcessing */,
 				DB26CE1D2D92824F0011DEEB /* Home */,
@@ -280,6 +288,15 @@
 				DBFCDD762CF2DEEA0067D73C /* PaymentView.swift */,
 			);
 			path = Payment;
+			sourceTree = "<group>";
+		};
+		DB26CE292D94EA3B0011DEEB /* Push */ = {
+			isa = PBXGroup;
+			children = (
+				DB26CE2A2D94EA480011DEEB /* NotificationDelegate.swift */,
+				DB26CE2E2D94EB150011DEEB /* PushService.swift */,
+			);
+			path = Push;
 			sourceTree = "<group>";
 		};
 		DB2F11D12CD7993D005EF0E5 /* Views */ = {
@@ -338,6 +355,7 @@
 		DB5A68192CD7968800F1D151 /* CartoonImages */ = {
 			isa = PBXGroup;
 			children = (
+				DB26CE282D94E6260011DEEB /* CartoonImages.entitlements */,
 				DBF1EF6A2D184968000FA4FE /* Info.plist */,
 				DB26CE1B2D9282310011DEEB /* Componnents */,
 				DBF1EF522D16A03E000FA4FE /* Extensions */,
@@ -350,6 +368,7 @@
 				DB2F11F82CDB9FC9005EF0E5 /* Models */,
 				DB2F11D12CD7993D005EF0E5 /* Views */,
 				DB5A681A2CD7968800F1D151 /* CartoonImagesApp.swift */,
+				DB26CE2C2D94EA770011DEEB /* AppDelegate.swift */,
 				DB5A681E2CD7968A00F1D151 /* Assets.xcassets */,
 				DB5A68202CD7968A00F1D151 /* Preview Content */,
 				DBFEA4982D0182FF007C73AE /*  LaunchScreen.storyboard */,
@@ -757,9 +776,11 @@
 				DB2F11FE2CDBA12A005EF0E5 /* MainView.swift in Sources */,
 				DBABC6562CDE5119001FD8C0 /* PaymentAction.swift in Sources */,
 				DB2F11DD2CD7993D005EF0E5 /* ContentView.swift in Sources */,
+				DB26CE2B2D94EA480011DEEB /* NotificationDelegate.swift in Sources */,
 				DBFCDD862CF5B6690067D73C /* CarouselView.swift in Sources */,
 				DB5A681B2CD7968800F1D151 /* CartoonImagesApp.swift in Sources */,
 				DBABC6542CDE5100001FD8C0 /* PaymentService.swift in Sources */,
+				DB26CE2D2D94EA770011DEEB /* AppDelegate.swift in Sources */,
 				DBF1EF542D16A03E000FA4FE /* Bundle+Version.swift in Sources */,
 				DBFCDD772CF2DEEA0067D73C /* PaymentView.swift in Sources */,
 				DBABC6262CDC5281001FD8C0 /* ImageProcessor.swift in Sources */,
@@ -781,6 +802,7 @@
 				DB2CEB112CF077B7006D7C52 /* CustomCameraView.swift in Sources */,
 				DB080D7F2D07363900A602D9 /* ImageModel.swift in Sources */,
 				DBF1EF692D183929000FA4FE /* WatermarkManager.swift in Sources */,
+				DB26CE2F2D94EB150011DEEB /* PushService.swift in Sources */,
 				DBEE755C2CF17B6A00A833AD /* PhotoConfirmationView.swift in Sources */,
 				DB2F11FD2CDBA12A005EF0E5 /* LoginView.swift in Sources */,
 				DBABC6382CDC6A3B001FD8C0 /* AppState.swift in Sources */,
@@ -999,6 +1021,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CartoonImages/CartoonImages.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1039,6 +1062,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CartoonImages/CartoonImages.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

@@ -133,48 +133,6 @@ class NetworkService {
             .eraseToAnyPublisher()
     }
     
-    func processImage1(_ imageData: Data, modelType: String = "1") -> AnyPublisher<UIImage, ProcessImageError> {
-        let size = imageData.count
-        print("size === \(size / 1000)KB")
-        return provider.requestPublisher(.processImage(imageData: imageData, modelType: modelType))
-            .tryMap { response -> UIImage in
-                let imageResponse = try JSONDecoder().decode(ImageResponse.self, from: response.data)
-                
-                guard imageResponse.status == "success",
-                      let imageData = Data(base64Encoded: imageResponse.images),
-                      let processedImage = UIImage(data: imageData) else {
-                    throw ProcessImageError.invalidResponse
-                }
-                print("====[CM]END: \(Date.now)")
-                if mainStore.state.paymentState.isSubscribed {
-                    return processedImage
-                } else {
-                    return WatermarkManager.addWatermark(to: processedImage)
-
-                }
-            }
-            .mapError { error -> ProcessImageError in
-                if let processError = error as? ProcessImageError {
-                    return processError
-                }
-                if let moyaError = error as? MoyaError {
-                    switch moyaError {
-                    case .statusCode(let response):
-                        if response.statusCode == 400 {
-                            if let json = try? JSONSerialization.jsonObject(with: response.data) as? [String: String],
-                               let errorMessage = json["error"] {
-                                return .serverError(errorMessage)
-                            }
-                        }
-                    default:
-                        break
-                    }
-                }
-                return .unknown(error)
-            }
-            .eraseToAnyPublisher()
-    }
-    
     func fetchAnnouncements(_ version: Int) -> AnyPublisher<[Announcement], NetworkError> {
         let target = API.fetchAnnoucement(version: version)
         return provider.requestPublisher(target)
@@ -208,6 +166,40 @@ class NetworkService {
             }
             .eraseToAnyPublisher()
     }
+    
+    func registerTokenWithServer(_ token: String) -> AnyPublisher<Bool, NetworkError> {
+        let target = API.registerDeviceToken(deviceToken: token)
+        return provider.requestPublisher(target)
+            .tryMap { response -> Bool in
+                let announcementResponse = try JSONDecoder().decode(RegisterPushResponse.self, from: response.data)
+                
+                guard announcementResponse.status == "success" else {
+                    throw NetworkError.invalidResponse
+                }
+                return true
+            }
+            .mapError { error in
+                if let processError = error as? NetworkError {
+                    return processError
+                }
+                
+                if let moyaError = error as? MoyaError {
+                    switch moyaError {
+                    case .statusCode(let response):
+                        if response.statusCode == 400 {
+                            if let json = try? JSONSerialization.jsonObject(with: response.data) as? [String: String],
+                               let errorMessage = json["error"] {
+                                return .serverError(errorMessage)
+                            }
+                        }
+                    default:
+                        break
+                    }
+                }
+                return .unknown(error)
+            }
+            .eraseToAnyPublisher()
+    }
 }
 
 struct AnnouncementResponse: Decodable {
@@ -215,6 +207,15 @@ struct AnnouncementResponse: Decodable {
     let data: [Announcement]
 }
 
+struct RegisterPushResponse: Decodable {
+    let status: String
+    let data: RegisterPushData
+}
+
+struct RegisterPushData: Decodable {
+    let id: Int
+    let token: String
+}
 // 响应模型
 struct ImageResponse: Decodable {
     let status: String

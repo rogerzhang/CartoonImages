@@ -13,7 +13,10 @@ struct CartoonImagesApp: App {
     @StateObject private var themeManager = ThemeManager()
     @StateObject private var networkManager = NetworkPermissionManager.shared
     
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     init() {
+        PushService.shared.setupPushNotifications()
         // 设置订阅状态变化的监听
         PaymentService.shared.onSubscriptionStatusChanged = { isPremium in
             mainStore.dispatch(AppAction.payment(.updateSubscriptionStatus(isPremium)))
