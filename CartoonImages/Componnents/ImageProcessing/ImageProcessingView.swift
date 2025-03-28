@@ -2,6 +2,7 @@ import SwiftUI
 import AVFoundation
 import Photos
 import AlertToast
+import Lottie
 
 struct ImageProcessingView: View {
     @EnvironmentObject private var themeManager: ThemeManager
@@ -74,30 +75,20 @@ struct ImageProcessingView: View {
                         .ignoresSafeArea()
                     
                     VStack(spacing: 20) {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: themeManager.accent))
-                            .scaleEffect(1.5)
-                        
-                        // 进度条
-                        VStack(spacing: 8) {
-                            ProgressView(value: viewModel.processProgress)
-                                .progressViewStyle(LinearProgressViewStyle(tint: themeManager.accent))
-                                .frame(width: 200)
-                            
-                            Text("\(Int(viewModel.processProgress * 100))%")
-                                .font(.caption)
-                                .foregroundColor(themeManager.text)
+                        VStack {
+                            SafeLottieView(name: "loading3", loopMode: .loop, animationSpeed: 1.0)
+                                .frame(width: 100, height: 100)
                         }
+                        .background(themeManager.secondaryBackground)
+                        .cornerRadius(12)
+                        .shadow(radius: 10)
                         
-                        Text(viewModel.processMessage)
+                        Text(viewModel.processMessage + "\(Int(viewModel.processProgress * 100))%")
                             .font(.subheadline)
                             .foregroundColor(themeManager.text)
                             .multilineTextAlignment(.center)
                     }
                     .padding()
-                    .background(themeManager.secondaryBackground)
-                    .cornerRadius(12)
-                    .shadow(radius: 10)
                 }
                 .transition(.opacity)
                 .animation(.easeInOut, value: viewModel.isProcessing)

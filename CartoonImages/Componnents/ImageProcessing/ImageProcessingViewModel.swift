@@ -7,7 +7,7 @@ class ImageProcessingViewModel: ObservableObject {
     @Published var selectedImage: UIImage?
     @Published var processedImage: UIImage?
     @Published var isProcessing = false
-    @Published var processProgress: Double = 0
+    @Published var processProgress: CGFloat = 0
     @Published var showProcessError = false
     @Published var processErrorMsg: String?
     @Published var processMessage: String = "处理中..."
@@ -65,7 +65,7 @@ class ImageProcessingViewModel: ObservableObject {
         func updateProgress() {
             guard currentStep < 5 else { return }
             currentStep += 1
-            processProgress = Double(currentStep) / Double(totalSteps)
+            processProgress = CGFloat(currentStep) / CGFloat(totalSteps)
             
             switch currentStep {
             case 1:
