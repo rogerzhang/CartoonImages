@@ -20,6 +20,10 @@ class LocalizationManager {
     private let defaults = UserDefaults.standard
     private let languageKey = "AppLanguage"
     
+    var currentLanguageCode: String {
+        return Locale.current.language.languageCode?.identifier ?? "en"
+    }
+    
     var currentLanguage: Language {
         get {
             if let savedLanguage = defaults.string(forKey: languageKey),

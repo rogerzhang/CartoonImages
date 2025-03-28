@@ -50,7 +50,7 @@ extension API: TargetType {
         case .fetchAnnoucement:
             return "/pushAnnouncement/getAnnouncements"
         case .registerDeviceToken:
-            return "/pushAnnouncement/registerToken"
+            return "/pushAnnouncement/registerIosToken"
         }
     }
     
@@ -103,7 +103,8 @@ extension API: TargetType {
             )
         case let .registerDeviceToken(deviceToken):
             return .requestParameters(
-                parameters: ["token": deviceToken],
+                parameters: ["ios_token": deviceToken,
+                             "language": LocalizationManager.shared.currentLanguageCode],
                 encoding: URLEncoding.default
             )
         }

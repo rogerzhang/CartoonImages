@@ -79,7 +79,7 @@ struct ImageProcessingView: View {
                             SafeLottieView(name: "loading3", loopMode: .loop, animationSpeed: 1.0)
                                 .frame(width: 100, height: 100)
                         }
-                        .background(themeManager.secondaryBackground)
+                        .background(Color.gray.opacity(0.3))
                         .cornerRadius(12)
                         .shadow(radius: 10)
                         
