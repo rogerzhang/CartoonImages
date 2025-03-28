@@ -16,6 +16,7 @@ struct ImageProcessingView: View {
     @State private var alertMessage: String = ""
     @State private var showAlert: Bool = false
     @State private var showPayment: Bool = false
+    @State private var showShareSheet: Bool = false
     
     private let buttonSize: CGFloat = 32
     
@@ -28,17 +29,30 @@ struct ImageProcessingView: View {
             // 图片预览区域
             imagePreviewArea
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(action: {
-                            showPayment.toggle()
-                        }, label: {
-                            Image(systemName: "crown.fill")
-                                .font(.callout)
-                                .foregroundColor(.yellow)
-                                .frame(width: buttonSize, height: buttonSize)
-                        })
+                    if viewModel.processedImage == nil {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                showPayment.toggle()
+                            }, label: {
+                                Image(systemName: "crown.fill")
+                                    .font(.callout)
+                                    .foregroundColor(.yellow)
+                                    .frame(width: buttonSize, height: buttonSize)
+                            })
+                        }
+                    } else {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button(action: {
+                                showShareSheet.toggle()
+                            }, label: {
+                                Image(systemName: "square.and.arrow.up")
+                                    .font(.callout)
+                                    .foregroundColor(themeManager.accent)
+                                    .frame(width: buttonSize, height: buttonSize)
+                            })
+                        }
                     }
-                    
+              
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button(action: {
                             viewModel.selectedImage = nil
@@ -99,6 +113,14 @@ struct ImageProcessingView: View {
                 handlePayment: {}
             )
         }
+        .sheet(isPresented: $showShareSheet) {
+            if let image = viewModel.processedImage,
+               let data = image.pngData(),
+               let url = saveTemporaryImage(data: data) {
+                ActivityView(activityItems: [url], applicationActivities: nil)
+                    .presentationDetents([.height(320)])
+            }
+        }
         .navigationBarBackButtonHidden(true)
         .toast(isPresenting: $showAlert, tapToDismiss: false) {
             AlertToast(type: .regular, title: alertMessage)
@@ -117,6 +139,20 @@ struct ImageProcessingView: View {
             DispatchQueue.main.async {
                 viewModel.loadRecentImages()
             }
+        }
+    }
+    
+    func saveTemporaryImage(data: Data) -> URL? {
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("IMAGE".localized)
+            .appendingPathExtension("png")
+        
+        do {
+            try data.write(to: url)
+            return url
+        } catch {
+            print("Error saving temporary image: \(error)")
+            return nil
         }
     }
     

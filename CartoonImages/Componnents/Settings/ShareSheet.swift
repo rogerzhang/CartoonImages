@@ -29,13 +29,14 @@ struct ShareSheet: UIViewControllerRepresentable {
     }
 }
 
-// 预览
-struct ShareSheet_Previews: PreviewProvider {
-    static var previews: some View {
-        Text("Share Sheet Preview")
-            .sheet(isPresented: .constant(true)) {
-                ShareSheet(items: ["分享内容", URL(string: "https://example.com")!])
-                    .environmentObject(ThemeManager())
-            }
+struct ActivityView: UIViewControllerRepresentable {
+    var activityItems: [Any]
+    var applicationActivities: [UIActivity]? = nil
+    
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityView>) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
+        return controller
     }
-} 
+    
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityView>) {}
+}
