@@ -25,6 +25,7 @@
 		DB26CE3D2D9698FE0011DEEB /* progress.json in Resources */ = {isa = PBXBuildFile; fileRef = DB26CE3C2D9698FE0011DEEB /* progress.json */; };
 		DB26CE412D969A180011DEEB /* progress2.json in Resources */ = {isa = PBXBuildFile; fileRef = DB26CE402D969A180011DEEB /* progress2.json */; };
 		DB26CE432D96A2F80011DEEB /* loading3.json in Resources */ = {isa = PBXBuildFile; fileRef = DB26CE422D96A2F80011DEEB /* loading3.json */; };
+		DB26CE452D96B5D70011DEEB /* save.json in Resources */ = {isa = PBXBuildFile; fileRef = DB26CE442D96B5D70011DEEB /* save.json */; };
 		DB2CEB112CF077B7006D7C52 /* CustomCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2CEB102CF077B7006D7C52 /* CustomCameraView.swift */; };
 		DB2F11DC2CD7993D005EF0E5 /* ImageProcessingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11D22CD7993D005EF0E5 /* ImageProcessingView.swift */; };
 		DB2F11DD2CD7993D005EF0E5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11D32CD7993D005EF0E5 /* ContentView.swift */; };
@@ -127,6 +128,7 @@
 		DB26CE3C2D9698FE0011DEEB /* progress.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = progress.json; sourceTree = "<group>"; };
 		DB26CE402D969A180011DEEB /* progress2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = progress2.json; sourceTree = "<group>"; };
 		DB26CE422D96A2F80011DEEB /* loading3.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = loading3.json; sourceTree = "<group>"; };
+		DB26CE442D96B5D70011DEEB /* save.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = save.json; sourceTree = "<group>"; };
 		DB2CEB102CF077B7006D7C52 /* CustomCameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCameraView.swift; sourceTree = "<group>"; };
 		DB2F11D22CD7993D005EF0E5 /* ImageProcessingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessingView.swift; sourceTree = "<group>"; };
 		DB2F11D32CD7993D005EF0E5 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 		DB26CE1E2D92825A0011DEEB /* ImageProcessing */ = {
 			isa = PBXGroup;
 			children = (
+				DB26CE442D96B5D70011DEEB /* save.json */,
 				DB26CE402D969A180011DEEB /* progress2.json */,
 				DB26CE3C2D9698FE0011DEEB /* progress.json */,
 				DB26CE422D96A2F80011DEEB /* loading3.json */,
@@ -664,6 +667,7 @@
 				DBF1EF652D16AA86000FA4FE /* UserAgreement_en.txt in Resources */,
 				DB26CE412D969A180011DEEB /* progress2.json in Resources */,
 				DBFEA4992D0182FF007C73AE /*  LaunchScreen.storyboard in Resources */,
+				DB26CE452D96B5D70011DEEB /* save.json in Resources */,
 				DBF1EF5B2D16A31C000FA4FE /* UserAgreement.txt in Resources */,
 				DB26CE432D96A2F80011DEEB /* loading3.json in Resources */,
 				DB26CE392D968EEB0011DEEB /* loading1.json in Resources */,

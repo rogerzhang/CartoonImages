@@ -106,6 +106,19 @@ class AnnouncementViewModel: ObservableObject {
             list[index].isRead = true
         }
         saveAnnouncements()
+        
+        resetPushNotificationBadge()
+    }
+    
+    func resetPushNotificationBadge() {
+        DispatchQueue.main.async {
+            if #available(iOS 17.0, *) {
+                UNUserNotificationCenter.current().setBadgeCount(0) { _ in }
+            } else {
+                UIApplication.shared.applicationIconBadgeNumber = 0
+            }
+            UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        }
     }
     
     func hasUnread() -> Bool {

@@ -79,7 +79,7 @@ struct ImageProcessingView: View {
                             SafeLottieView(name: "loading3", loopMode: .loop, animationSpeed: 1.0)
                                 .frame(width: 100, height: 100)
                         }
-                        .background(Color.gray.opacity(0.3))
+                        .background(Color("C2").opacity(0.3))
                         .cornerRadius(12)
                         .shadow(radius: 10)
                         
@@ -157,17 +157,26 @@ struct ImageProcessingView: View {
                     .frame(maxHeight: UIScreen.main.bounds.height * 0.6)
                     .cornerRadius(10)
                     .shadow(radius: 5)
-                HStack(spacing: UIScreen.main.bounds.width / 3) {
+                HStack(spacing: 50) {
                     Button(action: {
                         saveImageToPhotoLibrary()
                     }, label: {
-                        VStack {
+                        HStack {
                             Image("save")
+                                .renderingMode(.template)
                                 .font(.largeTitle)
-                                .foregroundColor(themeManager.text)
+                                .foregroundColor(Color("C1"))
+                            Spacer()
+                                .frame(width: 10)
                             Text("SAVE".localized)
-                                .foregroundColor(.black)
+                                .foregroundColor(Color("C1"))
                         }
+                        .frame(height: 44)
+                        .padding(.horizontal, 35)
+                        .background(
+                            Color("C2")
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                        )
                     })
 
                     Button(action: {
@@ -175,13 +184,22 @@ struct ImageProcessingView: View {
                         viewModel.processedImage = nil
                         showCameraView = true
                     }, label: {
-                        VStack {
+                        HStack {
                             Image("retake")
+                                .renderingMode(.template)
                                 .font(.largeTitle)
-                                .foregroundColor(themeManager.text)
+                                .foregroundColor(Color("C3"))
+                            Spacer()
+                                .frame(width: 10)
                             Text("RETAKE".localized)
-                                .foregroundColor(.black)
+                                .foregroundColor(Color("C3"))
                         }
+                        .frame(height: 44)
+                        .padding(.horizontal, 35)
+                        .background(
+                            Color("C4")
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                        )
                     })
                 }
             }
@@ -263,4 +281,4 @@ struct ImageProcessingView: View {
             }
         }
     }
-} 
+}

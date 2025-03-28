@@ -10,6 +10,7 @@ import Kingfisher
 
 struct ImageModelTypeSelectionView: View {
     @State private var currentIndex = mainStore.state.imageState.currentModelType?.id ?? 1
+    var sort_id = mainStore.state.imageState.currentModelType?.sort_order ?? 1
     @State private var beautyEnabled = false
     @State private var showImagePicker = false
     @State private var showPayment = false
@@ -106,7 +107,7 @@ struct ImageModelTypeSelectionView: View {
             )
         }
         .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 selectedImage = viewModel.recentImages.first
                 viewModel.tempSelectedImage = selectedImage
             }
@@ -151,7 +152,7 @@ struct ImageModelTypeSelectionView: View {
     
     private var cameraButton: some View {
         Button(action: {
-            if viewModel.isSubscribed || (1...3).contains(currentIndex) {
+            if viewModel.isSubscribed || (1...3).contains(sort_id) {
                 showCameraView = true
                 showPayment = false
             } else {
@@ -169,7 +170,7 @@ struct ImageModelTypeSelectionView: View {
     
     private var processButton: some View {
         Button(action: {
-            if viewModel.isSubscribed || (1...3).contains(currentIndex) {
+            if viewModel.isSubscribed || (1...3).contains(sort_id) {
                 showPayment = false
             } else {
                 showPayment = true
