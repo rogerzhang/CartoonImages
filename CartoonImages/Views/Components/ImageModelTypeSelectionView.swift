@@ -10,7 +10,8 @@ import Kingfisher
 
 struct ImageModelTypeSelectionView: View {
     @State private var currentIndex = mainStore.state.imageState.currentModelType?.id ?? 1
-    var sort_id = mainStore.state.imageState.currentModelType?.sort_order ?? 1
+    var sort_id = mainStore.state.imageState.currentModelType?.sort_order ?? -1
+    var region = mainStore.state.imageState.currentModelType?.region ?? -1
     @State private var beautyEnabled = false
     @State private var showImagePicker = false
     @State private var showPayment = false
@@ -152,7 +153,7 @@ struct ImageModelTypeSelectionView: View {
     
     private var cameraButton: some View {
         Button(action: {
-            if viewModel.isSubscribed || (1...3).contains(sort_id) {
+            if viewModel.isSubscribed || ((0...2).contains(sort_id) && region == 1) {
                 showCameraView = true
                 showPayment = false
             } else {
@@ -170,7 +171,7 @@ struct ImageModelTypeSelectionView: View {
     
     private var processButton: some View {
         Button(action: {
-            if viewModel.isSubscribed || (1...3).contains(sort_id) {
+            if viewModel.isSubscribed || ((0...2).contains(sort_id) && region == 1) {
                 showPayment = false
             } else {
                 showPayment = true
