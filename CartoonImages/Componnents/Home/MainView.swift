@@ -24,83 +24,85 @@ struct MainView: View {
     }()
     
     var body: some View {
-        ZStack(alignment: .top) {
-            themeManager.background
-                .ignoresSafeArea()
-            
+        NavigationStack {
             ZStack(alignment: .top) {
-                // 固定在顶部的导航栏
-                topNavigationBar
-                    .padding(.horizontal)
-                    .zIndex(1)
+                themeManager.background
+                    .ignoresSafeArea()
                 
-                // 滚动内容
-                ScrollView {
-                    VStack(spacing: 20) {
-                        if let images = viewModel.headerImages, images.count > 0 {
-                            CarouselView(images: images)
-                                .frame(height: 240)
-                                .cornerRadius(12)
-                                .padding(.horizontal, 0)
-                        }
-                
-                        VStack(spacing: 0) {
-                            if let modelTypes = viewModel.config?.groupedBySortedRegion() {
-                                VStack {
-                                    ForEach(modelTypes, id: \.region) { section in
-                                        ImageProcessingEffectSectionView(item: section, onModelSelected: { model in
-                                            selectedModelId = model.id
-                                            mainStore.dispatch(AppAction.image(.selectImageModelType(model)))
-                                        }, onMoreBtnSelected: { effects in
-                                            selectedSectionTitle = LocalizationManager.shared.currentLanguage == .chinese ? section.region_title_zh : section.region_title
-                                            
-                                            selectedModelId = nil
-                                            showModelGridView = true
-                                            modelGridEffects = effects
-                                        })
+                ZStack(alignment: .top) {
+                    // 固定在顶部的导航栏
+                    topNavigationBar
+                        .padding(.horizontal)
+                        .zIndex(1)
+                    
+                    // 滚动内容
+                    ScrollView {
+                        VStack(spacing: 20) {
+                            if let images = viewModel.headerImages, images.count > 0 {
+                                CarouselView(images: images)
+                                    .frame(height: 240)
+                                    .cornerRadius(12)
+                                    .padding(.horizontal, 0)
+                            }
+                    
+                            VStack(spacing: 0) {
+                                if let modelTypes = viewModel.config?.groupedBySortedRegion() {
+                                    VStack {
+                                        ForEach(modelTypes, id: \.region) { section in
+                                            ImageProcessingEffectSectionView(item: section, onModelSelected: { model in
+                                                selectedModelId = model.id
+                                                mainStore.dispatch(AppAction.image(.selectImageModelType(model)))
+                                            }, onMoreBtnSelected: { effects in
+                                                selectedSectionTitle = LocalizationManager.shared.currentLanguage == .chinese ? section.region_title_zh : section.region_title
+                                                
+                                                selectedModelId = nil
+                                                showModelGridView = true
+                                                modelGridEffects = effects
+                                            })
+                                        }
                                     }
+                                    .background(navigationLinkToImageProcessingView())
                                 }
-                                .background(navigationLinkToImageProcessingView())
                             }
                         }
                     }
+                    .edgesIgnoringSafeArea(.top)
+    //                .safeAreaInset(edge: .top, content: {
+    //                    Color.clear.frame(height: 0) // 让内容填充安全区
+    //                })
                 }
-                .edgesIgnoringSafeArea(.top)
-//                .safeAreaInset(edge: .top, content: {
-//                    Color.clear.frame(height: 0) // 让内容填充安全区
-//                })
             }
-        }
-        .sheet(isPresented: $showPayment) {
-            PaymentView(
-                showPaymentAlert: .constant(false),
-                paymentIsProcessing: $viewModel.paymentIsProcessing,
-                showPaymentError: .constant(false),
-                isSubscribed: $viewModel.isSubscribed,
-                paymentError: nil,
-                handlePayment: {  }
-            )
-        }
-        .sheet(isPresented: $showProfile) {
-            ProfileView()
-                .environmentObject(announcementViewModel)
-        }
-        .background(navigationLinkToModelGridView())
-        .onAppear {
-            if NetworkPermissionManager.shared.isNetworkAuthorized {
-                announcementViewModel.fetchLatestAnnouncement()
+            .sheet(isPresented: $showPayment) {
+                PaymentView(
+                    showPaymentAlert: .constant(false),
+                    paymentIsProcessing: $viewModel.paymentIsProcessing,
+                    showPaymentError: .constant(false),
+                    isSubscribed: $viewModel.isSubscribed,
+                    paymentError: nil,
+                    handlePayment: {  }
+                )
             }
-        }
-        .onReceive(NetworkPermissionManager.shared.$isNetworkAuthorized) { isAuthorized in
-            if isAuthorized {
-                announcementViewModel.fetchLatestAnnouncement()
+            .sheet(isPresented: $showProfile) {
+                ProfileView()
+                    .environmentObject(announcementViewModel)
             }
+            .background(navigationLinkToModelGridView())
+            .onAppear {
+                if NetworkPermissionManager.shared.isNetworkAuthorized {
+                    announcementViewModel.fetchLatestAnnouncement()
+                }
+            }
+            .onReceive(NetworkPermissionManager.shared.$isNetworkAuthorized) { isAuthorized in
+                if isAuthorized {
+                    announcementViewModel.fetchLatestAnnouncement()
+                }
+            }
+    //        .onChange(of: scenePhase) { newPhase in
+    //            if newPhase == .active, NetworkPermissionManager.shared.isNetworkAuthorized {
+    //                announcementViewModel.fetchLatestAnnouncement()
+    //            }
+    //        }
         }
-//        .onChange(of: scenePhase) { newPhase in
-//            if newPhase == .active, NetworkPermissionManager.shared.isNetworkAuthorized {
-//                announcementViewModel.fetchLatestAnnouncement()
-//            }
-//        }
     }
     
     private func navigationLinkToImageProcessingView() -> some View {
