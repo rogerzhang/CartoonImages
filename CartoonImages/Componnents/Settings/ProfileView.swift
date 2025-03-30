@@ -108,6 +108,20 @@ struct ProfileView: View {
                     .listRowBackground(themeManager.secondaryBackground)
                 }
                 
+                // 主题切换
+                Section {
+                    Toggle(isOn: Binding(
+                        get: { themeManager.colorScheme == .dark },
+                        set: { newValue in
+                            themeManager.colorScheme = newValue ? .dark : .light
+                        }
+                    )) {
+                        Label("DARK_MODE".localized, systemImage: "moon")
+                            .foregroundColor(themeManager.text)
+                    }
+                    .listRowBackground(themeManager.secondaryBackground)
+                }
+                
                 // 隐私和协议
                 Section {
                     NavigationLink(destination: PrivacyPolicyView()) {

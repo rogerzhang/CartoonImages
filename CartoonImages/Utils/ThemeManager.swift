@@ -11,7 +11,11 @@ extension Color {
 }
 
 class ThemeManager: ObservableObject {
-    @Published var colorScheme: ColorScheme = .dark
+    @Published var colorScheme: ColorScheme {
+        didSet {
+            UserDefaults.standard.set(colorScheme == .dark ? "dark" : "light", forKey: "colorScheme")
+        }
+    }
     
     // 背景色
     var background: Color {
@@ -110,6 +114,7 @@ class ThemeManager: ObservableObject {
     // 更新颜色模式
     func updateColorScheme(_ scheme: ColorScheme) {
         colorScheme = scheme
+        UserDefaults.standard.set(true, forKey: "userSetTheme")  // 记录用户偏好
     }
     
     // 监听系统颜色模式变化
@@ -133,6 +138,9 @@ class ThemeManager: ObservableObject {
     
     // 处理颜色模式变化
     @objc private func handleColorSchemeChange() {
+        if UserDefaults.standard.object(forKey: "userSetTheme") as? Bool == true {
+            return  // 如果用户手动设置过主题，则不自动调整
+        }
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
             let newColorScheme = windowScene.traitCollection.userInterfaceStyle == .dark ? ColorScheme.dark : ColorScheme.light
             if newColorScheme != colorScheme {
@@ -145,6 +153,8 @@ class ThemeManager: ObservableObject {
     
     // 初始化时开始监听
     init() {
+        let storedScheme = UserDefaults.standard.string(forKey: "colorScheme") ?? "light"
+        self.colorScheme = storedScheme == "dark" ? .dark : .light
         startObservingColorScheme()
     }
     
