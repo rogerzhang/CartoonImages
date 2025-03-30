@@ -47,12 +47,14 @@ struct ProfileView: View {
                         VStack(alignment: .leading) {
                             Text("APP_NAME".localized)
                                 .font(.headline)
+                                .foregroundColor(themeManager.text)
                             Text("VERSION".localized + " " + Bundle.version())
                                 .font(.subheadline)
                                 .foregroundColor(themeManager.secondaryText)
                         }
                     }
                     .padding(.vertical, 8)
+                    .listRowBackground(themeManager.secondaryBackground)
                 }
                 
                 // 公告
@@ -69,6 +71,7 @@ struct ProfileView: View {
                             }
                         }
                     }
+                    .listRowBackground(themeManager.secondaryBackground)
                 }
                 
                 // Section 2: 评分和分享
@@ -81,11 +84,13 @@ struct ProfileView: View {
                         Label("RATE_US".localized, systemImage: "star")
                             .foregroundColor(themeManager.text)
                     }
+                    .listRowBackground(themeManager.secondaryBackground)
                     
                     Button(action: { showShareSheet = true }) {
                         Label("SHARE".localized, systemImage: "square.and.arrow.up")
                             .foregroundColor(themeManager.text)
                     }
+                    .listRowBackground(themeManager.secondaryBackground)
                 }
                 
                 // Section 3: 客服
@@ -100,6 +105,7 @@ struct ProfileView: View {
                         Label("CONTACT_US".localized, systemImage: "message")
                             .foregroundColor(themeManager.text)
                     }
+                    .listRowBackground(themeManager.secondaryBackground)
                 }
                 
                 // 隐私和协议
@@ -108,26 +114,32 @@ struct ProfileView: View {
                         Label("PRIVACY_POLICY".localized, systemImage: "hand.raised")
                             .foregroundColor(themeManager.text)
                     }
+                    .listRowBackground(themeManager.secondaryBackground)
                     
                     NavigationLink(destination: UserAgreementView()) {
                         Label("USER_AGREEMENT".localized, systemImage: "doc.text")
                             .foregroundColor(themeManager.text)
                     }
+                    .listRowBackground(themeManager.secondaryBackground)
+                    
                     #if DEBUG
                     NavigationLink(destination: SettingsView()) {
                         Label("Settings".localized, systemImage: "gearshape")
                             .foregroundColor(themeManager.text)
                     }
+                    .listRowBackground(themeManager.secondaryBackground)
                     #endif
                 }
             }
-//            .navigationTitle("个人中心")
+            .listStyle(.insetGrouped)
+            .background(themeManager.background)
+            .scrollContentBackground(.hidden) // 隐藏默认背景
+            .navigationBarTitleDisplayMode(.inline)
             .sheet(isPresented: $showLoginSheet) {
-//                LoginView()
                 VerificationLoginView()
             }
             .sheet(isPresented: $showShareSheet) {
-                ShareSheet(items: ["分享享文本内容", URL(string: "https://apps.apple.com/us/app/toonyou/id6739438626")!])
+                ShareSheet(items: ["分享文本内容", URL(string: "https://apps.apple.com/us/app/toonyou/id6739438626")!])
             }
             .sheet(isPresented: $showMailView) {
                 MailView(toRecipients: ["roger.zhangvi@gmail.com"],
@@ -142,31 +154,26 @@ struct ProfileView: View {
                         """,
                         isBodyHTML: false)
             }
-            .alert("CONTACT_US".localized, isPresented: $showContactSheet) {
-                Button("COPY_WECHAT".localized, action: {
-                    UIPasteboard.general.string = "FelixChen33"
-                })
-                Button("CANCEL".localized, role: .cancel) { }
-            } message: {
-                Text("CONTACT_INFO".localized)
+            .actionSheet(isPresented: $showContactSheet) {
+                ActionSheet(
+                    title: Text("CONTACT_US".localized),
+                    message: Text("CONTACT_INFO".localized),
+                    buttons: [
+                        .default(Text("COPY_WECHAT".localized)) {
+                            UIPasteboard.general.string = "FelixChen33"
+                        },
+                        .cancel(Text("CANCEL".localized))
+                    ]
+                )
             }
         }
         .onAppear {
             let backButtonAppearance = UIBarButtonItem.appearance()
             backButtonAppearance.title = "Custom Back"
+            
+            // 自定义 UITableView 外观（iOS 16以下兼容）
+            UITableView.appearance().backgroundColor = .clear
         }
-//        .navigationBarBackButtonHidden(true)
-//        .toolbar {
-//            ToolbarItem(placement: .navigationBarLeading) {
-//                Button(action: {
-//                    presentationMode.wrappedValue.dismiss()
-//                }) {
-//                    HStack {
-//                        Image(systemName: "chevron.backward")
-//                        Text("个人中心")
-//                    }
-//                }
-//            }
-//        }
+        .environment(\.colorScheme, themeManager.colorScheme) // 可选：强制使用主题的颜色方案
     }
 }

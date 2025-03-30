@@ -27,6 +27,9 @@ struct ImageProcessingView: View {
     
     var body: some View {
         ZStack {
+            themeManager.background
+                .ignoresSafeArea()
+            
             // 图片预览区域
             imagePreviewArea
                 .toolbar {

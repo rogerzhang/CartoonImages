@@ -40,49 +40,52 @@ struct PaymentView: View {
         ZStack {
             themeManager.background
                 .ignoresSafeArea()
+            
             ScrollView {
                 VStack {
+                    // 顶部订阅状态
                     HStack {
                         HStack {
                             Image(systemName: self.isSubscribed ? "crown.fill" : "crown")
                                 .font(.system(size: 38))
-                                .foregroundColor(self.isSubscribed ? .yellow : .gray)
-                            VStack {
+                                .foregroundColor(self.isSubscribed ? .yellow : themeManager.secondaryText)
+                            
+                            VStack(alignment: .leading) {
                                 Text(self.isSubscribed ? "SUBSCRIBED".localized : "NOT_SUBSCRIBED".localized)
                                     .font(.headline)
-                                    .foregroundStyle(themeManager.text)
+                                    .foregroundColor(themeManager.text)
+                                
                                 if self.isSubscribed {
-                                    let dataString = PaymentService.shared.formartedExpirationDate()
-                                    Text("EXPIRES_ON".localizedFormat(dataString))
+                                    let dateString = PaymentService.shared.formartedExpirationDate()
+                                    Text("EXPIRES_ON".localizedFormat(dateString))
                                         .font(.system(size: 14))
-                                        .foregroundStyle(themeManager.text)
+                                        .foregroundColor(themeManager.secondaryText)
                                 } else {
                                     Text("UPGRADE_TO_VIP".localized)
                                         .font(.system(size: 14))
-                                        .foregroundStyle(themeManager.text)
+                                        .foregroundColor(themeManager.secondaryText)
                                 }
                             }
                         }
-                        .padding(.leading, 20)
                         Spacer()
-                        
                         Image("viplogo")
-                            .padding(.trailing, 20)
                     }
+                    .padding(.horizontal)
                     
+                    // 会员状态卡片
                     HStack {
                         VStack(alignment: .leading, spacing: 0) {
                             Text("MEMBER_STATUS".localized)
                                 .font(.headline)
                                 .foregroundStyle(
-                                                LinearGradient(
-                                                    colors: [.init(hex: 0xABED3B), .init(hex: 0x61DFC2)],
-                                                    startPoint: .leading,
-                                                    endPoint: .trailing
-                                                )
+                                    LinearGradient(
+                                        colors: [.init(hex: 0xABED3B), .init(hex: 0x61DFC2)],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
                                 )
                                 .padding(.bottom, 0)
-                        
+                            
                             ZStack(alignment: .leading) {
                                 Image("vipstate")
                                     .frame(width: 175, height: 114)
@@ -96,33 +99,38 @@ struct PaymentView: View {
                                     }
                                     .padding(.vertical, 5)
                                     .padding(.horizontal, 10)
-                                    .background(Color.black)
+                                    .background(themeManager.cardAccent)
                                     .cornerRadius(15)
                                     
                                     Text(self.isSubscribed ? "SUBSCRIBED".localized : "NOT_SUBSCRIBED".localized)
                                         .font(.headline)
-                                        .foregroundStyle(themeManager.text)
+                                        .foregroundColor(.black)
+                                    
                                     let leftDays = PaymentService.shared.expirationDaysFromToday()
                                     Text(self.isSubscribed ? "DAYS_LEFT".localizedFormat(leftDays) : "UPGRADE_TO_VIP".localized)
                                         .font(.subheadline)
-                                        .foregroundStyle(themeManager.secondaryText)
+                                        .foregroundColor(.gray)
                                 }
                                 .padding(.leading, 5)
                             }
                             .padding(0)
-                            .background(.clear)
                         }
-                        .padding(.horizontal, 20)
+                        .padding(.horizontal)
                         .padding(.top, 0)
                         .padding(.bottom, 20)
+                        
                         Spacer()
                     }
                     
+                    // 支付计划
                     VStack {
                         PaymentPlanView()
                             .frame(height: 120)
-                    }.padding(0)
+                    }
+                    .padding(0)
+                    .padding(.horizontal)
                     
+                    // 计划描述
                     VStack {
                         switch viewModel.currentPaymentType {
                         case .monthly:
@@ -131,76 +139,59 @@ struct PaymentView: View {
                             let text = "MONTHLY_PLAN_DES".localizedFormat(price!)
                             Text(text)
                                 .font(.subheadline)
-                                .modifier(SecondaryTextStyle())
+                                .foregroundColor(themeManager.secondaryText)
                         case .weekly:
                             let product = mainStore.state.paymentState.products.first(where: { $0.productIdentifier == PaymentPlanType.weekly.rawValue})
                             let price = PaymentService.shared.localizedPrice(for: product!)
                             let text = "WEEKLY_PLAN_DES".localizedFormat(price!)
                             Text(text)
-                                .modifier(SecondaryTextStyle())
                                 .font(.subheadline)
+                                .foregroundColor(themeManager.secondaryText)
                         case .yearly:
                             let product = mainStore.state.paymentState.products.first(where: { $0.productIdentifier == PaymentPlanType.yearly.rawValue})
                             let price = PaymentService.shared.localizedPrice(for: product!)
                             let text = "YEARLY_PLAN_DES".localizedFormat(price!)
                             Text(text)
-                                .modifier(SecondaryTextStyle())
                                 .font(.subheadline)
+                                .foregroundColor(themeManager.secondaryText)
                         case .none:
-                            let text = ""
-                            Text(text)
-                                .modifier(SecondaryTextStyle())
+                            Text("")
                                 .font(.subheadline)
                         }
                     }
                     .padding(.top, 0)
                     .padding(.bottom, 10)
                     
+                    // 会员权益和操作按钮
                     VStack(spacing: 12) {
-        //                Divider()
-        //                    .padding(.vertical, 8)
-                        
-                        // 会员服务说明
+                        // 会员权益
                         VStack(alignment: .leading, spacing: 8) {
                             Text("MEMBER_BENEFITS".localized)
                                 .font(.headline)
-                                .foregroundStyle(themeManager.text)
+                                .foregroundColor(themeManager.text)
                             
-                            HStack {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundColor(.green)
-                                Text("BENEFIT_1".localized)
-                                    .foregroundStyle(themeManager.text)
-                            }
-                            
-                            HStack {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundColor(.green)
-                                Text("BENEFIT_2".localized)
-                                    .foregroundStyle(themeManager.text)
-                            }
-                            
-                            HStack {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundColor(.green)
-                                Text("BENEFIT_3".localized)
-                                    .foregroundStyle(themeManager.text)
+                            ForEach(1...3, id: \.self) { index in
+                                HStack {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundColor(.green)
+                                    Text("BENEFIT_\(index)".localized)
+                                        .foregroundColor(themeManager.text)
+                                }
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal)
                         .padding(.vertical, 20)
-                        .background(Color.init(hex: 0xF8FFEC))
+                        .background(themeManager.benefitsBackground)
                         .cornerRadius(15)
                         .overlay(
-                            RoundedRectangle(cornerRadius: 5)
-                                .stroke(
-                                        Color.init(hex: 0x6CEACF), lineWidth: 1)
+                            RoundedRectangle(cornerRadius: 15)
+                                .stroke(themeManager.benefitsBorder, lineWidth: 1)
                         )
                         
                         Spacer()
-                 
                         
+                        // 订阅按钮
                         VStack(spacing: 10) {
                             Button(action: {
                                 guard let plan = mainStore.state.paymentState.selectedPlan else {
@@ -214,31 +205,37 @@ struct PaymentView: View {
                                 }
                                 .frame(maxWidth: .infinity)
                                 .padding()
-                                .background(Color.black)
-                                .foregroundColor(.white)
+                                .background(themeManager.buttonBackground)
+                                .foregroundColor(themeManager.buttonText)
                                 .cornerRadius(10)
                             }
                             .disabled(paymentIsProcessing || isRestoringPurchases)
                         }
                         .padding(.horizontal)
                         
+                        // 底部链接
                         HStack {
                             Button(action: {
                                 restorePurchases()
                             }, label: {
                                 Text("RESTORE_PURCHASES".localized)
                                     .font(.caption)
-                                    .padding()
+                                    .foregroundColor(themeManager.secondaryText)
+                                    .padding(.vertical)
                             })
+                            
                             Spacer()
+                            
                             HStack(spacing: 20) {
                                 let urlString = isZHansLanguage() ? "https://hk.holymason.cn/TermsAndConditionsZh.html" : "https://hk.holymason.cn/TermsAndConditionsEn.html"
                                 Link("TERMS".localized, destination: URL(string: urlString)!)
                                     .font(.caption)
+                                    .foregroundColor(themeManager.secondaryText)
                                 
                                 let urlString1 = isZHansLanguage() ? "https://hk.holymason.cn/PrivacyPolicyZH.html" : "https://hk.holymason.cn/PrivacyPolicyEN.html"
                                 Link("PRIVACY".localized, destination: URL(string: urlString1)!)
                                     .font(.caption)
+                                    .foregroundColor(themeManager.secondaryText)
                             }
                         }
                     }
@@ -246,7 +243,7 @@ struct PaymentView: View {
                 }
             }
             
-            
+            // 加载指示器
             if paymentIsProcessing || isRestoringPurchases {
                 Color.black.opacity(0.4)
                     .ignoresSafeArea()
@@ -261,21 +258,22 @@ struct PaymentView: View {
                         .foregroundColor(.white)
                 }
                 .frame(width: 120, height: 120)
-                .background(.black.opacity(0.8))
+                .background(themeManager.loadingBackground)
                 .cornerRadius(12)
                 .shadow(radius: 10)
             }
         }
-  
         .alert("PAYMENT_ERROR".localized, isPresented: $showPaymentError) {
             Button("OK".localized, role: .cancel) { }
         } message: {
             Text(paymentError ?? "UNKNOWN_ERROR".localized)
+                .foregroundColor(themeManager.text)
         }
         .alert("RESTORE_FAILED".localized, isPresented: $showRestoreError) {
             Button("OK".localized, role: .cancel) { }
         } message: {
             Text(restoreError ?? "UNKNOWN_ERROR".localized)
+                .foregroundColor(themeManager.text)
         }
     }
     

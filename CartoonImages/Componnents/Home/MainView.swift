@@ -143,7 +143,7 @@ struct MainView: View {
                         .opacity(0.8)
                     Text("VIP".localized)
                         .font(.system(size: 14, weight: .medium))
-                        .foregroundColor(themeManager.text)
+                        .foregroundColor(Color.black)
                 }
             }
             .buttonStyle(PlainButtonStyle())

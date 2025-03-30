@@ -11,11 +11,11 @@ extension Color {
 }
 
 class ThemeManager: ObservableObject {
-    @Published var colorScheme: ColorScheme = .light
+    @Published var colorScheme: ColorScheme = .dark
     
     // 背景色
     var background: Color {
-        colorScheme == .dark ? Color.black : Color.white
+        colorScheme == .dark ? Color(hex: 0x101929) : Color.white
     }
     
     // 前景色
@@ -38,12 +38,78 @@ class ThemeManager: ObservableObject {
     
     // 次要文本色
     var secondaryText: Color {
-        Color.gray
+        colorScheme == .dark ? Color.white : Color.black
+    }
+    
+    var cardBackground: Color {
+        colorScheme == .dark ? Color(hex: 0x1E1E1E) : Color.white
+    }
+    
+    var cardAccent: Color {
+        colorScheme == .dark ? Color(hex: 0x333333) : Color.black
+    }
+    
+    var benefitsBackground: Color {
+        colorScheme == .dark ? Color(hex: 0x2A2A2A) : Color(hex: 0xF8FFEC)
+    }
+    
+    var benefitsBorder: Color {
+        colorScheme == .dark ? Color(hex: 0x4A4A4A) : Color(hex: 0x6CEACF)
+    }
+    
+    var buttonBackground: Color {
+        colorScheme == .dark ? Color.white : Color.black
+    }
+    
+    var buttonText: Color {
+        colorScheme == .dark ? Color.black : Color.white
+    }
+    
+    var loadingBackground: Color {
+        colorScheme == .dark ? Color(hex: 0x333333) : Color(hex: 0x222222)
+    }
+    
+    var planBackground: Color {
+        colorScheme == .dark ? Color(hex: 0x2C2C2E) : Color.white
+    }
+        
+    var selectedPlanBackground: Color {
+        colorScheme == .dark ? Color(hex: 0x3A3A3C) : Color(hex: 0xF8FFEC)
+    }
+        
+    var planBorder: Color {
+        colorScheme == .dark ? Color(hex: 0x444446) : Color.gray.opacity(0.5)
+        
+    }
+        
+    var selectedPlanBorder: Color {
+        colorScheme == .dark ? Color(hex: 0x6CEACF) : Color(hex: 0x6CEACF)
+        
+    }
+        
+    var planText: Color {
+        colorScheme == .dark ? Color.white : Color.black
+    }
+        
+    var selectedPlanText: Color {
+        colorScheme == .dark ? Color.white : Color.black
+    }
+        
+    var planSecondaryText: Color {
+        colorScheme == .dark ? Color.gray : Color.gray
+    }
+        
+    var selectedPlanSecondaryText: Color {
+        colorScheme == .dark ? Color(hex: 0x6CEACF) : Color(hex: 0x6CEACF)
+    }
+        
+    var selectedPlanShadow: Color {
+        colorScheme == .dark ? Color.black.opacity(0.3) : Color.gray.opacity(0.3)
     }
     
     // 更新颜色模式
     func updateColorScheme(_ scheme: ColorScheme) {
-//        colorScheme = scheme
+        colorScheme = scheme
     }
     
     // 监听系统颜色模式变化
