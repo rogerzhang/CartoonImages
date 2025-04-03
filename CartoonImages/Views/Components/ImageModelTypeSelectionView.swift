@@ -153,7 +153,7 @@ struct ImageModelTypeSelectionView: View {
     
     private var cameraButton: some View {
         Button(action: {
-            if viewModel.isSubscribed || ((0...2).contains(sort_id) && region == 1) {
+            if viewModel.isSubscribed || viewModel.isFree() {
                 showCameraView = true
                 showPayment = false
             } else {
@@ -171,7 +171,7 @@ struct ImageModelTypeSelectionView: View {
     
     private var processButton: some View {
         Button(action: {
-            if viewModel.isSubscribed || ((0...2).contains(sort_id) && region == 1) {
+            if viewModel.isSubscribed || viewModel.isFree() {
                 showPayment = false
             } else {
                 showPayment = true

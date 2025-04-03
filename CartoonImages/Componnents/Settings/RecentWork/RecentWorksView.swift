@@ -17,12 +17,12 @@ struct RecentWorksView: View {
 
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
                 ForEach(images.indices, id: \.self) { index in
                     Image(uiImage: images[index])
                         .resizable()
-                        .scaledToFit()
-                        .frame(height: 150)
+                        .scaledToFill()
+                        .frame(width: 150 * 3 / 4, height: 150)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         .onTapGesture {
                             selectedImageIndex = IdentifiableIndex(id: index)

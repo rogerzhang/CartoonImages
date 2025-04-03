@@ -20,6 +20,16 @@ class ImageProcessingViewModel: ObservableObject {
     @Published var recentImages: [UIImage] = []
     var tempSelectedImage: UIImage?
     
+    var limitCount: Int {
+        get {
+            let storedValue = UserDefaults.standard.object(forKey: "limitCount") as? Int
+            return storedValue ?? 3 // 默认返回 3
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "limitCount")
+        }
+    }
+    
     private var cancellables = Set<AnyCancellable>()
     private var timer: Timer?
        
@@ -54,7 +64,16 @@ class ImageProcessingViewModel: ObservableObject {
         guard let image = selectedImage, let imageData = ImageProcessor.processForUpload(image) else { return }
         mainStore.dispatch(AppAction.image(.startProcessing(imageData, model)))
         
+        self.limitCount -= 1
         startSimulateProgress()
+    }
+    
+    func isFree() -> Bool {
+        if let cur = currentModelType {
+            return (0...2).contains(cur.sort_order) && cur.region == 1 && limitCount > 0
+        }
+        
+        return false
     }
     
     func startSimulateProgress() {
