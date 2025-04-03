@@ -74,6 +74,15 @@ struct ProfileView: View {
                     .listRowBackground(themeManager.secondaryBackground)
                 }
                 
+                // 最近作品集
+                Section {
+                    NavigationLink(destination: RecentWorksView()) {
+                        Label("RECENT_WORKS".localized, systemImage: "photo.on.rectangle.angled")
+                            .foregroundColor(themeManager.text)
+                    }
+                    .listRowBackground(themeManager.secondaryBackground)
+                }
+
                 // Section 2: 评分和分享
                 Section {
                     Button(action: {
@@ -190,4 +199,8 @@ struct ProfileView: View {
         }
         .environment(\.colorScheme, themeManager.colorScheme) // 可选：强制使用主题的颜色方案
     }
+}
+
+struct IdentifiableIndex: Identifiable {
+    let id: Int
 }

@@ -26,6 +26,8 @@
 		DB26CE412D969A180011DEEB /* progress2.json in Resources */ = {isa = PBXBuildFile; fileRef = DB26CE402D969A180011DEEB /* progress2.json */; };
 		DB26CE432D96A2F80011DEEB /* loading3.json in Resources */ = {isa = PBXBuildFile; fileRef = DB26CE422D96A2F80011DEEB /* loading3.json */; };
 		DB26CE452D96B5D70011DEEB /* save.json in Resources */ = {isa = PBXBuildFile; fileRef = DB26CE442D96B5D70011DEEB /* save.json */; };
+		DB27D9992D9AB5CD0020B17E /* RecentWorksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB27D9982D9AB5CD0020B17E /* RecentWorksView.swift */; };
+		DB27D99B2D9AB5F90020B17E /* PortfolioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB27D99A2D9AB5F50020B17E /* PortfolioManager.swift */; };
 		DB2CEB112CF077B7006D7C52 /* CustomCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2CEB102CF077B7006D7C52 /* CustomCameraView.swift */; };
 		DB2F11DC2CD7993D005EF0E5 /* ImageProcessingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11D22CD7993D005EF0E5 /* ImageProcessingView.swift */; };
 		DB2F11DD2CD7993D005EF0E5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2F11D32CD7993D005EF0E5 /* ContentView.swift */; };
@@ -129,6 +131,8 @@
 		DB26CE402D969A180011DEEB /* progress2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = progress2.json; sourceTree = "<group>"; };
 		DB26CE422D96A2F80011DEEB /* loading3.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = loading3.json; sourceTree = "<group>"; };
 		DB26CE442D96B5D70011DEEB /* save.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = save.json; sourceTree = "<group>"; };
+		DB27D9982D9AB5CD0020B17E /* RecentWorksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentWorksView.swift; sourceTree = "<group>"; };
+		DB27D99A2D9AB5F50020B17E /* PortfolioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioManager.swift; sourceTree = "<group>"; };
 		DB2CEB102CF077B7006D7C52 /* CustomCameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCameraView.swift; sourceTree = "<group>"; };
 		DB2F11D22CD7993D005EF0E5 /* ImageProcessingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessingView.swift; sourceTree = "<group>"; };
 		DB2F11D32CD7993D005EF0E5 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -269,6 +273,7 @@
 		DB26CE1C2D9282410011DEEB /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				DB27D9972D9AB5B50020B17E /* RecentWork */,
 				DBFCDD802CF408410067D73C /* ShareSheet.swift */,
 				DBFCDD7C2CF407870067D73C /* ProfileView.swift */,
 				DBDE9CBF2D0B3354005EBAFC /* UserProfileView.swift */,
@@ -320,6 +325,15 @@
 				DB26CE2E2D94EB150011DEEB /* PushService.swift */,
 			);
 			path = Push;
+			sourceTree = "<group>";
+		};
+		DB27D9972D9AB5B50020B17E /* RecentWork */ = {
+			isa = PBXGroup;
+			children = (
+				DB27D99A2D9AB5F50020B17E /* PortfolioManager.swift */,
+				DB27D9982D9AB5CD0020B17E /* RecentWorksView.swift */,
+			);
+			path = RecentWork;
 			sourceTree = "<group>";
 		};
 		DB2F11D12CD7993D005EF0E5 /* Views */ = {
@@ -801,10 +815,12 @@
 			files = (
 				DB2F11DC2CD7993D005EF0E5 /* ImageProcessingView.swift in Sources */,
 				DBE1F82B2D1301B200084871 /* UINavigationController+BackButton.swift in Sources */,
+				DB27D99B2D9AB5F90020B17E /* PortfolioManager.swift in Sources */,
 				DBFCDD812CF408410067D73C /* ShareSheet.swift in Sources */,
 				DBABC6582CDE512B001FD8C0 /* AuthAction.swift in Sources */,
 				DB2F11FE2CDBA12A005EF0E5 /* MainView.swift in Sources */,
 				DBABC6562CDE5119001FD8C0 /* PaymentAction.swift in Sources */,
+				DB27D9992D9AB5CD0020B17E /* RecentWorksView.swift in Sources */,
 				DB2F11DD2CD7993D005EF0E5 /* ContentView.swift in Sources */,
 				DB26CE2B2D94EA480011DEEB /* NotificationDelegate.swift in Sources */,
 				DBFCDD862CF5B6690067D73C /* CarouselView.swift in Sources */,

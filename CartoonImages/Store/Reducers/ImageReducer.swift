@@ -20,6 +20,7 @@ func imageReducer(action: ImageAction, state: ImageState) -> ImageState {
         newState.processedImage = image
         newState.error = nil
         newState.showError = false
+        PortfolioManager.shared.saveImage(image)
         
     case let .processFailure(error):
         newState.error = error.localizedDescription
