@@ -17,12 +17,15 @@ extension API {
     static var hostAddress: String {
         let regionCode = Locale.current.region?.identifier ?? "US" // Default to US if region code is not available
 #if DEBUG
-        return "https://test.holymason.cn"
+//        return "https://test.holymason.cn"
+//        return "https://hk.holymason.cn"
+        return "https://main.holymason.cn"
 #else
         if regionCode == "CN" {
             return "https://main.holymason.cn" // China mainland
         } else {
-            return "https://hk.holymason.cn" // Other regions
+            return "https://main.holymason.cn"
+            //return "https://hk.holymason.cn" // Other regions
         }
 #endif
     }
